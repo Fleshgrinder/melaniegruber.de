@@ -1,0 +1,15 @@
+/* TEAM */
+
+    Chef: Melanie Gruber
+    Contact: https://melaniegruber.de/contact
+    From: Germany
+
+    Design & Developer: Richard Fussenegger
+    Contact: https://richard.fussenegger.info/
+    From: Austria
+
+/* SITE */
+
+    Language: English
+    Doctype: HTML5
+    IDE: PhpStorm, Photoshop, Illustrator

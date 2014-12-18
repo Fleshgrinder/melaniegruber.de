@@ -1,0 +1,23 @@
+
+@mixin font-face($family, $file-name, $weight: "normal", $style: "normal") {
+    @font-face {
+        font-family: $family;
+        src: url("../fonts/#{$family}/#{$file-name}.eot");
+        src: url("../fonts/#{$family}/#{$file-name}.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/#{$family}/#{$file-name}.woff") format("woff"),
+        url("../fonts/#{$family}/#{$file-name}.ttf") format("truetype"),
+        url("../fonts/#{$family}/#{$file-name}.svg##{family}") format("svg");
+        font-weight: unquote($weight);
+        font-style: unquote($style);
+    }
+
+    // http://www.adtrak.co.uk/blog/font-face-chrome-rendering/
+    @media screen and (-webkit-min-device-pixel-ratio: 0) {
+        @font-face {
+            font-family: $family;
+            src: url("../fonts/#{$family}/#{$file-name}.svg##{family}") format("svg");
+            font-weight: unquote($weight);
+            font-style: unquote($style);
+        }
+    }
+}

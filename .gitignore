@@ -1,0 +1,5 @@
+.idea
+bower_components
+config.json
+desktop.ini
+node_modules

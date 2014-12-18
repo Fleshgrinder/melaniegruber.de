@@ -1,0 +1,242 @@
+
+@import "mixins/font-face";
+@import "variables";
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+html,
+body,
+button {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+}
+
+@include font-face(clear-sans, thin, 200);
+@include font-face(clear-sans, light, 300);
+@include font-face(clear-sans, regular, 400);
+@include font-face(clear-sans, italic, 400, "italic");
+@include font-face(clear-sans, medium, 600);
+@include font-face(clear-sans, mediumitalic, 600, "italic");
+@include font-face(clear-sans, bold, 700);
+@include font-face(clear-sans, bolditalic, 700, "italic");
+
+html,
+body {
+    background-color: #fff;
+    color: #666;
+    font: normal 300 16px/1.42857143 clear-sans, sans-serif;
+    height: 100%;
+    margin: 0;
+}
+
+article,
+header,
+footer,
+main,
+nav,
+section {
+    display: block;
+}
+
+[hidden] {
+    display: none;
+}
+
+a {
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+    color: nth($color-palette, 1);
+    text-decoration: none;
+    transition-duration: $animation-duration;
+    transition-property: color, border-bottom-color;
+
+    &:active,
+    &:hover {
+        outline: 0;
+    }
+
+    &:active,
+    &:focus,
+    &:hover {
+        border-bottom-color: rgba(nth($color-palette, 4), .5);
+        color: nth($color-palette, 4);
+    }
+}
+
+b,
+strong {
+    font-weight: bold;
+}
+
+img {
+    border: 0;
+    vertical-align: middle;
+}
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+.index .page-left {
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    position: fixed;
+    text-align: justify;
+    top: 0;
+    width: 50%;
+
+    .flex-center {
+        align-items: center;
+        display: flex;
+        flex: 1;
+        justify-content: center;
+    }
+
+    h1 {
+        margin: 0 auto 1em;
+        width: 50%;
+    }
+
+    p {
+        margin: 0 auto 1em;
+        width: 75%;
+    }
+}
+
+.social {
+    opacity: .5;
+    padding: 0 5px;
+    transition: opacity $animation-duration;
+
+    &:active,
+    &:focus,
+    &:hover {
+        opacity: 1;
+    }
+}
+
+@keyframes projects {
+    from {
+        margin-left: 80%;
+        opacity: .5;
+    }
+
+    to {
+        margin-left: 50%;
+        opacity: 1;
+    }
+}
+
+.index .page-right {
+    animation: projects $animation-duration linear 1 forwards;
+    margin-left: 50%;
+    overflow: hidden;
+    position: relative;
+    width: 50%;
+}
+
+.index .project {
+    display: block;
+    position: relative;
+    right: $index-animation-offset;
+    transition: right $animation-duration ease-in-out;
+
+    &:active,
+    &:focus,
+    &:hover {
+        right: 0;
+    }
+
+    .title {
+        background-color: rgba(0, 0, 0, .75);
+        bottom: 20px;
+        color: #fff;
+        display: inline-block;
+        min-width: 25%;
+        opacity: 0;
+        padding: 5px 40px 7.5px 20px;
+        position: absolute;
+        right: $index-animation-offset;
+        transition: $animation-duration ease-in-out;
+        transition-property: right, opacity;
+        z-index: 1;
+    }
+
+    &:active .title,
+    &:focus .title,
+    &:hover .title {
+        opacity: 1;
+        right: 0;
+    }
+
+    h2 {
+        font-size: 32px;
+        font-weight: 200;
+    }
+
+    p {
+        font-weight: 200;
+    }
+
+    picture:before {
+        background-color: rgba(0, 0, 0, .6);
+        bottom: 0;
+        content: "";
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: background-color $animation-duration linear;
+    }
+
+    &:active picture:before,
+    &:focus picture:before,
+    &:hover picture:before {
+        background-color: rgba(0, 0, 0, .2);
+    }
+}
+
+.img-anchor {
+    border: 0;
+}
+
+.img-responsive {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-justify {
+    text-align: justify;
+}
