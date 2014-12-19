@@ -64,6 +64,9 @@ gulp.task("clean:cache", function (done) {
     return $.cache.clearAll(done);
 });
 
+// Delete empty directories from deployment directory.
+gulp.task("clean:dep", del.bind(null, ["dep/projects", "dep/views"]));
+
 // Delete all npm files.
 gulp.task("clean:npm", del.bind(null, ["node_modules"], {dot: true}));
 
@@ -71,36 +74,28 @@ gulp.task("clean:npm", del.bind(null, ["node_modules"], {dot: true}));
 gulp.task("compress", function () {
     return gulp.src(["dep/**/*", "!dep/**/*.{gif,jpg,png,webp}"])
         .pipe($.gzip({"gzipOptions": {"level": 9}}))
-        .pipe(gulp.dest("dep"));
+        .pipe(gulp.dest("dep"))
+        .pipe($.size({title: "compress"}));
 });
 
 // Copy all static files from the source root directory to the deployment directory.
 gulp.task("copy", function () {
-    return mergeStreams(
-        gulp.src(["src/*", "!src/*.md"], {dot: true})
-            .pipe(gulp.dest("dep"))
-            .pipe($.size({title: "root-files"})),
-        gulp.src("bower_components/picturefill/dist/picturefill.min.js")
-            .pipe(gulp.dest(".tmp/scripts"))
-            .pipe($.size({title: "picturefill"})),
-        gulp.src("bower_components/clear-sans//**/*.{eot,svg,ttf,woff}")
-            .pipe($.rename(function (filePath) {
-                filePath.dirname = "clear-sans";
-                filePath.basename = filePath.basename.substring(filePath.basename.lastIndexOf("-") + 1).toLowerCase();
-            }))
-            .pipe(gulp.dest(".tmp/fonts"))
-            .pipe($.size({title: "clear-sans"}))
-    );
+    return gulp.src(["src/*", "!src/*.md"], {dot: true}).pipe(gulp.dest("dep"));
 });
 
 // Deploy the website; note that we clear the cache to ensure that we have the latest versions of everything.
 gulp.task("default", ["clean", "clean:cache"], function (callback) {
-    // Note that fonts will execute the copy task!
-    require("run-sequence")(["fonts", "styles"], ["html", "images", "jshint"], "compress", callback);
+    require("run-sequence")(
+        ["copy", "fonts", "scripts", "styles"],
+        ["html", "images"],
+        "clean:dep",
+        "compress",
+        callback
+    );
 });
 
 // Copy the fonts from the source directory to the deployment directory.
-gulp.task("fonts", ["copy"], function () {
+gulp.task("fonts", ["fonts:copy"], function () {
     return gulp.src(".tmp/fonts/**/*.{eot,svg,ttf,woff}")
         // https://github.com/svg/svgo/issues/277
         .pipe($.if("*.svg", $.replace(/<metadata>[^]*<\/metadata>/, "")))
@@ -110,13 +105,27 @@ gulp.task("fonts", ["copy"], function () {
         .pipe($.size({title: "fonts"}));
 });
 
+gulp.task("fonts:copy", function () {
+    return gulp.src("bower_components/clear-sans//**/*.{eot,svg,ttf,woff}")
+        .pipe($.rename(function (filePath) {
+            filePath.dirname = "clear-sans";
+            filePath.basename = filePath.basename.substring(filePath.basename.lastIndexOf("-") + 1).toLowerCase();
+        }))
+        .pipe(gulp.dest(".tmp/fonts"))
+        .pipe($.size({title: "fonts:copy"}));
+});
+
 // Generate static HTML files from the temporary HTML files.
 gulp.task("html", ["markdown"], function () {
     var assets = $.useref.assets({searchPath: "{.tmp,src}"});
 
     return gulp.src([".tmp/**/*.html", "src/**/*.html"])
         .pipe(assets)
-        .pipe($.if("*.js", $.uglify()))
+        .pipe($.if("*.js", $.uglify({
+            preserveComments: function () {
+                return false;
+            }
+        })))
         .pipe($.if("*.css", $.uncss({html: glob.sync(".tmp/**/*.html")})))
         .pipe($.if("*.css", $.csso()))
         .pipe(assets.restore())
@@ -150,16 +159,6 @@ gulp.task("images", function () {
     );
 });
 
-// TODO: First we need some JS. ;-)
-gulp.task("jshint", function () {
-    return gulp.src("src/scripts/**/*.js")
-        .pipe(browserSync.reload({stream: true, once: true}))
-        .pipe($.jshint())
-        .pipe($.jshint.reporter("jshint-stylish"))
-        .pipe($.if(!browserSync.active, $.jshint.reporter("fail")));
-});
-
-// Generate HTML files from Markdown files.
 // TODO: We could collect the project information during a first gulp run that excludes the index.
 gulp.task("markdown", function () {
     var fm = require("gulp-front-matter/node_modules/front-matter");
@@ -199,14 +198,32 @@ gulp.task("markdown", function () {
         .pipe($.size({title: "markdown"}));
 });
 
-gulp.task("scsslint", function () {
-    return gulp.src("src/styles/**/*.scss")
-        .pipe($.changed("styles"))
-        .pipe($.scssLint({config: ".scss-lint.yml"}));
+gulp.task("scripts", ["scripts:copy"], function () {
+    return gulp.src([".tmp/**/*.js", "src/**/*.js"])
+        .pipe($.uglify({
+            preserveComments: function () {
+                return false;
+            }
+        }))
+        .pipe(gulp.dest("dep"))
+        .pipe($.size({title: "scripts"}));
 });
 
-// Start the browserSync web server for local development.
-gulp.task("serve", ["copy", "markdown", "styles"], function () {
+gulp.task("scripts:copy", function () {
+    return gulp.src("bower_components/picturefill/dist/picturefill.js")
+        .pipe(gulp.dest(".tmp/scripts"))
+        .pipe($.size({title: "scripts:copy"}));
+});
+
+gulp.task("scripts:lint", function () {
+    return gulp.src("src/scripts/**/*.js")
+        .pipe(browserSync.reload({stream: true, once: true}))
+        .pipe($.jshint())
+        .pipe($.jshint.reporter("jshint-stylish"))
+        .pipe($.if(!browserSync.active, $.jshint.reporter("fail")));
+});
+
+gulp.task("serve", ["copy", "markdown", "styles", "scripts:copy"], function () {
     var watchlog = function (event) {
         $.util.log("File " + $.util.colors.cyan(event.path) + " was " + $.util.colors.green(event.type) + ", running tasks ...");
     };
@@ -215,16 +232,14 @@ gulp.task("serve", ["copy", "markdown", "styles"], function () {
 
     gulp.watch(["src/views/**/*.ejs", "src/**/*.md"], ["html", browserSync.reload]).on("change", watchlog);
     gulp.watch("src/styles/**/*.scss", ["styles", browserSync.reload]).on("change", watchlog);
-    gulp.watch("src/scripts/**/*.js", ["jshint"]).on("change", watchlog);
+    gulp.watch("src/scripts/**/*.js", ["scripts:lint"]).on("change", watchlog);
     gulp.watch("src/images/**/*", browserSync.reload).on("change", watchlog);
 });
 
-// Build and serve the output from the deployment directory.
 gulp.task("serve:deployment", ["default"], function () {
     browserSync(server("dep"));
 });
 
-// Generate CSS from SCSS files.
 gulp.task("styles", function () {
     return gulp.src("src/styles/main.scss")
         .pipe($.sass({precision: 10}))
@@ -248,7 +263,12 @@ gulp.task("styles", function () {
         .pipe($.size({title: "styles"}));
 });
 
-// Upload everything to the configured remote (S)FTP server.
+gulp.task("styles:lint", function () {
+    return gulp.src("src/styles/**/*.scss")
+        .pipe($.changed("styles"))
+        .pipe($.scssLint({config: ".scss-lint.yml"}));
+});
+
 gulp.task("upload", ["default"], function () {
     var config = require("./config.json");
     var modes = ["sftp", "ftp"];
