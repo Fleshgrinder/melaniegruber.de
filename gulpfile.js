@@ -27,6 +27,7 @@
  * @copyright 2014 Richard Fussenegger
  * @license http://unlicense.org/ Unlicense.
  */
+
 var $ = require("gulp-load-plugins")();
 var browserSync = require("browser-sync");
 var del = require("del");
@@ -34,6 +35,15 @@ var glob = require("glob");
 var gulp = require("gulp");
 var merge = require("merge");
 var mergeStreams = require("merge-stream");
+
+// Create copy of the original _runTask method.
+gulp.Gulp.prototype.__runTask = gulp.Gulp.prototype._runTask;
+
+// Overwrite existing _runTask method and store the name.
+gulp.Gulp.prototype._runTask = function (task) {
+    this.name = task.name;
+    return this.__runTask(task);
+};
 
 /**
  * Get browserSync server configuration.
@@ -53,37 +63,30 @@ var server = function (baseDirectory) {
     };
 };
 
-// Delete generated deployment and temporary files.
 gulp.task("clean", del.bind(null, ["dep/*", "!dep/.gitignore", ".tmp"], {dot: true}));
 
-// Delete all bower files.
 gulp.task("clean:bower", del.bind(null, ["bower_components"], {dot: true}));
 
-// Clear the cache for temporary files.
 gulp.task("clean:cache", function (done) {
     return $.cache.clearAll(done);
 });
 
-// Delete empty directories from deployment directory.
-gulp.task("clean:dep", del.bind(null, ["dep/projects", "dep/views"]));
+gulp.task("clean:dep", del.bind(null, ["dep/projects", "dep/views"], {dot: true}));
 
-// Delete all npm files.
 gulp.task("clean:npm", del.bind(null, ["node_modules"], {dot: true}));
 
-// Pre-compress all static files (which are not already compressed) for nginx static module.
 gulp.task("compress", function () {
     return gulp.src(["dep/**/*", "!dep/**/*.{gif,jpg,png,webp}"])
-        .pipe($.gzip({"gzipOptions": {"level": 9}}))
+        .pipe($.changed(this.name))
+        .pipe($.gzip({gzipOptions: {level: 9}}))
         .pipe(gulp.dest("dep"))
-        .pipe($.size({title: "compress"}));
+        .pipe($.size({title: this.name}));
 });
 
-// Copy all static files from the source root directory to the deployment directory.
 gulp.task("copy", function () {
     return gulp.src(["src/*", "!src/*.md"], {dot: true}).pipe(gulp.dest("dep"));
 });
 
-// Deploy the website; note that we clear the cache to ensure that we have the latest versions of everything.
 gulp.task("default", ["clean", "clean:cache"], function (callback) {
     require("run-sequence")(
         ["copy", "fonts", "scripts", "styles"],
@@ -94,32 +97,33 @@ gulp.task("default", ["clean", "clean:cache"], function (callback) {
     );
 });
 
-// Copy the fonts from the source directory to the deployment directory.
 gulp.task("fonts", ["fonts:copy"], function () {
     return gulp.src(".tmp/fonts/**/*.{eot,svg,ttf,woff}")
+        .pipe($.changed(this.name))
         // https://github.com/svg/svgo/issues/277
         .pipe($.if("*.svg", $.replace(/<metadata>[^]*<\/metadata>/, "")))
         .pipe($.if("*.svg", $.replace(/id="[\w-]+"/, 'id="clear-sans"')))
         .pipe($.if("*.svg", $.imagemin({"svgoPlugins": [{"cleanupIDs": false}]})))
         .pipe(gulp.dest("dep/fonts"))
-        .pipe($.size({title: "fonts"}));
+        .pipe($.size({title: this.name}));
 });
 
 gulp.task("fonts:copy", function () {
     return gulp.src("bower_components/clear-sans//**/*.{eot,svg,ttf,woff}")
+        .pipe($.changed(this.name))
         .pipe($.rename(function (filePath) {
             filePath.dirname = "clear-sans";
             filePath.basename = filePath.basename.substring(filePath.basename.lastIndexOf("-") + 1).toLowerCase();
         }))
         .pipe(gulp.dest(".tmp/fonts"))
-        .pipe($.size({title: "fonts:copy"}));
+        .pipe($.size({title: this.name}));
 });
 
-// Generate static HTML files from the temporary HTML files.
 gulp.task("html", ["markdown"], function () {
     var assets = $.useref.assets({searchPath: "{.tmp,src}"});
 
     return gulp.src([".tmp/**/*.html", "src/**/*.html"])
+        .pipe($.changed(this.name))
         .pipe(assets)
         .pipe($.if("*.js", $.uglify({
             preserveComments: function () {
@@ -132,10 +136,9 @@ gulp.task("html", ["markdown"], function () {
         .pipe($.useref())
         .pipe($.if("*.html", $.minifyHtml()))
         .pipe(gulp.dest("dep"))
-        .pipe($.size({title: "html"}));
+        .pipe($.size({title: this.name}));
 });
 
-// Optimize all images and copy them to the deployment directory.
 // TODO: Convert to various sizes for various devices.
 gulp.task("images", function () {
     var src = ["src/images/**/*.{gif,jpg,png,svg}", "!src/images/**/*.{ai,psd}"];
@@ -166,6 +169,7 @@ gulp.task("markdown", function () {
     var options = {property: "page", templateDir: "./src/views"};
 
     return gulp.src("src/**/*.md")
+        .pipe($.changed(this.name))
         .pipe($.frontMatter(merge({remove: true}, options)))
         .pipe($.tap(function (file) {
             file[options.property].subtitle = file[options.property].subtitle || "Melanie Gruber";
@@ -189,41 +193,41 @@ gulp.task("markdown", function () {
         .pipe($.markdown())
         .pipe($.multiRenderer(options))
         .pipe($.rename(function (filePath) {
-            // Move the actual projects file up into the root directory.
             if (filePath.dirname === "projects") {
                 filePath.dirname = "";
             }
         }))
         .pipe(gulp.dest(".tmp"))
-        .pipe($.size({title: "markdown"}));
+        .pipe($.size({title: this.name}));
 });
 
 gulp.task("scripts", ["scripts:copy"], function () {
     return gulp.src([".tmp/**/*.js", "src/**/*.js"])
-        .pipe($.uglify({
-            preserveComments: function () {
-                return false;
-            }
-        }))
+        .pipe($.changed(this.name))
+        .pipe($.uglify({preserveComments: function () {
+            return false;
+        }}))
         .pipe(gulp.dest("dep"))
-        .pipe($.size({title: "scripts"}));
+        .pipe($.size({title: this.name}));
 });
 
 gulp.task("scripts:copy", function () {
     return gulp.src("bower_components/picturefill/dist/picturefill.js")
+        .pipe($.changed("scripts"))
         .pipe(gulp.dest(".tmp/scripts"))
-        .pipe($.size({title: "scripts:copy"}));
+        .pipe($.size({title: this.name}));
 });
 
 gulp.task("scripts:lint", function () {
     return gulp.src("src/scripts/**/*.js")
+        .pipe($.changed("scripts"))
         .pipe(browserSync.reload({stream: true, once: true}))
         .pipe($.jshint())
         .pipe($.jshint.reporter("jshint-stylish"))
         .pipe($.if(!browserSync.active, $.jshint.reporter("fail")));
 });
 
-gulp.task("serve", ["copy", "markdown", "styles", "scripts:copy"], function () {
+gulp.task("serve", ["markdown", "styles", "scripts:copy"], function () {
     var watchlog = function (event) {
         $.util.log("File " + $.util.colors.cyan(event.path) + " was " + $.util.colors.green(event.type) + ", running tasks ...");
     };
@@ -260,7 +264,7 @@ gulp.task("styles", function () {
         .pipe(gulp.dest(".tmp/styles"))
         .pipe($.csso())
         .pipe(gulp.dest("dep/styles"))
-        .pipe($.size({title: "styles"}));
+        .pipe($.size({title: this.name}));
 });
 
 gulp.task("styles:lint", function () {
@@ -275,7 +279,9 @@ gulp.task("upload", ["default"], function () {
 
     for (var i = 0; i < 2; ++i) {
         if (config[modes[i]]) {
-            return gulp.src("dep/**/*", {dot: true}).pipe($[modes[i]](config[modes[i]]));
+            return gulp.src("dep/**/*", {dot: true})
+                .pipe($.changed(this.name))
+                .pipe($[modes[i]](config[modes[i]]));
         }
     }
 
