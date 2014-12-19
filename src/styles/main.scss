@@ -136,7 +136,7 @@ p {
     position: fixed;
     text-align: justify;
     top: 0;
-    width: 50%;
+    width: $golden-ratio-long;
 
     .flex-center {
         align-items: center;
@@ -146,11 +146,6 @@ p {
     }
 
     h1 {
-        margin: 0 auto 1em;
-        width: 50%;
-    }
-
-    p {
         margin: 0 auto 1em;
         width: 75%;
     }
@@ -170,28 +165,28 @@ p {
 
 @keyframes projects {
     from {
-        margin-left: 80%;
+        margin-left: $golden-ratio-long + 10;
         opacity: .5;
     }
 
     to {
-        margin-left: 50%;
+        margin-left: $golden-ratio-long;
         opacity: 1;
     }
 }
 
 .index .page-right {
     animation: projects $animation-duration linear 1 forwards;
-    margin-left: 50%;
     overflow: hidden;
     position: relative;
-    width: 50%;
+    width: $golden-ratio-short;
 }
 
 .index .project {
     display: block;
     position: relative;
     right: $index-animation-offset;
+    transform: translateZ(0); // Trigger hardware acceleration, otherwise it might lag in WebKit browsers.
     transition: right $animation-duration ease-in-out;
 
     &:active,

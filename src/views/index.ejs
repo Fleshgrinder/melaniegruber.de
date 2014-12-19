@@ -19,21 +19,27 @@
         <footer class="text-center">
             <% var iconSize = 32; %>
             <p>
-                <a class="img-anchor social" href="https://melaniegruber.deviantart.com/">
+                <a class="img-anchor social" href="https://melaniegruber.deviantart.com/" target="_blank">
                     <img src="/images/icons/deviantart.svg" alt="deviantART" width="<%= iconSize %>" height="<%= iconSize %>">
                 </a>
-                <a class="img-anchor social" href="https://www.linkedin.com/in/melaniegruber">
+                <a class="img-anchor social" href="https://www.linkedin.com/in/melaniegruber" target="_blank">
                     <img src="/images/icons/linkedin.svg" alt="LinkedIn" width="<%= iconSize %>" height="<%= iconSize %>">
                 </a>
-                <a class="img-anchor social" href="https://www.pinterest.com/GruberMelanie/">
+                <a class="img-anchor social" href="https://www.pinterest.com/GruberMelanie/" target="_blank">
                     <img src="/images/icons/pinterest.svg" alt="Pinterest" width="<%= iconSize %>" height="<%= iconSize %>">
                 </a>
-                <a class="img-anchor social" href="callto:melaniegruber.de">
+                <a class="img-anchor social" href="callto:melaniegruber.de" target="_blank">
                     <img src="/images/icons/skype.svg" alt="Skype" width="<%= iconSize %>" height="<%= iconSize %>">
                 </a>
-                <a class="img-anchor social" href="https://vimeo.com/melaniegruber">
+                <a class="img-anchor social" href="https://vimeo.com/melaniegruber" target="_blank">
                     <img src="/images/icons/vimeo.svg" alt="Vimeo" width="<%= iconSize %>" height="<%= iconSize %>">
                 </a>
+            </p>
+            <p>
+                <a href="/about">About</a> ·
+                <a href="/contact">Contact</a> ·
+                <a href="/résumé">Résumé</a> ·
+                <a href="/impressum">Impressum</a>
             </p>
         </footer>
     </div>
@@ -46,12 +52,13 @@
                         <p><%= project.description %></p>
                     </div>
                     <picture>
+                        <source srcset="/images/<%= project.route %>/banner.webp" type="image/webp">
                         <img class="img-responsive" src="/images/<%= project.route %>/banner.jpg" alt="<%= project.title %> banner.">
                     </picture>
                 </a>
             </article>
         <% }); %>
     </div>
-    <script src="/scripts/picturefill.min.js"></script>
+    <script src="/scripts/picturefill.js"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 title: 'Résumé'  
 description: 'All about me.'  
 route: 'résumé'  
+layout: 'index'  
 ---
 
-All about me.
+Curriculum Vitae

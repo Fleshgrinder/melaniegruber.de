@@ -25,6 +25,9 @@
 // @license http://unlicense.org/ Unlicense.
 // ---------------------------------------------------------------------------------------------------------------------
 
+// Duration for animations.
+$animation-duration: .2s;
+
 // Color palette, note that the order matches the one from the AI file.
 $color-palette: (
     #910026,
@@ -34,8 +37,9 @@ $color-palette: (
     #0d1127
 );
 
-// Duration for animations.
-$animation-duration: .2s;
+// Golden ratio proportion in percentage.
+$golden-ratio-long: 100% / 1.618;
+$golden-ratio-short: 100 - $golden-ratio-long;
 
 // Offset for animations on the index page.
 $index-animation-offset: -20px;
