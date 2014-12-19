@@ -20,7 +20,7 @@ double-click the `deploy.bat` file on Windows or execute the `deploy.sh` script 
 
 ## License
 ### Third-Party Content
-All third-party content (e.g. trademarks, logos) are the property of their respective owners.
+> All third-party content (e.g. trademarks, logos) are the property of their respective owners.
 
 The SVG social media icons are from the [Picons Social](https://picons.me/download-social.php) icon set.
 
