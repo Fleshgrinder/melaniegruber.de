@@ -27,6 +27,7 @@
     "gulp-ftp": "^1.0.1",
     "gulp-gzip": "0.0.8",
     "gulp-if": "^1.2.5",
+    "gulp-image-resize": "^0.6.0",
     "gulp-imagemin": "^2.0.0",
     "gulp-load-plugins": "^0.8.0",
     "gulp-markdown": "^1.0.0",
