@@ -8,4 +8,8 @@ layout:         index
 
 ---
 
-Hello there! I’m Melanie, a Stuttgart based 3D artist and passionate animal lover.
+Hello there!
+
+I’m **Melanie**,  
+a Stuttgart based  
+**3D artist**.
