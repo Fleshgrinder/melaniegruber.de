@@ -13,8 +13,7 @@
   ],
   "private": true,
   "dependencies": {
-    "picturefill": "*",
-    "google-open-sans": "*"
+    "picturefill": "*"
   },
   "repository": {
     "type": "git",
