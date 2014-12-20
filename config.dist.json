@@ -1,5 +1,11 @@
 {
     "INFO": "SFTP is preferred over FTP because the FTP module might result in ECONREFUSED errors.",
+    "page": {
+        "title": "Melanie Gruber",
+        "titleSeparator": " | ",
+        "url": "mg.bobdo.net",
+        "workSeparator": " · "
+    },
     "sftp": {
         "host": "127.0.0.1",
         "user": "anonymous",

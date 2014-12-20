@@ -25,14 +25,14 @@
 // @license http://unlicense.org/ Unlicense.
 // ---------------------------------------------------------------------------------------------------------------------
 
-@mixin font-face($family, $file-name, $weight: "normal", $style: "normal") {
+@mixin font-face($family, $file-name, $weight: "normal", $style: "normal", $otf: false) {
     @font-face {
         font-family: $family;
         src: url("../fonts/#{$family}/#{$file-name}.eot");
         src: url("../fonts/#{$family}/#{$file-name}.eot?#iefix") format("embedded-opentype"),
-        url("../fonts/#{$family}/#{$file-name}.woff") format("woff"),
-        url("../fonts/#{$family}/#{$file-name}.ttf") format("truetype"),
-        url("../fonts/#{$family}/#{$file-name}.svg##{family}") format("svg");
+             url("../fonts/#{$family}/#{$file-name}.woff") format("woff"),
+             url("../fonts/#{$family}/#{$file-name}.ttf") format("truetype"),
+             url("../fonts/#{$family}/#{$file-name}.svg##{family}") format("svg");
         font-weight: unquote($weight);
         font-style: unquote($style);
     }

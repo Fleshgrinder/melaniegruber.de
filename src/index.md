@@ -1,8 +1,11 @@
 ---
-subtitle: '3D artist'  
-description: 'Portfolio website of 3D artist Melanie Gruber.'
+
+title:          Melanie Gruber
 titleSeparator: ', '
-layout: 'index'  
+subtitle:       3D artist
+description:    Portfolio website of 3D artist Melanie Gruber.
+layout:         index
+
 ---
 
-Hello there! I’m Melanie, a Hamburg based 3D artist and passionate animal lover.
+Hello there! I’m Melanie, a Stuttgart based 3D artist and passionate animal lover.

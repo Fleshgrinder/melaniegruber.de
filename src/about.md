@@ -1,7 +1,8 @@
 ---
-title: 'About'  
-description: 'Kitty ipsum dolor …'
-layout: 'index'  
+
+title: About
+description: Kitty ipsum dolor …
+
 ---
 
 Kitty ipsum dolor sit amet, consectetur lay down in your way non chase the red dot ac climb the curtains, chuf mauris a

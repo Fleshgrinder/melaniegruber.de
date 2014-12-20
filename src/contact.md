@@ -1,6 +1,7 @@
 ---
-subtitle: 'Contact'  
-description: 'Drop me a line.'
-layout: 'contact'  
-route: 'contact'  
+
+title: Contact
+description: Drop me a line.
+layout: contact
+
 ---

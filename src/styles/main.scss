@@ -25,8 +25,15 @@
 // @license http://unlicense.org/ Unlicense.
 // ---------------------------------------------------------------------------------------------------------------------
 
-@import "mixins/font-face";
 @import "variables";
+@import "mixins/font-face";
+@import "mixins/transition";
+
+@include font-face($font, light, 200);
+@include font-face($font, regular, 400);
+
+@include font-face($font-condensed, light, 200);
+@include font-face($font-condensed, bold, 700);
 
 *,
 *::before,
@@ -48,26 +55,19 @@ button {
     font-smoothing: antialiased;
 }
 
-@include font-face(clear-sans, thin, 200);
-@include font-face(clear-sans, light, 300);
-@include font-face(clear-sans, regular, 400);
-@include font-face(clear-sans, italic, 400, "italic");
-@include font-face(clear-sans, medium, 600);
-@include font-face(clear-sans, mediumitalic, 600, "italic");
-@include font-face(clear-sans, bold, 700);
-@include font-face(clear-sans, bolditalic, 700, "italic");
-
 html,
 body {
-    background-color: #fff;
+    background-color: $background;
     color: #666;
-    font: normal 300 16px/1.42857143 clear-sans, sans-serif;
+    font: normal 16px/1.42857143 $font, sans-serif;
     height: 100%;
     margin: 0;
 }
 
 article,
 header,
+figcaption,
+figure,
 footer,
 main,
 nav,
@@ -75,26 +75,22 @@ section {
     display: block;
 }
 
-[hidden] {
-    display: none;
-}
-
+.a,
 a {
+    @include transition(color);
     background-color: transparent;
     color: nth($color-palette, 1);
     position: relative;
     text-decoration: none;
-    transition-duration: $animation-duration;
-    transition-property: color;
 
     &:before {
+        @include transition(transform);
         background-color: nth($color-palette, 4);
         bottom: -2px;
         content: "";
         height: 1px;
         position: absolute;
         transform: scaleX(0);
-        transition: transform $animation-duration ease-in-out;
         width: 100%;
     }
 
@@ -144,126 +140,189 @@ p {
     margin-bottom: 10px;
 }
 
-.index .page-left {
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
+
+// --------------------------------------------------------------------------------------------------------------------- Header
+
+
+$header-height: 75px;
+$header-logo-height: 32px;
+
+.title {
+    color: #fff;
+    font-family: $font-condensed, sans-serif;
+    margin-left: ($header-height - $header-logo-height) / 2;
+}
+
+header {
+    background-color: #f7f7f7;
+    box-shadow: 0 0 1rem $background;
+    height: $header-height;
     left: 0;
+    line-height: $header-height;
     position: fixed;
-    text-align: justify;
+    right: 0;
     top: 0;
-    width: $golden-ratio-long;
-
-    .flex-center {
-        align-items: center;
-        display: flex;
-        flex: 1;
-        justify-content: center;
-    }
-
-    h1 {
-        margin: 0 auto 1em;
-        width: 75%;
-    }
-}
-
-.social {
-    opacity: .5;
-    padding: 0 5px;
-    transition: opacity $animation-duration;
-
-    &:active,
-    &:focus,
-    &:hover {
-        opacity: 1;
-    }
-}
-
-@keyframes projects {
-    from {
-        margin-left: $golden-ratio-long + 10;
-        opacity: .5;
-    }
-
-    to {
-        margin-left: $golden-ratio-long;
-        opacity: 1;
-    }
-}
-
-.index .page-right {
-    animation: projects $animation-duration linear 1 forwards;
-    overflow: hidden;
-    position: relative;
-    width: $golden-ratio-short;
-}
-
-.index .project {
-    display: block;
-    position: relative;
-    right: $index-animation-offset;
-    transition: right $animation-duration ease-in-out;
-
-    // Trigger hardware acceleration, otherwise it might lag in WebKit browsers.
-    @media screen and (-webkit-min-device-pixel-ratio: 0) {
-        & {
-            transform: translate3D(0, 0, 0);
-        }
-    }
-
-    &:active,
-    &:focus,
-    &:hover {
-        right: 0;
-    }
+    z-index: 99;
 
     .title {
-        background-color: rgba(0, 0, 0, .75);
-        bottom: 20px;
-        color: #fff;
-        display: inline-block;
-        min-width: 25%;
+        background: url("../images/initials/vector.svg") left center no-repeat;
+        background-size: $header-logo-height;
+        color: nth($color-palette, 5);
+        float: left;
+        font-size: $header-logo-height / 2;
+        padding-left: $header-logo-height * 1.2;
+        text-transform: uppercase;
+    }
+
+    .content {
+        float: right;
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            display: inline-block;
+            padding: 0 $header-height / 3;
+        }
+
+        li:last-child {
+            padding-right: $header-height / 3 * 2;
+        }
+
+        // TODO: The click area for the anchors is too small, especially on touch devices.
+    }
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------- Main
+
+
+main {
+    padding-top: $header-height;
+
+    > .title {
+        font-size: 64px;
+        font-weight: 200;
+    }
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------- Index
+
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.project {
+    @include transition(box-shadow);
+    color: #fff !important; // Overwrite :active, :focus, and :hover at once.
+    display: block;
+    flex: 0 0 100%;
+    line-height: 1;
+    position: relative;
+
+    article {
+        overflow: hidden;
+    }
+
+    .overlay {
+        @include transition(opacity);
+        align-items: center;
+        background-color: rgba($background, .8);
+        display: flex;
+        flex-flow: column;
+        height: 100%;
+        justify-content: center;
+        left: 0;
+        margin: 0;
         opacity: 0;
-        padding: 5px 40px 7.5px 20px;
         position: absolute;
-        right: $index-animation-offset;
-        transition: $animation-duration ease-in-out;
-        transition-property: right, opacity;
+        text-align: center;
+        text-transform: uppercase;
+        top: 0;
+        width: 100%;
         z-index: 1;
     }
 
-    &:active .title,
-    &:focus .title,
-    &:hover .title {
-        opacity: 1;
-        right: 0;
-    }
-
-    h2 {
-        font-size: 32px;
-        font-weight: 200;
+    h2,
+    p {
+        opacity: 0;
+        position: relative;
+        top: -.5em;
+        transition: top $animation-duration * 2 $animation-function, opacity $animation-duration * 1.5 linear $animation-duration * .5;
     }
 
     p {
+        font-size: 12px;
         font-weight: 200;
+        line-height: 1.42857143;
+        margin: 2em 0 0;
+        text-transform: lowercase;
+        width: 75%;
+
+        &:before {
+            @include transition(transform, $animation-duration * 2);
+            background-color: rgba(255, 255, 255, .5);
+            content: "";
+            height: 1px;
+            left: 0;
+            position: absolute;
+            top: -1em;
+            transform: scaleX(0);
+            width: 100%;
+        }
     }
 
-    picture:before {
-        background-color: rgba(0, 0, 0, .6);
-        bottom: 0;
-        content: "";
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-        transition: background-color $animation-duration linear;
+    img {
+        @include transition(transform);
+        transform: scale(1);
     }
 
-    &:active picture:before,
-    &:focus picture:before,
-    &:hover picture:before {
-        background-color: rgba(0, 0, 0, .2);
+    &:active,
+    &:focus,
+    &:hover {
+        box-shadow: 0 0 1rem $background;
+        z-index: 1;
+
+        .overlay {
+            opacity: 1;
+        }
+
+        h2,
+        p {
+            opacity: 1;
+            top: 0;
+        }
+
+        p:before {
+            transform: scaleX(1);
+        }
+
+        img {
+            transform: scale(1.2);
+        }
     }
+}
+
+@for $i from 2 through 16 {
+    @media (min-width: 320px * $i) {
+        .gallery .project {
+            flex: 0 0 (100% / $i);
+        }
+    }
+}
+
+// --------------------------------------------------------------------------------------------------------------------- Utility
+
+.clearfix:after {
+    clear: both;
+    content: " ";
+    display: table;
 }
 
 .img-anchor:before {
@@ -274,12 +333,16 @@ p {
     display: block;
     height: auto;
     max-width: 100%;
+    width: 100%;
 }
 
-.text-center {
-    text-align: center;
-}
-
-.text-justify {
-    text-align: justify;
+.sr-only {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
 }
