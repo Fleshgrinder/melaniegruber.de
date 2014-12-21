@@ -21,21 +21,29 @@
  */
 
 /**
- * Default gulp task and task loading file.
+ * Gulp script tasks.
  *
  * @author Richard Fussenegger <richard@fussenegger.info>
  * @copyright 2014 Richard Fussenegger
  * @license http://unlicense.org/ Unlicense.
  */
-require("gulp").task("default", function (done) {
-    require("run-sequence")(
-        ["font", "script", "style"],
-        ["html", "image"],
-        ["clean:dep", "copy"],
-        //"compress", TODO: Activate as soon as we have the nginx server ready.
-        done
-    );
+
+var $ = require("gulp-load-plugins")();
+var gulp = require("gulp");
+
+gulp.task("script", ["script:flatten"], function () {
+    return gulp.src([".tmp/**/*.js", "src/**/*.js"])
+        .pipe($.if("!*.min.js", $.uglify({
+            preserveComments: function () {
+                return false;
+            }
+        })))
+        .pipe(gulp.dest("dep"))
+        .pipe($.size({ title: "script" }));
 });
 
-// Include all other tasks (including this after the default task ensures that the default task has highest priority).
-require("require-dir")("./gulp/task");
+gulp.task("script:flatten", function () {
+    return gulp.src("bower_components/**/*.min.js")
+        .pipe($.flatten())
+        .pipe(gulp.dest(".tmp/scripts"));
+});

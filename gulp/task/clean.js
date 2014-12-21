@@ -21,21 +21,18 @@
  */
 
 /**
- * Default gulp task and task loading file.
+ * Gulp cleanup tasks.
  *
  * @author Richard Fussenegger <richard@fussenegger.info>
  * @copyright 2014 Richard Fussenegger
  * @license http://unlicense.org/ Unlicense.
  */
-require("gulp").task("default", function (done) {
-    require("run-sequence")(
-        ["font", "script", "style"],
-        ["html", "image"],
-        ["clean:dep", "copy"],
-        //"compress", TODO: Activate as soon as we have the nginx server ready.
-        done
-    );
-});
 
-// Include all other tasks (including this after the default task ensures that the default task has highest priority).
-require("require-dir")("./gulp/task");
+var del  = require("del");
+var gulp = require("gulp");
+
+gulp.task("clean:all", ["clean:tmp"], del.bind(null, ["dep/*", "!dep/.gitignore"], { dot: true }));
+
+gulp.task("clean:dep", del.bind(null, ["dep/projects", "dep/views"], { dot: true }));
+
+gulp.task("clean:tmp", del.bind(null, ".tmp", { dot: true }));

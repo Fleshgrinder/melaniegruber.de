@@ -21,21 +21,27 @@
  */
 
 /**
- * Default gulp task and task loading file.
+ * Gulp upload tasks.
  *
  * @author Richard Fussenegger <richard@fussenegger.info>
  * @copyright 2014 Richard Fussenegger
  * @license http://unlicense.org/ Unlicense.
  */
-require("gulp").task("default", function (done) {
-    require("run-sequence")(
-        ["font", "script", "style"],
-        ["html", "image"],
-        ["clean:dep", "copy"],
-        //"compress", TODO: Activate as soon as we have the nginx server ready.
-        done
-    );
-});
 
-// Include all other tasks (including this after the default task ensures that the default task has highest priority).
-require("require-dir")("./gulp/task");
+var $      = require("gulp-load-plugins")();
+var config = require("../../config.json");
+var gulp   = require("gulp");
+
+gulp.task("upload", ["default"], function () {
+    var modes = ["sftp", "ftp"];
+
+    for (var i = 0; i < 2; ++i) {
+        if (config[modes[i]]) {
+            return gulp.src("dep/**/*", { dot: true })
+                .pipe($.cached("upload"))
+                .pipe($[modes[i]](config[modes[i]]));
+        }
+    }
+
+    throw new $.util.PluginError("upload", "No FTP nor SFTP configuration found.");
+});

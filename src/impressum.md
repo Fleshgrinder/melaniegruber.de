@@ -1,5 +1,7 @@
 ---
-title: 'Impressum'  
-description: ''
-layout: 'index'  
+
+title: Impressum
+
 ---
+
+<%= page.title %>

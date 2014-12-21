@@ -21,21 +21,39 @@
  */
 
 /**
- * Default gulp task and task loading file.
+ * Gulp style tasks.
  *
  * @author Richard Fussenegger <richard@fussenegger.info>
  * @copyright 2014 Richard Fussenegger
  * @license http://unlicense.org/ Unlicense.
  */
-require("gulp").task("default", function (done) {
-    require("run-sequence")(
-        ["font", "script", "style"],
-        ["html", "image"],
-        ["clean:dep", "copy"],
-        //"compress", TODO: Activate as soon as we have the nginx server ready.
-        done
-    );
+
+var $ = require("gulp-load-plugins")();
+var gulp = require("gulp");
+
+gulp.task("style", ["style:scss"], function () {
+    return gulp.src(".tmp/styles/**/*.css")
+        .pipe($.csso())
+        .pipe(gulp.dest("dep/styles"))
+        .pipe($.size({ title: "style" }));
 });
 
-// Include all other tasks (including this after the default task ensures that the default task has highest priority).
-require("require-dir")("./gulp/task");
+gulp.task("style:scss", function () {
+    return gulp.src("src/styles/main.scss")
+        .pipe($.sass({ precision: 10 }))
+        .on("error", console.error.bind(console))
+        .pipe($.autoprefixer({
+            browsers: [
+                "ie >= 10",
+                "ie_mob >= 10",
+                "ff >= 30",
+                "chrome >= 30",
+                "safari >= 6",
+                "opera >= 20",
+                "ios >= 7",
+                "android >= 4.1",
+                "bb >= 10"
+            ]
+        }))
+        .pipe(gulp.dest(".tmp/styles"));
+});
