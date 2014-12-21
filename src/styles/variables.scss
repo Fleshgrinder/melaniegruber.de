@@ -29,9 +29,6 @@
 $animation-duration: .2s;
 $animation-function: ease-in-out;
 
-// Main background color;
-$background: #141414;
-
 // Color palette, note that the order matches the one from the AI file.
 $color-palette: (
     #910026,
@@ -41,6 +38,8 @@ $color-palette: (
     #0d1127
 );
 
-// Font names in use.
-$font: open-sans;
-$font-condensed: open-sans-condensed;
+// Name of the font in use.
+$font-family: dosis;
+
+// The absolute height in pixels of the header.
+$header-height: 75px;

@@ -29,11 +29,14 @@
 @import "mixins/font-face";
 @import "mixins/transition";
 
-@include font-face($font, light, 200);
-@include font-face($font, regular, 400);
-
-@include font-face($font-condensed, light, 200);
-@include font-face($font-condensed, bold, 700);
+// TODO: Remove the fonts which are not used anywhere in the design and try limiting to very few!
+@include font-face($font-family, extralight, 200);
+@include font-face($font-family, light, 300);
+@include font-face($font-family, book, 400);
+@include font-face($font-family, medium, 500);
+@include font-face($font-family, semibold, 600);
+@include font-face($font-family, bold, 700);
+@include font-face($font-family, extrabold, 800);
 
 *,
 *::before,
@@ -55,13 +58,13 @@ button {
     font-smoothing: antialiased;
 }
 
-html,
 body {
-    background-color: $background;
+    background-color: nth($color-palette, 5);
     color: #666;
-    font: normal 16px/1.42857143 $font, sans-serif;
+    font: normal 16px/1.42857143 $font-family, sans-serif;
     height: 100%;
     margin: 0;
+    padding-top: $header-height;
 }
 
 article,
@@ -112,9 +115,22 @@ a {
     }
 }
 
+// We use the same styles for all of these tags because our font does not support italics.
 b,
+em,
+h1,
+h2,
+h3,
+i,
 strong {
+    font-style: normal;
     font-weight: bold;
+}
+
+h4,
+h5,
+h6 {
+    font-weight: normal;
 }
 
 img {
@@ -140,22 +156,17 @@ p {
     margin-bottom: 10px;
 }
 
+.title {
+    color: #fff;
+}
+
 
 // --------------------------------------------------------------------------------------------------------------------- Header
 
 
-$header-height: 75px;
-$header-logo-height: 32px;
-
-.title {
-    color: #fff;
-    font-family: $font-condensed, sans-serif;
-    margin-left: ($header-height - $header-logo-height) / 2;
-}
-
 header {
     background-color: #f7f7f7;
-    box-shadow: 0 0 1rem $background;
+    box-shadow: 0 0 1rem #000;
     height: $header-height;
     left: 0;
     line-height: $header-height;
@@ -165,17 +176,18 @@ header {
     z-index: 99;
 
     .title {
-        background: url("../images/initials/vector.svg") left center no-repeat;
-        background-size: $header-logo-height;
+        background: url("../images/logo/vector.svg") left 18px / 32px no-repeat;
         color: nth($color-palette, 5);
         float: left;
-        font-size: $header-logo-height / 2;
-        padding-left: $header-logo-height * 1.2;
+        font-size: 18px;
+        margin-left: 24px;
+        padding-left: 44px;
         text-transform: uppercase;
     }
 
     .content {
         float: right;
+        font-weight: 700;
 
         ul {
             list-style: none;
@@ -197,19 +209,6 @@ header {
 }
 
 
-// --------------------------------------------------------------------------------------------------------------------- Main
-
-
-main {
-    padding-top: $header-height;
-
-    > .title {
-        font-size: 64px;
-        font-weight: 200;
-    }
-}
-
-
 // --------------------------------------------------------------------------------------------------------------------- Index
 
 
@@ -218,11 +217,33 @@ main {
     flex-wrap: wrap;
 }
 
+.intro,
+.project {
+    align-items: center;
+    color: #fff !important; // Overwrite :active, :focus, and :hover at once.
+    display: flex;
+    flex-basis: 100%;
+    justify-content: center;
+}
+
+@for $i from 2 through 16 {
+    @media (min-width: 320px * $i) {
+        .intro,
+        .project {
+            flex-basis: (100% / $i);
+        }
+    }
+}
+
+.intro .content {
+    font-size: 24px;
+    font-weight: 200;
+    padding: 48px;
+}
+
 .project {
     @include transition(box-shadow);
-    color: #fff !important; // Overwrite :active, :focus, and :hover at once.
     display: block;
-    flex: 0 0 100%;
     line-height: 1;
     position: relative;
 
@@ -233,7 +254,7 @@ main {
     .overlay {
         @include transition(opacity);
         align-items: center;
-        background-color: rgba($background, .8);
+        background-color: rgba(0, 0, 0, .8);
         display: flex;
         flex-flow: column;
         height: 100%;
@@ -286,7 +307,7 @@ main {
     &:active,
     &:focus,
     &:hover {
-        box-shadow: 0 0 1rem $background;
+        box-shadow: 0 0 1rem #000;
         z-index: 1;
 
         .overlay {
@@ -305,14 +326,6 @@ main {
 
         img {
             transform: scale(1.2);
-        }
-    }
-}
-
-@for $i from 2 through 16 {
-    @media (min-width: 320px * $i) {
-        .gallery .project {
-            flex: 0 0 (100% / $i);
         }
     }
 }

@@ -25,25 +25,12 @@
 // @license http://unlicense.org/ Unlicense.
 // ---------------------------------------------------------------------------------------------------------------------
 
-@mixin font-face($family, $file-name, $weight: "normal", $style: "normal", $otf: false) {
+@mixin font-face($family, $file-name, $weight: normal, $style: normal, $otf: false) {
     @font-face {
         font-family: $family;
-        src: url("../fonts/#{$family}/#{$file-name}.eot");
-        src: url("../fonts/#{$family}/#{$file-name}.eot?#iefix") format("embedded-opentype"),
-             url("../fonts/#{$family}/#{$file-name}.woff") format("woff"),
-             url("../fonts/#{$family}/#{$file-name}.ttf") format("truetype"),
-             url("../fonts/#{$family}/#{$file-name}.svg##{family}") format("svg");
+        src: url("../fonts/#{$family}/#{$family}-#{$file-name}.woff2") format("woff2"),
+             url("../fonts/#{$family}/#{$family}-#{$file-name}.woff") format("woff");
         font-weight: unquote($weight);
         font-style: unquote($style);
-    }
-
-    // http://www.adtrak.co.uk/blog/font-face-chrome-rendering/
-    @media screen and (-webkit-min-device-pixel-ratio: 0) {
-        @font-face {
-            font-family: $family;
-            src: url("../fonts/#{$family}/#{$file-name}.svg##{family}") format("svg");
-            font-weight: unquote($weight);
-            font-style: unquote($style);
-        }
     }
 }

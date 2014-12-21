@@ -22,29 +22,44 @@
         </nav>
     </header>
     <main>
-        <h1 class="title">Work</h1>
+        <h1 class="sr-only">Work</h1>
         <div class="content gallery">
-        <!-- TODO: Remove (debug only). --><% for (var i = 0; i < 10; i++ ) { %>
-        <% page.projects.forEach(function (project) { %>
-            <a class="img-anchor project" href="/<%= project.route %>">
-                <article>
-                    <div class="overlay">
-                        <h2><%= project.title %></h2>
-                        <% if (project.work.length > 0) { %>
-                            <p><%= project.work.join(page.workSeparator) %></p>
-                        <% } %>
-                    </div>
-                    <!--
-                      We need the 640 pixel images because the grid is flexible and adjusted as there is space. Devices
-                      that have exactly 320 pixel will totally waist their bandwidth, but it is not worth the effort to
-                      generate separate images only for those rare devices.
-                    -->
-                    <img alt="<%= project.title %>" class="img-responsive" src="/images/<%= project.route %>/banner.jpg" width="640" height="640">
-                </article>
-            </a>
-        <% }); %>
-        <!-- TODO: Remove (debug only). --><% } %>
+            <div class="intro">
+                <div class="content"><%- contents %></div>
+            </div>
+            <!-- TODO: Remove (debug only). --><% for (var i = 0; i < 10; i++ ) { %>
+            <% page.projects.forEach(function (project) { %>
+                <a class="img-anchor project" href="/<%= project.route %>">
+                    <article>
+                        <div class="overlay">
+                            <h2><%= project.title %></h2>
+                            <% if (project.work.length > 0) { %>
+                                <p><%= project.work.join(page.workSeparator) %></p>
+                            <% } %>
+                        </div>
+                        <!--
+                            We need the 640 pixel images because the grid is flexible and adjusted as there is space.
+                            Devices that have exactly 320 pixel will totally waist their bandwidth, but it is not worth
+                            the effort to generate separate images only for those rare devices.
+                        -->
+                        <!-- TODO: Can we create a function for this? -->
+                        <picture>
+                            <source srcset="/images/<%= project.route %>/banner.webp,
+                                            /images/<%= project.route %>/banner@1.5x.webp 1.5x,
+                                            /images/<%= project.route %>/banner@2x.webp 2x,
+                                            /images/<%= project.route %>/banner@3x.webp 3x" type="image/webp">
+                            <img alt="<%= project.title %>" class="img-responsive"
+                                 src="/images/<%= project.route %>/banner.jpg"
+                                 srcset="/images/<%= project.route %>/banner@1.5x.jpg 1.5x,
+                                         /images/<%= project.route %>/banner@2x.jpg 2x,
+                                         /images/<%= project.route %>/banner@3x.jpg 3x" width="640" height="640">
+                        </picture>
+                    </article>
+                </a>
+            <% }); %>
+            <!-- TODO: Remove (debug only). --><% } %>
         </div>
     </main>
+    <script src="/scripts/picturefill.min.js"></script>
 </body>
 </html>
