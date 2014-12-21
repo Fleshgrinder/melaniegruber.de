@@ -30,12 +30,14 @@
 
 var $ = require("gulp-load-plugins")();
 var browserSync = require("browser-sync");
+var concurrentTransform = require("concurrent-transform");
 var config = require("./config.json");
 var del = require("del");
 var glob = require("glob");
 var gulp = require("gulp");
 var merge = require("merge");
 var mergeStreams = require("merge-stream");
+var os = require("os");
 var path = require("path");
 var runSequence = require("run-sequence");
 
@@ -66,9 +68,11 @@ var server = function (baseDirectory) {
     };
 };
 
-gulp.task("clean", del.bind(null, ["dep/*", "!dep/.gitignore", ".tmp"], { dot: true }));
+gulp.task("clean:all", ["clean:tmp"], del.bind(null, ["dep/*", "!dep/.gitignore"], { dot: true }));
 
 gulp.task("clean:dep", del.bind(null, ["dep/projects", "dep/views"], { dot: true }));
+
+gulp.task("clean:tmp", del.bind(null, ".tmp", { dot: true }));
 
 gulp.task("compress", function () {
     return gulp.src(["dep/**/*", "!dep/**/*.{gif,gz,jpg,png,webp}"])
@@ -84,13 +88,13 @@ gulp.task("copy", function () {
         .pipe(gulp.dest("dep"));
 });
 
-gulp.task("default", function (callback) {
+gulp.task("default", function (done) {
     runSequence(
         ["copy", "fonts", "scripts", "styles"],
         ["html", "images"],
         "clean:dep",
         //"compress", TODO: Activate as soon as we have the nginx server ready.
-        callback
+        done
     );
 });
 
@@ -125,13 +129,16 @@ gulp.task("html:markdown", function () {
     var options = { property: "page", templateDir: "./src/views" };
 
     var prepare = function (vinyl, page) {
+        page.date = page.date || "";
         page.description = page.description || "";
         page.programs = page.programs || [];
         page.route = page.route || path.basename(vinyl.path, ".md");
         page.subtitle = page.subtitle || config.page.title;
         page.title = page.title || config.page.title;
         page.titleSeparator = page.titleSeparator || config.page.titleSeparator;
+        page.vimeo = page.vimeo || [];
         page.work = page.work || [];
+        // TODO: Remove workSeparator, we want the program icons.
         page.workSeparator = page.workSeparator || config.page.workSeparator;
         return page;
     };
@@ -164,7 +171,11 @@ gulp.task("html:markdown", function () {
         .pipe($.size({ title: this.name }));
 });
 
-gulp.task("images", ["images:optimize", "images:webp"], function () {
+gulp.task("images", function (done) {
+    runSequence(["images:resize:tiles"], ["images:optimize", "images:webp"], "images:copy", done);
+});
+
+gulp.task("images:copy", function () {
     return gulp.src(".tmp/images/**/*")
         .pipe(gulp.dest("dep/images"))
         .pipe($.size({ title: this.name }));
@@ -172,7 +183,7 @@ gulp.task("images", ["images:optimize", "images:webp"], function () {
 
 gulp.task("images:optimize", function () {
     return gulp.src("src/images/**/*.{gif,jpg,png,svg}")
-        .pipe($.cached(this.name))
+        .pipe($.cached(this.name, { optimizeMemory: true }))
         .pipe($.imagemin({
             interlaced: true,
             optimizationLevel: 7,
@@ -185,9 +196,36 @@ gulp.task("images:optimize", function () {
         .pipe($.size({ title: this.name }));
 });
 
+gulp.task("images:resize:tiles", function () {
+    var resize = function (name, dimension, suffix) {
+        suffix = suffix || "";
+        return gulp.src("src/images/**/tile.jpg")
+            .pipe($.cached(name, { optimizeMemory: true }))
+            .pipe(concurrentTransform($.imageResize({
+                crop: true,
+                filter: "Catrom",
+                height: dimension,
+                imageMagick: true,
+                sharpen: true,
+                width: dimension,
+                upscale: true
+            }), os.cpus().length))
+            .pipe($.remember(name))
+            .pipe($.rename({ suffix: suffix }))
+            .pipe(gulp.dest(".tmp/images"));
+    };
+
+    return mergeStreams(
+        resize(this.name + "@3x", 1920, "@3x"),
+        resize(this.name + "@2x", 1280, "@2x"),
+        resize(this.name + "@1.5x", 960, "@1.5x"),
+        resize(this.name, 640)
+    ).pipe($.size({ title: this.name }));
+});
+
 gulp.task("images:webp", function () {
     return gulp.src("src/images/**/*.{gif,jpg,png}")
-        .pipe($.cached(this.name))
+        .pipe($.cached(this.name, { optimizeMemory: true }))
         .pipe($.webp())
         .pipe($.remember(this.name))
         .pipe(gulp.dest(".tmp/images"))
