@@ -68,15 +68,13 @@ var server = function (baseDirectory) {
 
 gulp.task("clean", del.bind(null, ["dep/*", "!dep/.gitignore", ".tmp"], { dot: true }));
 
-gulp.task("clean:cache", function (done) {
-    return $.cache.clearAll(done);
-});
-
 gulp.task("clean:dep", del.bind(null, ["dep/projects", "dep/views"], { dot: true }));
 
 gulp.task("compress", function () {
     return gulp.src(["dep/**/*", "!dep/**/*.{gif,gz,jpg,png,webp}"])
-        .pipe($.cache($.gzip({ gzipOptions: { level: 9 } })))
+        .pipe($.cached(this.name))
+        .pipe($.gzip({ gzipOptions: { level: 9 } }))
+        .pipe($.remember(this.name))
         .pipe(gulp.dest("dep"))
         .pipe($.size({ title: this.name }));
 });
@@ -139,7 +137,7 @@ gulp.task("html:markdown", function () {
     };
 
     return gulp.src("src/**/*.md")
-        .pipe($.changed(this.name))
+        .pipe($.cached(this.name))
         .pipe($.frontMatter(merge({ remove: true }, options)))
         .pipe($.tap(function (vinyl) {
             prepare(vinyl, vinyl[options.property]);
@@ -174,20 +172,24 @@ gulp.task("images", ["images:optimize", "images:webp"], function () {
 
 gulp.task("images:optimize", function () {
     return gulp.src("src/images/**/*.{gif,jpg,png,svg}")
-        .pipe($.cache($.imagemin({
+        .pipe($.cached(this.name))
+        .pipe($.imagemin({
             interlaced: true,
             optimizationLevel: 7,
             progressive: true,
             svgoPlugins: [{ removeViewBox: false }],
             use: [require("imagemin-mozjpeg")(), require('imagemin-pngquant')()]
-        })))
+        }))
+        .pipe($.remember(this.name))
         .pipe(gulp.dest(".tmp/images"))
         .pipe($.size({ title: this.name }));
 });
 
 gulp.task("images:webp", function () {
     return gulp.src("src/images/**/*.{gif,jpg,png}")
-        .pipe($.cache($.webp()))
+        .pipe($.cached(this.name))
+        .pipe($.webp())
+        .pipe($.remember(this.name))
         .pipe(gulp.dest(".tmp/images"))
         .pipe($.size({ title: this.name }));
 });
@@ -269,7 +271,9 @@ gulp.task("upload", ["default"], function () {
 
     for (var i = 0; i < 2; ++i) {
         if (config[modes[i]]) {
-            return gulp.src("dep/**/*", { dot: true }).pipe($[modes[i]](config[modes[i]]));
+            return gulp.src("dep/**/*", { dot: true })
+                .pipe($.cached(this.name))
+                .pipe($[modes[i]](config[modes[i]]));
         }
     }
 
