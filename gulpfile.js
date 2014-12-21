@@ -84,15 +84,15 @@ gulp.task("compress", function () {
 });
 
 gulp.task("copy", function () {
-    return gulp.src(["src/*", "!src/*.md"], { dot: true })
+    return gulp.src([".tmp", "src/*", "!src/*.md"], { dot: true })
         .pipe(gulp.dest("dep"));
 });
 
 gulp.task("default", function (done) {
     runSequence(
-        ["copy", "fonts", "scripts", "styles"],
+        ["fonts", "scripts", "styles"],
         ["html", "images"],
-        "clean:dep",
+        ["clean:dep", "copy"],
         //"compress", TODO: Activate as soon as we have the nginx server ready.
         done
     );
@@ -172,13 +172,7 @@ gulp.task("html:markdown", function () {
 });
 
 gulp.task("images", function (done) {
-    runSequence(["images:resize:tiles"], ["images:optimize", "images:webp"], "images:copy", done);
-});
-
-gulp.task("images:copy", function () {
-    return gulp.src(".tmp/images/**/*")
-        .pipe(gulp.dest("dep/images"))
-        .pipe($.size({ title: this.name }));
+    runSequence(["images:resize:tiles"], ["images:optimize", "images:webp"], done);
 });
 
 gulp.task("images:optimize", function () {
@@ -249,7 +243,7 @@ gulp.task("scripts:flatten", function () {
         .pipe(gulp.dest(".tmp/scripts"));
 });
 
-gulp.task("serve", ["html:markdown", "images:webp", "styles:scss", "scripts:flatten"], function () {
+gulp.task("serve", ["html:markdown", "images", "styles:scss", "scripts:flatten"], function () {
     var watchlog = function (event) {
         $.util.log("File " + $.util.colors.cyan(event.path) + " was " + $.util.colors.green(event.type) + ", running tasks ...");
     };
@@ -267,8 +261,8 @@ gulp.task("serve", ["html:markdown", "images:webp", "styles:scss", "scripts:flat
     ).on("change", watchlog);
 
     gulp.watch(
-        "src/images/**/*.{gif,jpg,png}",
-        ["images:webp", browserSync.reload]
+        "src/images/**/*.{gif,jpg,png,svg}",
+        ["images", browserSync.reload]
     ).on("change", watchlog);
 });
 
