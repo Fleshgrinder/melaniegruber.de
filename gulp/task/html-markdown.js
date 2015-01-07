@@ -86,7 +86,7 @@ function prepareIndexMetaInfo(vinyl) {
     meta.projects = projects.sort(function (a, b) {
         a = a.date + a.title;
         b = b.date + b.title;
-        return a.localeCompare(b);
+        return b.localeCompare(a);
     });
 }
 
