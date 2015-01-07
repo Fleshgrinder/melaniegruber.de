@@ -247,87 +247,91 @@ header {
     line-height: 1;
     position: relative;
 
-    article {
-        overflow: hidden;
-    }
-
-    .overlay {
-        @include transition(opacity);
-        align-items: center;
-        background-color: rgba(0, 0, 0, .8);
-        display: flex;
-        flex-flow: column;
-        height: 100%;
-        justify-content: center;
-        left: 0;
-        margin: 0;
-        opacity: 0;
-        position: absolute;
-        text-align: center;
-        text-transform: uppercase;
-        top: 0;
-        width: 100%;
-        z-index: 1;
-    }
-
-    h2,
-    p {
-        opacity: 0;
-        position: relative;
-        top: -.5em;
-        transition: top $animation-duration * 2 $animation-function, opacity $animation-duration * 1.5 linear $animation-duration * .5;
-    }
-
-    p {
-        font-size: 12px;
-        font-weight: 200;
-        line-height: 1.42857143;
-        margin: 2em 0 0;
-        text-transform: lowercase;
-        width: 75%;
-
-        &:before {
-            @include transition(transform, $animation-duration * 2);
-            background-color: rgba(255, 255, 255, .5);
-            content: "";
-            height: 1px;
-            left: 0;
-            position: absolute;
-            top: -1em;
-            transform: scaleX(0);
-            width: 100%;
-        }
-    }
-
-    img {
-        @include transition(transform);
-        transform: scale(1);
-    }
-
     &:active,
     &:focus,
     &:hover {
         box-shadow: 0 0 1rem #000;
         z-index: 1;
 
-        .overlay {
+        .project--overlay {
             opacity: 1;
         }
 
-        h2,
-        p {
+        .project--title,
+        .project--subtitle {
             opacity: 1;
             top: 0;
         }
 
-        p:before {
+        .project--subtitle:before {
             transform: scaleX(1);
         }
 
-        img {
+        .project--tile {
             transform: scale(1.2);
         }
     }
+}
+
+.project--wrapper {
+    overflow: hidden;
+}
+
+.project--overlay {
+    @include transition(opacity);
+    align-items: center;
+    background-color: rgba(0, 0, 0, .8);
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    margin: 0;
+    opacity: 0;
+    position: absolute;
+    text-align: center;
+    text-transform: uppercase;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.project--title,
+.project--subtitle {
+    opacity: 0;
+    position: relative;
+    top: -.5em;
+    transition: top $animation-duration * 2 $animation-function, opacity $animation-duration * 1.5 linear $animation-duration * .5;
+}
+
+.project--subtitle {
+    font-size: 12px;
+    font-weight: 200;
+    line-height: 1.42857143;
+    margin: 2em 0 0;
+    text-transform: lowercase;
+    width: 75%;
+
+    &:before {
+        @include transition(transform, $animation-duration * 2);
+        background-color: rgba(255, 255, 255, .5);
+        content: "";
+        height: 1px;
+        left: 0;
+        position: absolute;
+        top: -1em;
+        transform: scaleX(0);
+        width: 100%;
+    }
+}
+
+.project--program {
+    margin-right: (24px / 2);
+}
+
+.project--tile {
+    @include transition(transform);
+    transform: scale(1);
 }
 
 // --------------------------------------------------------------------------------------------------------------------- Utility

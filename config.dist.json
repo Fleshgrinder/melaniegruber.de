@@ -3,8 +3,7 @@
     "page": {
         "title": "Melanie Gruber",
         "titleSeparator": " | ",
-        "url": "mg.bobdo.net",
-        "workSeparator": " · "
+        "url": "mg.bobdo.net"
     },
     "sftp": {
         "host": "127.0.0.1",

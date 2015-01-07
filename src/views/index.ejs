@@ -27,14 +27,17 @@
             <div class="intro">
                 <div class="content"><%- contents %></div>
             </div>
-            <!-- TODO: Remove (debug only). --><% for (var i = 0; i < 10; i++ ) { %>
             <% page.projects.forEach(function (project) { %>
                 <a class="img-anchor project" href="/<%= project.route %>">
-                    <article>
-                        <div class="overlay">
-                            <h2><%= project.title %></h2>
-                            <% if (project.work.length > 0) { %>
-                                <p><%= project.work.join(page.workSeparator) %></p>
+                    <article class="project--wrapper">
+                        <div class="project--overlay">
+                            <h2 class="project--title"><%= project.title %></h2>
+                            <% if (project.programs.length > 0 ) { %>
+                                <p class="project--subtitle">
+                                <% project.programs.forEach(function (program) { %>
+                                    <img class="project--program" src="/images/icons/<%= program.replace(/ /g, "-") %>.png" alt="<%= program %>" width="24" height="24">
+                                <% }); %>
+                                </p>
                             <% } %>
                         </div>
                         <!--
@@ -48,7 +51,7 @@
                                             /images/<%= project.route %>/tile@1.5x.webp 1.5x,
                                             /images/<%= project.route %>/tile@2x.webp 2x,
                                             /images/<%= project.route %>/tile@3x.webp 3x" type="image/webp">
-                            <img alt="<%= project.title %>" class="img-responsive"
+                            <img alt="<%= project.title %>" class="img-responsive project--tile"
                                  src="/images/<%= project.route %>/tile.jpg"
                                  srcset="/images/<%= project.route %>/tile@1.5x.jpg 1.5x,
                                          /images/<%= project.route %>/tile@2x.jpg 2x,
@@ -57,7 +60,6 @@
                     </article>
                 </a>
             <% }); %>
-            <!-- TODO: Remove (debug only). --><% } %>
         </div>
     </main>
     <script src="/scripts/picturefill.min.js"></script>
