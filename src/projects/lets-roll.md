@@ -1,13 +1,12 @@
 ---
 
 title: Let’s Roll
+date: 2011-06
 description: Short Film (Bachelor’s Project)
 programs:
     - Autodesk Maya 
     - Mental Ray
 vimeo:
-    - https://vimeo.com/114336001
-    - https://vimeo.com/114970185
     - https://vimeo.com/25879412
 work:
     - Character Design
