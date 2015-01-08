@@ -35,7 +35,11 @@
                             <% if (project.programs.length > 0 ) { %>
                                 <p class="project--subtitle">
                                 <% project.programs.forEach(function (program) { %>
-                                    <img class="project--program" src="/images/icons/<%= program.replace(/ /g, "-") %>.png" alt="<%= program %>" width="24" height="24">
+                                <% program = { name: program, file: program.toLowerCase().replace(/ /g, "-") }; %>
+                                    <picture>
+                                        <source srcset="/images/icons/<%= program.file %>.webp" type="image/webp">
+                                        <img class="project--program" src="/images/icons/<%= program.file %>.png" alt="<%= program.name %>" width="24" height="24">
+                                    </picture>
                                 <% }); %>
                                 </p>
                             <% } %>
