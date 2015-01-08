@@ -12,9 +12,7 @@
     }
   ],
   "private": true,
-  "dependencies": {
-    "picturefill": "*"
-  },
+  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/Fleshgrinder/melaniegruber.de"
