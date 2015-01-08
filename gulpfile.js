@@ -31,7 +31,8 @@ require("gulp").task("default", function (done) {
     require("run-sequence")(
         ["font", "script", "style"],
         ["html", "image"],
-        ["clean:dep", "copy"],
+        "copy",
+        "clean:dep",
         //"compress", TODO: Activate as soon as we have the nginx server ready.
         done
     );
