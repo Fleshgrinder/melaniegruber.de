@@ -37,7 +37,12 @@ var resizeTasks         = ["image:resize:tile"];
 var runSequence         = require("run-sequence");
 
 gulp.task("image", function (done) {
-    runSequence(resizeTasks, ["image:optimize", "image:webp"], done);
+    runSequence(resizeTasks, ["image:optimize", "image:webp"], "image:dep", done);
+});
+
+gulp.task("image:dep", function () {
+    return gulp.src(".tmp/images/**/*")
+        .pipe(gulp.dest("dep/images"));
 });
 
 gulp.task("image:dev", function (done) {

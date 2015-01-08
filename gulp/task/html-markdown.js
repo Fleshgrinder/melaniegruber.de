@@ -140,7 +140,7 @@ gulp.task("html", ["html:markdown", "html:markdown:index"], function () {
         .pipe(assets.restore())
         .pipe($.useref())
         .pipe($.if("*.html", $.minifyHtml()))
-        .pipe(gulp.dest(".tmp"))
+        .pipe(gulp.dest("dep"))
         .pipe($.size({ title: "html" }));
 });
 
