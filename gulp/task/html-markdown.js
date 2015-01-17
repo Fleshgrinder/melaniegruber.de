@@ -60,22 +60,39 @@ var optionsFrontMatter = merge({ remove: true }, options);
 var projects = [];
 
 /**
+ * Build absolute URL.
+ * @param {string|null} path - The absolute URL's path (query, etc.).
+ * @return {string} The absolute URL.
+ */
+function url(path) {
+    return config.uri.scheme + "://" + config.uri.authority + path;
+}
+
+/**
  * Prepare meta information for all documents.
  * @param {Object} vinyl - Virtual file of the currently processed Markdown document.
  * @return {undefined}
  */
 function prepareMetaInfo(vinyl) {
-    var meta = vinyl[options.property];
+    vinyl[options.property] = merge({
+        description:    null,
+        route:          path.basename(vinyl.path, ".md"),
+        subtitle:       config.title,
+        title:          config.title,
+        titleSeparator: config.titleSeparator,
+        uri:            config.uri,
+        url:            url
+    }, vinyl[options.property]);
+}
 
-    meta.description    = meta.description    || null;
-    meta.route          = meta.route          || path.basename(vinyl.path, ".md");
-    meta.subtitle       = meta.subtitle       || config.title;
-    meta.title          = meta.title          || config.title;
-    meta.titleSeparator = meta.titleSeparator || config.titleSeparator;
-    meta.uri            = config.uri;
-    meta.url            = function (path) {
-        return config.uri.scheme + "://" + config.uri.authority + path;
-    };
+/**
+ * Sort function for projects on index page.
+ * @param (Object} a - Project "a".
+ * @param {Object} b - Project "b".
+ * @return {boolean}
+ */
+function sortProjects(a, b) {
+    return (b.date + b.title).localeCompare(a.date + a.title);
 }
 
 /**
@@ -84,14 +101,8 @@ function prepareMetaInfo(vinyl) {
  * @return {undefined}
  */
 function prepareIndexMetaInfo(vinyl) {
-    var meta = vinyl[options.property];
-
-    meta.route = "/";
-    meta.projects = projects.sort(function (a, b) {
-        a = a.date + a.title;
-        b = b.date + b.title;
-        return b.localeCompare(a);
-    });
+    vinyl[options.property].route    = "/";
+    vinyl[options.property].projects = projects.sort(sortProjects);
 }
 
 /**
@@ -100,14 +111,14 @@ function prepareIndexMetaInfo(vinyl) {
  * @return {undefined}
  */
 function prepareProjectMetaInfo(vinyl) {
-    var meta = vinyl[options.property];
-
-    meta.programs       = meta.programs || [];
-    meta.date           = meta.date     || "";
-    meta.vimeo          = meta.vimeo    || [];
-    meta.work           = meta.work     || [];
-    meta.year           = meta.date.substring(0, 4);
-
+    var date = vinyl[options.property].date || "";
+    vinyl[options.property] = merge({
+        program: [],
+        date: date,
+        vimeo: [],
+        work: [],
+        year: date.substring(0, 4)
+    }, vinyl[options.property]);
     projects.push(vinyl[options.property]);
 }
 
