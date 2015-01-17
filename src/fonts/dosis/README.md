@@ -1,6 +1,7 @@
-# Dosis v1.7
+# Dosis
 The web font was generated with [Font Squirrel](http://www.fontsquirrel.com/tools/webfont-generator), the used
-configuration is included in this directory (see `fontsquirrel.com-generator.cfg`).
+configuration is included in this directory (see `fontsquirrel.com-generator.cfg`). The font was downloaded from Google
+fonts.
 
 ## Font Description
 > Designed by Edgar Tolentino, refined & extended by Pablo Impallari, spaced & kerned by Igino Marini iKern.
@@ -11,7 +12,7 @@ configuration is included in this directory (see `fontsquirrel.com-generator.cfg
 >
 > It comes in 7 incremental weights: ExtraLight, Light, Book, Medium, Semibold, Bold & ExtraBold
 >
-> — [Official Website](http://www.impallari.com/dosis)
+> â€” [Official Website](http://www.impallari.com/dosis)
 
 ## Weblinks
 * [Official Website](http://www.impallari.com/dosis)
