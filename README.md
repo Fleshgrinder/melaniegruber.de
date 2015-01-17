@@ -63,14 +63,21 @@ The following is a list of supported program strings that might be used in the p
 programs which are not listed here have no icon to display. Also note that the string must be exactly as written here 
 (with the exception of the case) because otherwise the associated icon cannot be found.  
 
+* Adobe Acrobat Pro
 * Adobe After Effects
+* Adobe Dreamweaver
+* Adobe Flash Professional
 * Adobe Illustrator
 * Adobe InDesign
+* Adobe Lightroom
+* Adobe Muse
 * Adobe Photoshop
+* Adobe Premiere Pro
+* Adobe SpeedGrade
 * Autodesk 3ds Max
 * Autodesk Maya
+* Autodesk Mental Ray
 * Autodesk Mudbox
-* Mental Ray
 * Unity
 * V-Ray
 
