@@ -35,18 +35,20 @@ body {
     position: fixed;
 }
 
-.header--nav {
-    float: right;
-    font-weight: 700;
+.menu {
+    padding-right: $header-height / 3;
 
     li {
         display: inline-block;
-        padding: 0 $header-height / 3;
     }
+}
 
-    li:last-child {
-        padding-right: $header-height / 3 * 2;
+.menu-item {
+    display: block;
+    height: 100%;
+    padding: 0 $header-height / 3;
+
+    span {
+
     }
-
-    // TODO: The click area for the anchors is too small, especially on touch devices.
 }

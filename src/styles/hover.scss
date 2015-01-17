@@ -39,46 +39,46 @@
             box-shadow: 0 0 1rem #000;
             z-index: 1;
 
-            .project--overlay {
+            .project-overlay {
                 opacity: 1;
             }
 
-            .project--title,
-            .project--subtitle {
+            .project-title,
+            .project-subtitle {
                 opacity: 1;
                 top: 0;
             }
 
-            .project--subtitle:before {
+            .project-subtitle:before {
                 transform: scaleX(1);
             }
 
-            .project--tile {
+            .project-tile {
                 transform: scale(1.2) rotate(10deg);
             }
         }
     }
 
-    .project--overlay {
+    .project-overlay {
         @include transition(opacity);
         height: 100%;
         opacity: 0;
         top: 0;
     }
 
-    .project--title,
-    .project--subtitle {
+    .project-title,
+    .project-subtitle {
         opacity: 0;
         top: -.5em;
         transition: top $animation-duration * 2 $animation-function, opacity $animation-duration * 1.5 linear $animation-duration * .5;
     }
 
-    .project--subtitle:before {
+    .project-subtitle:before {
         @include transition(transform, $animation-duration * 2);
         transform: scaleX(0);
     }
 
-    .project--tile {
+    .project-tile {
         @include transition(transform);
     }
 
