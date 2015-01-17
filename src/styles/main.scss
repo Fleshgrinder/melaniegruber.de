@@ -103,6 +103,10 @@ a {
     }
 }
 
+.menu-item:focus {
+    outline-color: nth($color-palette, 4);
+}
+
 // We need the span child in order to increase the click area for touch devices.
 .menu-item span,
 main a {
