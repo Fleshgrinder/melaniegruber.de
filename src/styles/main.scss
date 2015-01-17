@@ -66,6 +66,11 @@ body {
     margin: 0;
 }
 
+::selection {
+    background: nth($color-palette, 1);
+    text-shadow: none;
+}
+
 article,
 header,
 figcaption,
@@ -99,6 +104,10 @@ a {
     &:active,
     &:hover {
         outline: 0;
+    }
+
+    &:focus {
+        outline: 1px dotted #fff;
     }
 
     &:active,
