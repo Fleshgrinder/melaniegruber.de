@@ -9,6 +9,7 @@ programs:
     - Autodesk Maya
 vimeo:
     - https://vimeo.com/115466285
+    - https://vimeo.com/115853516
 work:
     - Character Design
     - Low Poly Modeling

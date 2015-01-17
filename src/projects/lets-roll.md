@@ -5,9 +5,11 @@ date: 2011-06
 description: Short Film (Bachelor’s Project)
 programs:
     - Autodesk Maya 
-    - Mental Ray
+    - Autodesk Mental Ray
 vimeo:
     - https://vimeo.com/25879412
+    - https://vimeo.com/114336001
+    - https://vimeo.com/116344114
 work:
     - Character Design
     - Lighting
