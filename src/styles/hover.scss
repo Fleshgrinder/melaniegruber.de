@@ -31,6 +31,7 @@
 
     .project {
         @include transition(box-shadow);
+        overflow: hidden;
 
         &:active,
         &:focus,
@@ -53,7 +54,7 @@
             }
 
             .project--tile {
-                transform: scale(1.2);
+                transform: scale(1.2) rotate(10deg);
             }
         }
     }
@@ -79,7 +80,6 @@
 
     .project--tile {
         @include transition(transform);
-        transform: scale(1);
     }
 
 }
