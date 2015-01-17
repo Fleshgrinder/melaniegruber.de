@@ -124,23 +124,31 @@ var renderHTML = lazyPipe()
     .pipe($.markdown)
     .pipe($.multiRenderer, options);
 
-// Optimize HTML, CSS, and JS and move to deployment directory.
+// Optimize HTML for distribution.
 gulp.task("html", ["html:markdown", "html:markdown:index"], function () {
-    var assets = $.useref.assets({ searchPath: "{.tmp,src}" });
-
-    return gulp.src([".tmp/**/*.html", "src/**/*.html"])
-        .pipe(assets)
-        .pipe($.if("*.js", $.uglify({
-            preserveComments: function () {
-                return false;
+    return gulp.src(["src/**/*.html", "tmp/**/*.html"])
+        .pipe($.htmlMinifier({
+            removeComments: true,
+            removeCommentsFromCDATA: true,
+            removeCDATASectionsFromCDATA: true,
+            collapseWhitespace: true,
+            collapseBooleanAttributes: true,
+            removeAttributeQuotes: true,
+            removeRedundantAttributes: true,
+            preventAttributeEscaping: true,
+            useShortDoctype: true,
+            removeEmptyAttributes: true,
+            removeScriptTypeAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            removeOptionalTags: true,
+            removeIgnored: true,
+            minifyJS: true,
+            minifyCSS: true,
+            minifyURLs: {
+                schemeRelative: true
             }
-        })))
-        .pipe($.if("*.css", $.uncss({ html: require("glob").sync(".tmp/**/*.html") })))
-        .pipe($.if("*.css", $.csso()))
-        .pipe(assets.restore())
-        .pipe($.useref())
-        .pipe($.if("*.html", $.minifyHtml()))
-        .pipe(gulp.dest("dep"))
+        }))
+        .pipe(gulp.dest("dist"))
         .pipe($.size({ title: "html" }));
 });
 
@@ -150,7 +158,7 @@ gulp.task("html:markdown", function () {
         .pipe($.cached("html:markdown"))
         .pipe(extractMetaInfo())
         .pipe(renderHTML())
-        .pipe(gulp.dest(".tmp"));
+        .pipe(gulp.dest("tmp"));
 });
 
 // Process the special index Markdown document.
@@ -159,7 +167,7 @@ gulp.task("html:markdown:index", ["html:markdown:projects"], function () {
         .pipe(extractMetaInfo())
         .pipe($.tap(prepareIndexMetaInfo))
         .pipe(renderHTML())
-        .pipe(gulp.dest(".tmp"));
+        .pipe(gulp.dest("tmp"));
 });
 
 // Process all project Markdown documents.
@@ -172,5 +180,5 @@ gulp.task("html:markdown:projects", function () {
         .pipe($.rename(function (filePath) {
             filePath.dirname = "";
         }))
-        .pipe(gulp.dest(".tmp"));
+        .pipe(gulp.dest("tmp"));
 });

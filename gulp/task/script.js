@@ -32,18 +32,18 @@ var $ = require("gulp-load-plugins")();
 var gulp = require("gulp");
 
 gulp.task("script", ["script:flatten"], function () {
-    return gulp.src([".tmp/**/*.js", "src/**/*.js"])
+    return gulp.src(["tmp/**/*.js", "src/**/*.js"])
         .pipe($.if("!*.min.js", $.uglify({
             preserveComments: function () {
                 return false;
             }
         })))
-        .pipe(gulp.dest("dep"))
+        .pipe(gulp.dest("dist"))
         .pipe($.size({ title: "script" }));
 });
 
 gulp.task("script:flatten", function () {
     return gulp.src("bower_components/**/*.min.js")
         .pipe($.flatten())
-        .pipe(gulp.dest(".tmp/scripts"));
+        .pipe(gulp.dest("tmp/scripts"));
 });

@@ -32,14 +32,18 @@ var $ = require("gulp-load-plugins")();
 var gulp = require("gulp");
 
 gulp.task("style", ["style:scss"], function () {
-    return gulp.src(".tmp/styles/**/*.css")
+    return gulp.src("tmp/styles/**/*.css")
         .pipe($.csso())
-        .pipe(gulp.dest("dep/styles"))
+        .pipe(gulp.dest("dist/styles"))
         .pipe($.size({ title: "style" }));
 });
 
 gulp.task("style:scss", function () {
-    return gulp.src("src/styles/main.scss")
+    var src = function (name) {
+        return "src/styles/" + name + ".scss";
+    };
+
+    return gulp.src([ src("main"), src("mobile"), src("desktop"), src("placeholder") ])
         .pipe($.sass({ precision: 10 }))
         .on("error", console.error.bind(console))
         .pipe($.autoprefixer({
@@ -55,5 +59,5 @@ gulp.task("style:scss", function () {
                 "bb >= 10"
             ]
         }))
-        .pipe(gulp.dest(".tmp/styles"));
+        .pipe(gulp.dest("tmp/styles"));
 });

@@ -37,7 +37,7 @@ gulp.task("upload", ["default"], function () {
 
     for (var i = 0; i < 2; ++i) {
         if (config[modes[i]]) {
-            return gulp.src("dep/**/*", { dot: true })
+            return gulp.src("dist/**/*", { dot: true })
                 .pipe($.cached("upload"))
                 .pipe($[modes[i]](config[modes[i]]));
         }

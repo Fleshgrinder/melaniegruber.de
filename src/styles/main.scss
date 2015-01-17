@@ -32,7 +32,7 @@
 // TODO: Remove the fonts which are not used anywhere in the design and try limiting to very few!
 @include font-face($font-family, extralight, 200);
 @include font-face($font-family, light, 300);
-@include font-face($font-family, book, 400);
+@include font-face($font-family, regular, 400);
 @include font-face($font-family, medium, 500);
 @include font-face($font-family, semibold, 600);
 @include font-face($font-family, bold, 700);
@@ -64,7 +64,6 @@ body {
     font: normal 16px/1.42857143 $font-family, sans-serif;
     height: 100%;
     margin: 0;
-    padding-top: $header-height;
 }
 
 article,
@@ -164,48 +163,31 @@ p {
 // --------------------------------------------------------------------------------------------------------------------- Header
 
 
-header {
+.header {
     background-color: #f7f7f7;
     box-shadow: 0 0 1rem #000;
     height: $header-height;
     left: 0;
     line-height: $header-height;
-    position: fixed;
     right: 0;
     top: 0;
     z-index: 99;
+}
 
-    .title {
-        background: url("../images/logo/vector.svg") left 18px / 32px no-repeat;
-        color: nth($color-palette, 5);
-        float: left;
-        font-size: 18px;
-        margin-left: 24px;
-        padding-left: 44px;
-        text-transform: uppercase;
-    }
+.header--title {
+    background: url("../images/logo/vector.svg") left 18px / 32px no-repeat;
+    color: nth($color-palette, 5);
+    float: left;
+    font-size: 18px;
+    margin-left: 24px;
+    padding-left: 44px;
+    text-transform: uppercase;
+}
 
-    .content {
-        float: right;
-        font-weight: 700;
-
-        ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        li {
-            display: inline-block;
-            padding: 0 $header-height / 3;
-        }
-
-        li:last-child {
-            padding-right: $header-height / 3 * 2;
-        }
-
-        // TODO: The click area for the anchors is too small, especially on touch devices.
-    }
+.header--nav--menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 
@@ -242,99 +224,59 @@ header {
 }
 
 .project {
-    @include transition(box-shadow);
     display: block;
-    line-height: 1;
     position: relative;
-
-    &:active,
-    &:focus,
-    &:hover {
-        box-shadow: 0 0 1rem #000;
-        z-index: 1;
-
-        .project--overlay {
-            opacity: 1;
-        }
-
-        .project--title,
-        .project--subtitle {
-            opacity: 1;
-            top: 0;
-        }
-
-        .project--subtitle:before {
-            transform: scaleX(1);
-        }
-
-        .project--tile {
-            transform: scale(1.2);
-        }
-    }
-}
-
-.project--wrapper {
-    overflow: hidden;
 }
 
 .project--overlay {
-    @include transition(opacity);
     align-items: center;
     background-color: rgba(0, 0, 0, .8);
     display: flex;
     flex-flow: column;
-    height: 100%;
     justify-content: center;
     left: 0;
     margin: 0;
-    opacity: 0;
     position: absolute;
     text-align: center;
     text-transform: uppercase;
-    top: 0;
     width: 100%;
     z-index: 1;
 }
 
 .project--title,
 .project--subtitle {
-    opacity: 0;
     position: relative;
-    top: -.5em;
-    transition: top $animation-duration * 2 $animation-function, opacity $animation-duration * 1.5 linear $animation-duration * .5;
+    width: 75%;
 }
 
 .project--subtitle {
-    font-size: 12px;
-    font-weight: 200;
-    line-height: 1.42857143;
     margin: 2em 0 0;
-    text-transform: lowercase;
-    width: 75%;
 
     &:before {
-        @include transition(transform, $animation-duration * 2);
         background-color: rgba(255, 255, 255, .5);
         content: "";
         height: 1px;
         left: 0;
         position: absolute;
         top: -1em;
-        transform: scaleX(0);
         width: 100%;
     }
 }
 
 .project--program {
-    margin-right: (24px / 2);
+    margin: 0 (24px / 4) (24px / 2);
 }
 
-.project--tile {
-    @include transition(transform);
-    transform: scale(1);
-}
+
+// --------------------------------------------------------------------------------------------------------------------- Additional Styles
+
+
+@import "hover";
+@import "no-hover";
+
 
 // --------------------------------------------------------------------------------------------------------------------- Utility
+
 
 .clearfix:after {
     clear: both;

@@ -31,5 +31,5 @@
 var gulp = require("gulp");
 
 gulp.task("font", function () {
-    return gulp.src("src/fonts/**/*.{eot,svg,ttf,woff,woff2}").pipe(gulp.dest("dep/fonts"));
+    return gulp.src("src/fonts/**/*.{woff,woff2}").pipe(gulp.dest("dist/fonts"));
 });

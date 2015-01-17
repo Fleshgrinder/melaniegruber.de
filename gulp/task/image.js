@@ -33,16 +33,29 @@ var concurrentTransform = require("concurrent-transform");
 var gulp                = require("gulp");
 var mergeStreams        = require("merge-stream");
 var os                  = require("os");
-var resizeTasks         = ["image:resize:tile"];
+var resizeTasks         = ["image:resize:icon", "image:resize:logo", "image:resize:tile"];
 var runSequence         = require("run-sequence");
 
+function resizeOptions(dimension) {
+    return {
+        crop: true,
+        filter: "Catrom",
+        height: dimension,
+        imageMagick: true,
+        quality: 0.7,
+        sharpen: true,
+        width: dimension,
+        upscale: true
+    };
+}
+
 gulp.task("image", function (done) {
-    runSequence(resizeTasks, ["image:optimize", "image:webp"], "image:dep", done);
+    runSequence(resizeTasks, ["image:optimize", "image:webp"], "image:dist", done);
 });
 
-gulp.task("image:dep", function () {
-    return gulp.src(".tmp/images/**/*")
-        .pipe(gulp.dest("dep/images"));
+gulp.task("image:dist", function () {
+    return gulp.src("tmp/images/**/*")
+        .pipe(gulp.dest("dist/images"));
 });
 
 gulp.task("image:dev", function (done) {
@@ -50,50 +63,73 @@ gulp.task("image:dev", function (done) {
 });
 
 gulp.task("image:optimize", function () {
-    return gulp.src("src/images/**/*.{gif,jpg,png,svg}")
+    return gulp.src(["src/images/**/*.svg", "tmp/images/**/*.{jpg,png}"])
         .pipe($.imagemin({
             interlaced: true,
             optimizationLevel: 7,
             progressive: true,
+            qualit: "65-80",
             svgoPlugins: [{ removeViewBox: false }],
             use: [require("imagemin-mozjpeg")(), require('imagemin-pngquant')()]
         }))
-        .pipe(gulp.dest(".tmp/images"))
-        .pipe($.size({ title: this.name }));
+        .pipe(gulp.dest("tmp/images"));
 });
 
-gulp.task("image:resize:tile", function () {
-    var resize = function (name, dimension, suffix) {
-        suffix = suffix || "";
-        return gulp.src("src/images/**/tile.jpg")
-            .pipe($.cached(name, { optimizeMemory: true }))
-            .pipe(concurrentTransform($.imageResize({
-                crop: true,
-                filter: "Catrom",
-                height: dimension,
-                imageMagick: true,
-                sharpen: true,
-                width: dimension,
-                upscale: true
-            }), os.cpus().length))
-            .pipe($.remember(name))
-            .pipe($.rename({ suffix: suffix }))
-            .pipe(gulp.dest(".tmp/images"));
+gulp.task("image:resize:icon", function () {
+    var resize = function (dimension) {
+        return gulp.src("src/images/icons/*.png")
+            .pipe(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length))
+            .pipe($.rename({ suffix: "-" + dimension }))
+            .pipe(gulp.dest("tmp/images/icons"));
     };
 
     return mergeStreams(
-        resize("tile@3x", 1920, "@3x"),
-        resize("tile@2x", 1280, "@2x"),
-        resize("tile@1.5x", 960, "@1.5x"),
-        resize("tile", 640)
-    ).pipe($.size({ title: "image:resize:tile" }));
+        resize(72),
+        resize(48),
+        resize(36),
+        resize(24)
+    );
+});
+
+gulp.task("image:resize:logo", function () {
+    var resize = function (dimension) {
+        return gulp.src("src/images/logo/icon.png")
+            .pipe(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length))
+            .pipe($.rename({ suffix: "-" + dimension }))
+            .pipe(gulp.dest("tmp/images/logo"));
+    };
+
+    return mergeStreams(
+        resize(558),
+        resize(270),
+        resize(196),
+        resize(128),
+        resize(32)
+    );
+});
+
+gulp.task("image:resize:tile", function () {
+    var resize = function (dimension) {
+        return gulp.src("src/images/**/tile.jpg")
+            .pipe(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length))
+            .pipe($.rename({ suffix: "-" + dimension }))
+            .pipe(gulp.dest("tmp/images"));
+    };
+
+    return mergeStreams(
+        resize(1920),
+        resize(1280),
+        resize(960),
+        resize(640),
+        resize(480),
+        resize(320)
+    );
 });
 
 gulp.task("image:webp", function () {
-    return gulp.src("src/images/**/*.{gif,jpg,png}")
+    return gulp.src(["tmp/images/**/*.{jpg,png}", "!tmp/images/logo/*"])
         .pipe($.cached("images:webp", { optimizeMemory: true }))
         .pipe($.webp())
         .pipe($.remember("images:webp"))
-        .pipe(gulp.dest(".tmp/images"))
-        .pipe($.size({ title: "image:webp" }));
+        .pipe(gulp.dest("tmp/images"));
 });

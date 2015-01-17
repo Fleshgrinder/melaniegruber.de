@@ -27,13 +27,14 @@
  * @copyright 2014 Richard Fussenegger
  * @license http://unlicense.org/ Unlicense.
  */
-require("gulp").task("default", function (done) {
+
+require("gulp").task("default", ["clean"], function (done) {
     require("run-sequence")(
         ["font", "script", "style"],
         ["html", "image"],
         "copy",
-        "clean:dep",
-        //"compress", TODO: Activate as soon as we have the nginx server ready.
+        "clean:dist",
+        "compress",
         done
     );
 });

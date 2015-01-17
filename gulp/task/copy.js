@@ -31,5 +31,5 @@
 var gulp = require("gulp");
 
 gulp.task("copy", function () {
-    return gulp.src([".tmp", "src/*", "!src/*.md"], { dot: true }).pipe(gulp.dest("dep"));
+    return gulp.src("src/*.{ico,txt,xml}", { dot: true }).pipe(gulp.dest("dist"));
 });

@@ -1,6 +1,7 @@
 .idea
-.tmp
 bower_components
 config.json
+dist
 desktop.ini
 node_modules
+tmp

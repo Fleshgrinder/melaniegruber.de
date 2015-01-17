@@ -1,68 +1,108 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="/styles/main.css">
-    <title><%= page.title %><%= page.titleSeparator %><%= page.subtitle %></title>
-    <meta name="description" content="<%= page.description %>">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body class="index">
-    <header class="clearfix">
-        <h1 class="title"><%= page.title %></h1>
-        <nav class="content">
-            <h2 class="sr-only">Main Navigation</h2>
-            <ul>
-                <li>Work</li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/contact">Contact</a></li>
-                <li><a href="/impressum">Impressum</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <h1 class="sr-only">Work</h1>
-        <div class="content gallery">
-            <div class="intro">
-                <div class="content"><%- contents %></div>
+<html class="no-hover">
+    <head lang="en">
+        <meta charset="utf-8">
+        <!-- Optimized for SPDY and HTTP/2 clients and not HTTP/1.1 clients! -->
+        <link rel="stylesheet" href="/styles/main.css">
+        <!-- 640 pixels is the breakpoint we want and 16 is the assumed baseline; allow zooming! -->
+        <link rel="stylesheet" media="(max-width: <%= 960 / 16 %>em)" href="/styles/mobile.css?1">
+        <link rel="stylesheet" media="(min-width: <%= 960 / 16 %>em)" href="/styles/desktop.css?1">
+        <!--
+        http://dev.w3.org/csswg/mediaqueries-4/#hover
+
+        <link rel="stylesheet" media="(hover: none)" href="/styles/hover.css?1">
+        <link rel="stylesheet" media="(hover: hover)" href="/styles/no-hover.css?1">
+        -->
+        <title><%= page.title %><%= page.titleSeparator %><%= page.subtitle %></title>
+        <meta name="description" content="<%= page.description %>">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="/favicon.png">
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
+        <link rel="icon" href="/images/logo/vector.svg" sizes="any" type="image/svg+xml">
+        <link rel="canonical" href="<%= page.route %>">
+    </head>
+    <body class="index">
+        <header class="clearfix header">
+            <h1 class="header--title"><%= page.title %></h1>
+            <nav class="header--nav">
+                <h2 class="sr-only">Main Navigation</h2>
+                <ul class="header--nav--menu">
+                    <li>Work</li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/impressum">Impressum</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <h1 class="sr-only">Work</h1>
+            <div class="content gallery">
+                <div class="intro">
+                    <div class="content"><%- contents %></div>
+                </div>
+                <% page.projects.forEach(function (project) { %>
+                    <a class="img-anchor project" href="/<%= project.route %>">
+                        <article class="project--wrapper">
+                            <div class="project--overlay">
+                                <h2 class="project--title"><%= project.title %></h2>
+                                <% if (project.programs.length > 0 ) { %>
+                                    <p class="project--subtitle">
+                                    <% project.programs.forEach(function (program) { %>
+                                        <% program = { name: program, file: program.toLowerCase().replace(/ /g, "-") }; %>
+                                        <% if (program.name.split(" ")[0] === "Autodesk") { %>
+                                            <picture>
+                                                <source srcset="/images/icons/<%= program.file %>-24.webp, <%
+                                                    %>/images/icons/<%= program.file %>-32.webp 1.5x, <%
+                                                    %>/images/icons/<%= program.file %>-48.webp 2x, <%
+                                                    %>/images/icons/<%= program.file %>-72.webp 3x" type="image/webp">
+                                                <img class="project--program" alt="<%= program.name %>" width="24" height="24"
+                                                     src="/images/icons/<%= program.file %>-24.png"
+                                                     srcset="/images/icons/<% program.file %>-32.png 1.5x, <%
+                                                         %>/images/icons/<% program.file %>-48.png 2x, <%
+                                                         %>/images/icons/<% program.file %>-72.png 3x">
+                                            </picture>
+                                        <% } else { %>
+                                            <img class="project--program" src="/images/icons/<%= program.file %>.svg" alt="<%= program.name %>" width="24" height="24">
+                                        <% } %>
+                                    <% }); %>
+                                    </p>
+                                <% } %>
+                            </div>
+                            <picture>
+                                <source type="image/webp"
+                                    sizes="(max-width: 339px) 320px, <%
+                                        // The following covers all devices up to 4k UHD (3840px) as e.g. found in Apple's
+                                        // MacBook Pro since ~2012. Note that WebP is only supported in the Blink rendering
+                                        // engine; other browsers currently use the <img> fallback below.
+                                        for (var i = 2; i < 13; ++i) {
+                                            %>(min-width: <%= 320 * i %>px) and (max-width: <%= (320 * i) + 20 %>px) 320px, <%
+                                        }
+                                        %>640px"
+                                    srcset="/images/<%= project.route %>/tile-320.webp 320w, <%
+                                        %>/images/<%= project.route %>/tile-480.webp 480w, <%
+                                        %>/images/<%= project.route %>/tile-640.webp 640w, <%
+                                        %>/images/<%= project.route %>/tile-960.webp 960w, <%
+                                        %>/images/<%= project.route %>/tile-1280.webp 1280w, <%
+                                        %>/images/<%= project.route %>/tile-1920.webp 1920w">
+                                <!--
+                                Browsers without WebP support currently also have no support for the sizes attribute. The
+                                srcset attribute has some support in Apple based software, but only for the x syntax; there-
+                                fore we use that syntax since we want to supply the Retina displays with good looking images.
+                                This forces us to deliver higher resolution images and waste bandwidth, since we cannot
+                                anticipate the size of the device without the aid of the sizes attribute.
+                                -->
+                                <img alt="<%= project.title %>" class="img-responsive project--tile" width="640" height="640"
+                                     src="/images/<%= project.route %>/tile-640.jpg"
+                                     srcset="/images/<%= project.route %>/tile-960.jpg 1.5x, <%
+                                         %>/images/<%= project.route %>/tile-1280.jpg 2x, <%
+                                         %>/images/<%= project.route %>/tile-1920.jpg 3x">
+                            </picture>
+                        </article>
+                    </a>
+                <% }); %>
             </div>
-            <% page.projects.forEach(function (project) { %>
-                <a class="img-anchor project" href="/<%= project.route %>">
-                    <article class="project--wrapper">
-                        <div class="project--overlay">
-                            <h2 class="project--title"><%= project.title %></h2>
-                            <% if (project.programs.length > 0 ) { %>
-                                <p class="project--subtitle">
-                                <% project.programs.forEach(function (program) { %>
-                                <% program = { name: program, file: program.toLowerCase().replace(/ /g, "-") }; %>
-                                    <picture>
-                                        <source srcset="/images/icons/<%= program.file %>.webp" type="image/webp">
-                                        <img class="project--program" src="/images/icons/<%= program.file %>.png" alt="<%= program.name %>" width="24" height="24">
-                                    </picture>
-                                <% }); %>
-                                </p>
-                            <% } %>
-                        </div>
-                        <!--
-                            We need the 640 pixel images because the grid is flexible and adjusted as there is space.
-                            Devices that have exactly 320 pixel will totally waist their bandwidth, but it is not worth
-                            the effort to generate separate images only for those rare devices.
-                        -->
-                        <!-- TODO: Can we create a function for this? -->
-                        <picture>
-                            <source srcset="/images/<%= project.route %>/tile.webp,<%
-                                %>/images/<%= project.route %>/tile@1.5x.webp 1.5x,<%
-                                %>/images/<%= project.route %>/tile@2x.webp 2x,<%
-                                %>/images/<%= project.route %>/tile@3x.webp 3x" type="image/webp">
-                            <img alt="<%= project.title %>" class="img-responsive project--tile"
-                                 src="/images/<%= project.route %>/tile.jpg"
-                                 srcset="/images/<%= project.route %>/tile@1.5x.jpg 1.5x,<%
-                                    %>/images/<%= project.route %>/tile@2x.jpg 2x,<%
-                                    %>/images/<%= project.route %>/tile@3x.jpg 3x" width="640" height="640">
-                        </picture>
-                    </article>
-                </a>
-            <% }); %>
-        </div>
-    </main>
+        </main>
+        <script src="/scripts/main.js"></script>
+    </body>
+</html>

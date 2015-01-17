@@ -31,8 +31,8 @@
 var del  = require("del");
 var gulp = require("gulp");
 
-gulp.task("clean:all", ["clean:tmp"], del.bind(null, ["dep/*", "!dep/.gitignore"], { dot: true }));
+gulp.task("clean", ["clean:tmp"], del.bind(null, "dist", { dot: true }));
 
-gulp.task("clean:dep", del.bind(null, ["dep/.tmp", "dep/projects", "dep/views"], { dot: true }));
+gulp.task("clean:dist", del.bind(null, ["dist/tmp", "dist/projects", "dist/views"], { dot: true }));
 
-gulp.task("clean:tmp", del.bind(null, ".tmp", { dot: true }));
+gulp.task("clean:tmp", del.bind(null, "tmp", { dot: true }));
