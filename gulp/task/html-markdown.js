@@ -69,6 +69,22 @@ function url(path) {
 }
 
 /**
+ * Evaluate condition and wrap if true.
+ * @param {String} prefix - The prefix to put in front of the content if condition is true.
+ * @param {String} content - The content to wrap if condition is true.
+ * @param {String} suffix - The suffix to put behind of the content if condition is true.
+ * @param {Boolean} condition - The condition which decides if the content should be wrapped.
+ * @return {String} The content wrapped if condition is true or simply the content.
+ */
+function wrapIf(prefix, content, suffix, condition) {
+    if (condition) {
+        return prefix + content + suffix;
+    } else {
+        return content;
+    }
+}
+
+/**
  * Prepare meta information for all documents.
  * @param {Object} vinyl - Virtual file of the currently processed Markdown document.
  * @return {undefined}
@@ -81,7 +97,8 @@ function prepareMetaInfo(vinyl) {
         title:          config.title,
         titleSeparator: config.titleSeparator,
         uri:            config.uri,
-        url:            url
+        url:            url,
+        wrapIf:         wrapIf
     }, vinyl[options.property]);
 }
 

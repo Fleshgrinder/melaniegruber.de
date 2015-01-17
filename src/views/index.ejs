@@ -2,15 +2,15 @@
 <h1 class="sr-only">Work</h1>
 <div class="content gallery">
     <div class="intro">
-        <div class="content"><%- contents %></div>
+        <div class="intro-content"><%- contents %></div>
     </div>
     <% page.projects.forEach(function (project) { %>
         <a class="img-anchor project" href="/<%= project.route %>">
-            <article class="project--wrapper">
-                <div class="project--overlay">
-                    <h2 class="project--title"><%= project.title %></h2>
+            <article class="project-wrapper">
+                <div class="project-overlay">
+                    <h2 class="project-title"><%= project.title %></h2>
                     <% if (project.programs.length > 0 ) { %>
-                        <p class="project--subtitle">
+                        <p class="project-subtitle">
                         <% project.programs.forEach(function (program) { %>
                             <% program = { name: program, file: program.toLowerCase().replace(/ /g, "-") }; %>
                             <% if (program.name.split(" ")[0] === "Autodesk") { %>
@@ -26,7 +26,7 @@
                                              %>/images/icons/<% program.file %>-72.png 3x">
                                 </picture>
                             <% } else { %>
-                                <img class="project--program" src="/images/icons/<%= program.file %>.svg" alt="<%= program.name %>" width="24" height="24">
+                                <img class="project-icon" src="/images/icons/<%= program.file %>.svg" alt="<%= program.name %>" width="24" height="24">
                             <% } %>
                         <% }); %>
                         </p>
@@ -55,7 +55,7 @@
                     This forces us to deliver higher resolution images and waste bandwidth, since we cannot
                     anticipate the size of the device without the aid of the sizes attribute.
                     -->
-                    <img alt="<%= project.title %>" class="img-responsive project--tile" width="640" height="640"
+                    <img alt="<%= project.title %>" class="img-responsive project-tile" width="640" height="640"
                          src="/images/<%= project.route %>/tile-640.jpg"
                          srcset="/images/<%= project.route %>/tile-960.jpg 1.5x, <%
                              %>/images/<%= project.route %>/tile-1280.jpg 2x, <%

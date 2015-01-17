@@ -1,3 +1,8 @@
+<%
+
+var homepage = page.route === "/";
+
+%>
 <!DOCTYPE html>
 <html class="hover" lang="en" prefix="og: http://ogp.me/ns#" vocab="http://schema.org" typeof="WebPage">
 <head>
@@ -56,19 +61,20 @@
 </head>
 <body class="<%= page.layout %>">
     <header class="clearfix header">
-        <h1 class="header--title"><%= page.title %></h1>
-        <nav class="header--nav">
+        <%- page.wrapIf("<a rel=home href=/>", "<h1 class=logo>" + page.title + "</h1>", "</a>", !homepage) %>
+        <nav class="nav">
             <h2 class="sr-only">Main Navigation</h2>
-            <ul class="header--nav--menu"><%
+            <ul class="menu"><%
 
                 [ "Work", "About", "Contact", "Impressum"].forEach(function (title, index) {
                     var route = "/" + (index === 0 ? "" : title.toLowerCase());
-
+                    %><li><%
                     if (route === page.route) {
-                        %><em><%= title %></em><%
+                        %><em class="menu-item"><%= title %></em><%
                     } else {
-                        %><a href="<%- route %>"><span></span></a><%
+                        %><a class="menu-item" href="<%- route %>"><span><%= title %></span></a><%
                     }
+                    %></li><%
                 });
 
             %></ul>
