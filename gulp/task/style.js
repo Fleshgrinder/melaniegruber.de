@@ -47,15 +47,18 @@ gulp.task("style:scss", function () {
         .pipe($.sass({ precision: 10 }))
         .on("error", console.error.bind(console))
         .pipe($.autoprefixer({
+            // We only require flexbox support, which is actually pretty decent:
+            // - http://caniuse.com/#feat=flexbox
+            // - http://html5please.com/#flexbox
             browsers: [
                 "ie >= 10",
                 "ie_mob >= 10",
-                "ff >= 30",
-                "chrome >= 30",
-                "safari >= 6",
-                "opera >= 20",
+                "ff >= 22",
+                "chrome >= 21",
+                "safari >= 6.1",
+                "opera >= 12.1",
                 "ios >= 7",
-                "android >= 4.1",
+                "android >= 3",
                 "bb >= 10"
             ]
         }))
