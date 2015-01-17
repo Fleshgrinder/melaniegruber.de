@@ -72,6 +72,10 @@ function prepareMetaInfo(vinyl) {
     meta.subtitle       = meta.subtitle       || config.title;
     meta.title          = meta.title          || config.title;
     meta.titleSeparator = meta.titleSeparator || config.titleSeparator;
+    meta.uri            = config.uri;
+    meta.url            = function (path) {
+        return config.uri.scheme + "://" + config.uri.authority + path;
+    };
 }
 
 /**

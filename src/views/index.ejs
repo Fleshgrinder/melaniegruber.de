@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html class="hover">
-    <head lang="en">
-        <meta charset="utf-8">
-        <!-- Optimized for SPDY and HTTP/2 clients and not HTTP/1.1 clients! -->
+<html class="hover" lang="en" prefix="og: http://ogp.me/ns#" vocab="http://schema.org" typeof="WebPage">
+    <head>
+        <!-- No character encoding declaration because it is sent via HTTP headers. -->
+
+        <!--
+        Stylesheets first, we want the browser to download it asap. Note that the code is optimized for SPDY and HTTP/2
+        clients; optimization for older clients may be performed with the Google PageSpeed modules for Apache httpd and
+        nginx.
+        -->
         <link rel="stylesheet" href="/styles/main.css">
         <!-- 640 pixels is the breakpoint we want and 16 is the assumed baseline; allow zooming! -->
         <link rel="stylesheet" media="(max-width: <%= 960 / 16 %>em)" href="/styles/mobile.css?1">
@@ -13,14 +18,41 @@
         <link rel="stylesheet" media="(hover: none)" href="/styles/hover.css?1">
         <link rel="stylesheet" media="(hover: hover)" href="/styles/no-hover.css?1">
         -->
+
+        <!--
+        We want browsers to use the SVG, sadly that will not work for almost all of them. Next we provide the touch icon
+        for all supporting devices (this is 196x196 right now) and let the clients scale it themselves. Same is true for
+        the next PNG file which we serve to all modern browsers. The ICO file in the root contains multiple sizes, as it
+        should for Windows. The browserconfig.xml file is finally there for modern Windows browsers. That should cover
+        them all and resizing is pushed down to the client. Although we may waste some bandwidth, we should be fine with
+        that since we are not often serving them.
+
+        http://www.jonathantneal.com/blog/understand-the-favicon/
+        https://mathiasbynens.be/notes/touch-icons
+        http://css-tricks.com/favicon-quiz/
+        -->
+        <link rel="icon" href="/images/logo/vector.svg" sizes="any" type="image/svg+xml">
+        <link rel="apple-touch-icon-precomposed" href="/images/logo/icon-196.png">
+        <link rel="icon" href="/images/logo/icon-32.png">
+
+        <!-- Force latest rendering engine in IE. -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- Tell mobile devices how to behave. -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Browser and search engine information. -->
         <title><%= page.title %><%= page.titleSeparator %><%= page.subtitle %></title>
         <meta name="description" content="<%= page.description %>">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" href="/favicon.png">
-        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
-        <link rel="icon" href="/images/logo/vector.svg" sizes="any" type="image/svg+xml">
         <link rel="canonical" href="<%= page.route %>">
+
+        <!-- Facebook -->
+        <meta property="og:description" content="<%= page.description %>">
+        <meta property="og:image" content="<%= page.url("/images/logo/icon-270.png") %>">
+        <meta property="og:site_name" content="Melanie Gruber">
+        <meta property="og:title" content="<%= page.title %>">
+        <meta property="og:type" content="<% if (page.route === "/") { %>website<% } else { %>article<% } %>">
+        <meta property="og:url" content="<%= page.url(page.route) %>">
     </head>
     <body class="index">
         <header class="clearfix header">
@@ -28,10 +60,10 @@
             <nav class="header--nav">
                 <h2 class="sr-only">Main Navigation</h2>
                 <ul class="header--nav--menu">
-                    <li>Work</li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                    <li><a href="/impressum">Impressum</a></li>
+                    <li><em>Work</em></li>
+                    <li><a href="/about"><span>About</span></a></li>
+                    <li><a href="/contact"><span>Contact</span></a></li>
+                    <li><a href="/impressum"><span>Impressum</span></a></li>
                 </ul>
             </nav>
         </header>
@@ -103,6 +135,6 @@
                 <% }); %>
             </div>
         </main>
-        <script src="/scripts/main.js"></script>
+        <script async src="/scripts/main.js"></script>
     </body>
 </html>
