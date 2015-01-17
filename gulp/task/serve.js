@@ -69,8 +69,8 @@ function watch(watch, tasks) {
 
 gulp.task("serve", ["html:markdown", "html:markdown:index", "image:dev", "style:scss", "script:flatten"], function () {
     browserSync(server(["src", "tmp"]));
-    watch(["src/views/*.ejs", "src/*.md", "!src/projects/*.md", "!src/index.md"], ["html:markdown", browserSync.reload]);
-    watch(["src/views/*.ejs", "src/projects/*.md", "src/index.md"], ["html:markdown:index", browserSync.reload]);
+    watch(["src/views/**/*.ejs", "src/*.md", "!src/projects/*.md", "!src/index.md"], ["html:markdown", browserSync.reload]);
+    watch(["src/views/**/*.ejs", "src/projects/*.md", "src/index.md"], ["html:markdown:index", browserSync.reload]);
     watch(["src/styles/**/*.scss", "!src/styles/**/*_*.scss"], ["style:scss", browserSync.reload]);
     watch("src/scripts/**/*.js", browserSync.reload);
     watch("src/images/**/*.{gif,jpg,png,svg}", ["image:dev", browserSync.reload]);
