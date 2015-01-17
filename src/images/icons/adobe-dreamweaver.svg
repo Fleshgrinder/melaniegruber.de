@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="23.4" viewBox="0 0 24 23.3999424">
+    <defs>
+        <path id="a" d="M1 1v21.4h22V1z"/>
+        <filter id="b" filterUnits="userSpaceOnUse" x="-4.29" y="-4.438" width="32.579" height="32.276">
+            <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"/>
+        </filter>
+        <path id="d" d="M21.563 27.837L-4.29 21.002l6.727-25.44L28.29 2.4z"/>
+    </defs>
+    <clipPath id="c">
+        <use xlink:href="#a" overflow="visible"/>
+    </clipPath>
+    <mask maskUnits="userSpaceOnUse" x="-4.29" y="-4.438" width="32.579" height="32.276" id="g">
+        <g filter="url(#b)">
+            <clipPath id="e" clip-path="url(#c)">
+                <use xlink:href="#d" overflow="visible"/>
+            </clipPath>
+            <radialGradient id="f" cx="-281.506" cy="435.48" r="1.035" gradientTransform="matrix(13.403 3.544 3.544 -13.403 2239.475 6842.669)" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#D9D9D9"/>
+                <stop offset=".767" stop-color="#fff"/>
+                <stop offset="1" stop-color="#fff"/>
+            </radialGradient>
+            <path clip-path="url(#e)" fill="url(#f)" d="M-2.16-12.49L36.267-2.327 26.16 35.89l-38.425-10.162z"/>
+        </g>
+    </mask>
+    <radialGradient id="h" cx="-281.506" cy="435.48" r="1.035" gradientTransform="matrix(13.403 3.544 3.544 -13.403 2239.476 6842.67)" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#073200"/>
+        <stop offset=".767" stop-color="#073200"/>
+        <stop offset="1" stop-color="#073200"/>
+    </radialGradient>
+    <rect fill="#073200" width="100%" height="100%"/>
+    <path clip-path="url(#c)" mask="url(#g)" fill="url(#h)" d="M2.437-4.438L28.29 2.398l-6.727 25.44-25.853-6.836z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" fill="#94CA2E" d="M0 23.4h24V0H0v23.4zM1 1h22v21.4H1V1zM3.125 5.51c0-.084.016-.117.116-.134.38-.016 1.47-.05 2.592-.05 3.35 0 5.016 2.163 5.016 5.33 0 4.406-2.888 5.743-5.115 5.743-.84 0-2.063-.018-2.51-.035-.065 0-.098-.05-.098-.132V5.51zm1.8 9.272c.28.016.53.033.842.033 1.848 0 3.216-1.304 3.233-4.11.017-2.738-1.402-3.794-3.168-3.794-.346 0-.627.017-.907.034v7.838zm12.688 1.568c-.116 0-.148-.045-.165-.144-.495-2.755-.908-4.703-1.09-6.056h-.016c-.214 1.22-.61 3.25-1.27 6.073-.033.1-.066.127-.15.127h-1.616c-.115 0-.148-.017-.18-.116l-1.767-7.877c-.017-.066.015-.133.115-.133h1.617c.066 0 .116.024.132.09.627 3.547.89 5.385.99 6.11h.065c.115-.857.462-2.645 1.205-6.077.033-.1.033-.123.13-.123h1.7c.084 0 .1.04.117.124.577 3.25.957 5.302 1.055 6.127h.05c.165-1.056.38-2.482 1.09-6.144.016-.065.032-.106.114-.106h1.52c.065 0 .115.034.08.116l-1.962 7.894c-.016.083-.033.116-.148.116h-1.617z"/>
+</svg>
