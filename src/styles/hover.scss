@@ -30,13 +30,11 @@
 .hover {
 
     .project {
-        @include transition(box-shadow);
         overflow: hidden;
 
         &:active,
         &:focus,
         &:hover {
-            box-shadow: 0 0 1rem #000;
             z-index: 1;
 
             .project-overlay {
