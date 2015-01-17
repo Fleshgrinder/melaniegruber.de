@@ -28,9 +28,5 @@
 @import "variables";
 
 .header {
-    position: relative;
-}
-
-.header--nav {
-
+    position: relative; // Needed for z-index.
 }
