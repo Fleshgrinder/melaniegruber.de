@@ -35,6 +35,9 @@ var lazyPipe = require("lazypipe");
 var merge    = require("merge");
 var path     = require("path");
 
+// Append the source directory to the path module for easy removal from routes.
+path.root = path.dirname(path.dirname(__dirname)) + "\\src";
+
 /**
  * Default options for gulp-front-matter and gulp-multi-renderer.
  * @type {{property: String, templateDir: String}}
@@ -69,36 +72,20 @@ function url(path) {
 }
 
 /**
- * Evaluate condition and wrap if true.
- * @param {String} prefix - The prefix to put in front of the content if condition is true.
- * @param {String} content - The content to wrap if condition is true.
- * @param {String} suffix - The suffix to put behind of the content if condition is true.
- * @param {Boolean} condition - The condition which decides if the content should be wrapped.
- * @return {String} The content wrapped if condition is true or simply the content.
- */
-function wrapIf(prefix, content, suffix, condition) {
-    if (condition) {
-        return prefix + content + suffix;
-    } else {
-        return content;
-    }
-}
-
-/**
  * Prepare meta information for all documents.
  * @param {Object} vinyl - Virtual file of the currently processed Markdown document.
  * @return {undefined}
  */
 function prepareMetaInfo(vinyl) {
     vinyl[options.property] = merge({
+        config:         config,
         description:    null,
-        route:          path.basename(vinyl.path, ".md"),
-        subtitle:       config.title,
-        title:          config.title,
+        route:          vinyl.path.replace(path.root, "").replace(".md", "").replace(/\\/g, "/"),
+        siteName:       config.siteName,
+        subtitle:       config.siteName,
+        title:          config.siteName,
         titleSeparator: config.titleSeparator,
-        uri:            config.uri,
-        url:            url,
-        wrapIf:         wrapIf
+        url:            url
     }, vinyl[options.property]);
 }
 
@@ -128,14 +115,21 @@ function prepareIndexMetaInfo(vinyl) {
  * @return {undefined}
  */
 function prepareProjectMetaInfo(vinyl) {
+    // Make sure we always have date available for each project.
     var date = vinyl[options.property].date || "";
+
     vinyl[options.property] = merge({
         program: [],
-        date: date,
-        vimeo: [],
-        work: [],
-        year: date.substring(0, 4)
+        date:    date,
+        vimeo:   [],
+        work:    [],
+        year:    date.substring(0, 4)
     }, vinyl[options.property]);
+
+    // The route still contains /project which we don't want.
+    vinyl[options.property].route = vinyl[options.property].route.replace("/projects", "");
+
+    // Push this project to the projects array for the index gallery.
     projects.push(vinyl[options.property]);
 }
 

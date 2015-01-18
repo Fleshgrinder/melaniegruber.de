@@ -61,7 +61,7 @@ button {
 body {
     background-color: nth($color-palette, 5);
     color: #666;
-    font: normal 16px/1.42857143 $font-family, sans-serif;
+    font: normal $font-size#{"/"}$line-height $font-family, sans-serif;
     height: 100%;
     margin: 0;
 }
@@ -178,7 +178,6 @@ p {
 
 .header {
     background-color: #f7f7f7;
-    box-shadow: 0 0 1rem #000;
     height: $header-height;
     left: 0;
     line-height: $header-height;
@@ -239,7 +238,8 @@ p {
 
 .project {
     display: block;
-    position: relative;
+    font-size: 24px;
+    line-height: 1;
 }
 
 .project-overlay {
@@ -250,7 +250,6 @@ p {
     justify-content: center;
     left: 0;
     margin: 0;
-    position: absolute;
     text-align: center;
     text-transform: uppercase;
     width: 100%;
@@ -259,7 +258,7 @@ p {
 
 .project-title,
 .project-subtitle {
-    position: relative;
+    font-size: inherit;
     width: 75%;
 }
 
@@ -268,10 +267,8 @@ p {
 
     &:before {
         background-color: rgba(255, 255, 255, .5);
-        content: "";
         height: 1px;
         left: 0;
-        position: absolute;
         top: -1em;
         width: 100%;
     }
@@ -286,6 +283,21 @@ p {
 @import "no-hover";
 
 // Utility classes must be last!
+.abs,
+.abs-before-after:before,
+.abs-before-after:after,
+.abs-before:before,
+.abs-after:after {
+    position: absolute;
+}
+
+.abs-before-after:before,
+.abs-before-after:after,
+.abs-before:before,
+.abs-after:after {
+    content: "";
+}
+
 .clearfix:after {
     clear: both;
     content: " ";
@@ -301,6 +313,10 @@ p {
     height: auto;
     max-width: 100%;
     width: 100%;
+}
+
+.rel {
+    position: relative;
 }
 
 .sr-only {

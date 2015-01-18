@@ -26,7 +26,109 @@
 // ---------------------------------------------------------------------------------------------------------------------
 
 @import "variables";
+@import "mixins/transition";
 
-.header {
-    position: relative; // Needed for z-index.
+$menu-toggle-height: 20px;
+$menu-toggle-top: ($header-height - $menu-toggle-height) / 2;
+$menu-open-line: $menu-toggle-height / 5;
+
+.menu,
+.menu-open,
+.menu-open:before,
+.menu-close,
+.menu-close:before,
+.menu-close:after {
+    position: absolute;
+    right: 0;
+}
+
+.menu-open,
+.menu-close {
+    cursor: pointer;
+}
+
+.menu-open {
+    border-bottom: $menu-open-line solid nth($color-palette, 5);
+    border-top: $menu-open-line solid nth($color-palette, 5);
+    height: $menu-toggle-height;
+    right: 24px; // Match logo margin.
+    top: $menu-toggle-top;
+    width: $menu-toggle-height + ($menu-open-line * 2);
+
+    &:before {
+        background-color: nth($color-palette, 5);
+        height: $menu-open-line;
+        left: 0;
+        top: $menu-open-line;
+    }
+}
+
+.menu {
+    @include transition(left);
+    background-color: nth($color-palette, 5);
+    bottom: 0;
+    box-shadow: 0 0 1rem #000;
+    left: 100%;
+    padding-top: ($header-height - ($font-size * $line-height)) / 4;
+    top: 0;
+    z-index: 99;
+
+    a {
+        color: #fff !important; // Override :active, :focus, :hover at once.
+    }
+
+    &.open .menu-close {
+        transform: scale(1);
+    }
+}
+
+.menu-close {
+    @include transition(transform, $animation-duration * 1.5);
+    border: 1px solid #fff;
+    height: $menu-toggle-height * 4;
+    top: 0;
+    transform: scale(0);
+    width: $menu-toggle-height * 4;
+
+    &:before,
+    &:after {
+        $compensate-rotation: $menu-toggle-height * 0.5;
+        background-color: #fff;
+        height: 1px;
+        margin: ($compensate-rotation + $menu-toggle-top) 28px $compensate-rotation 0; // Multiplication: compensate rotation.
+        width: $menu-toggle-height;
+    }
+
+    &:before {
+        transform: rotate(45deg);
+    }
+
+    &:after {
+        transform: rotate(-45deg);
+    }
+}
+
+.menu-item {
+    display: block;
+    padding: 0 4rem 0 2rem;
+
+    span:before {
+        background-color: #fff;
+    }
+}
+
+@media (max-width: (360em / 16)) {
+    .project {
+        font-size: 18px;
+    }
+
+    .menu.open {
+        left: 68px; // Keep the logo visible.
+    }
+}
+
+@media (min-width: (360em / 16)) {
+    .menu.open {
+        left: 50%;
+    }
 }

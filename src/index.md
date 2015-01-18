@@ -1,6 +1,6 @@
 ---
 
-title:          Melanie Gruber
+title:          Work
 titleSeparator: ', '
 subtitle:       3D artist
 description:    Portfolio website of 3D artist Melanie Gruber.

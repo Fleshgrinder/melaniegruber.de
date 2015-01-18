@@ -1,10 +1,13 @@
 <%
 
-var homepage = page.route === "/";
+// Some pages need special handling.
+var homepage    = page.route === "/";
+var aboutpage   = page.route === "/about";
+var contactpage = page.route === "/contact";
+var legalpage   = page.route === "/impressum";
 
-%>
-<!DOCTYPE html>
-<html class="hover" lang="en" prefix="og: http://ogp.me/ns#" vocab="http://schema.org" typeof="WebPage">
+%><!DOCTYPE html>
+<html class="no-hover" lang="en" prefix="og: http://ogp.me/ns#" vocab="http://schema.org" typeof="WebPage">
 <head>
     <!-- No character encoding declaration because it is sent via HTTP headers. -->
 
@@ -50,34 +53,51 @@ var homepage = page.route === "/";
     <title><%= page.title %><%= page.titleSeparator %><%= page.subtitle %></title>
     <meta name="description" content="<%= page.description %>">
     <link rel="canonical" href="<%= page.route %>">
+    <link property="url" href="<%= page.route %>">
 
     <!-- Facebook -->
     <meta property="og:description" content="<%= page.description %>">
     <meta property="og:image" content="<%= page.url("/images/logo/icon-270.png") %>">
-    <meta property="og:site_name" content="Melanie Gruber">
-    <meta property="og:title" content="<%= page.title %>">
-    <meta property="og:type" content="<% if (page.route === "/") { %>website<% } else { %>article<% } %>">
+    <meta property="og:site_name" content="<%= page.siteName %>">
+    <meta property="og:title" content="<%= homepage ? page.siteName : page.title %>">
+    <meta property="og:type" content="<% if (homepage) { %>website<% } else { %>article<% } %>">
     <meta property="og:url" content="<%= page.url(page.route) %>">
 </head>
 <body class="<%= page.layout %>">
     <header class="clearfix header">
-        <%- page.wrapIf("<a rel=home href=/>", "<h1 class=logo>" + page.title + "</h1>", "</a>", !homepage) %>
+        <% if (homepage) { %>
+            <h1 class="logo" property="title"><%= page.siteName %></h1>
+        <% } else { %>
+            <a href="/" rel="home"><h1 class="logo"><%= page.siteName %></h1></a>
+        <% } %>
         <nav class="nav">
             <h2 class="sr-only">Main Navigation</h2>
-            <ul class="menu"><%
-
-                [ "Work", "About", "Contact", "Impressum"].forEach(function (title, index) {
-                    var route = "/" + (index === 0 ? "" : title.toLowerCase());
-                    %><li><%
-                    if (route === page.route) {
-                        %><em class="menu-item"><%= title %></em><%
-                    } else {
-                        %><a class="menu-item" href="<%- route %>"><span><%= title %></span></a><%
+            <span class="abs abs-before-after desktop-hidden menu-open menu-toggle"></span>
+            <ul class="menu">
+                <li class="abs abs-before-after desktop-hidden menu-close menu-toggle"></li>
+                <%
+                    function menuItem(title, rel, type, route) {
+                        route = route || "/" + title.toLowerCase();
+                        %><li<%
+                        if (route === page.route) {
+                            %>><em class="menu-item"><%= title %></em><%
+                        } else {
+                            if (type) {
+                                %> <%- rel %> typeof="<%= title %>Page"><a type="url"<%
+                            } else {
+                                %>><a <%- rel %><%
+                            }
+                            %> class="menu-item" href="<%= route %>"><span><%= title %></span></a><%
+                        }
+                        %></li><%
                     }
-                    %></li><%
-                });
 
-            %></ul>
+                    menuItem("Work", 'rel="home"', false, "/");
+                    menuItem("About", ' rel="about"', true);
+                    menuItem("Contact", 'rel="contact"', true);
+                    menuItem("Impressum", 'property="copyright license publishingPrinciples"');
+                %>
+            </ul>
         </nav>
     </header>
     <main>

@@ -29,10 +29,22 @@
 (function (window, document) {
     "use strict";
 
+    var menu;
+
     // Best solution until CSS4 media query hover support is available.
     if ("ontouchstart" in document.documentElement) {
         document.documentElement.classList.remove("hover");
         document.documentElement.classList.add("no-hover");
     }
+
+    function toggleMenu(event) {
+        event.preventDefault();
+        menu = menu || document.querySelector(".menu");
+        menu.classList.toggle("open");
+    }
+
+    [].forEach.call(document.querySelectorAll(".menu-toggle"), function (element) {
+        element.addEventListener("click", toggleMenu, false);
+    });
 
 })(window, window.document);

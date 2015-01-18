@@ -32,6 +32,7 @@ body {
 }
 
 .header {
+    box-shadow: 0 0 1rem #000;
     position: fixed;
 }
 
@@ -47,4 +48,8 @@ body {
     display: block;
     height: 100%;
     padding: 0 $header-height / 3;
+}
+
+.desktop-hidden {
+    display: none !important;
 }
