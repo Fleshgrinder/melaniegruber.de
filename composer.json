@@ -1,0 +1,17 @@
+{
+    "name": "fleshgrinder/melaniegruber.de",
+    "description": "Portfolio website of 3D artist Melanie Gruber.",
+    "license": "Unlicense",
+    "authors": [
+        {
+            "name": "Richard Fussenegger",
+            "email": "richard@fussenegger.info"
+        }
+    ],
+    "config": {
+        "vendor-dir": "src/vendor"
+    },
+    "require": {
+        "phpmailer/phpmailer": "~5.2"
+    }
+}
