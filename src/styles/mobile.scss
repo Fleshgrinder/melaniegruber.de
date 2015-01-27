@@ -28,9 +28,10 @@
 @import "variables";
 @import "mixins/transition";
 
-$menu-toggle-height: 20px;
-$menu-toggle-top: ($header-height - $menu-toggle-height) / 2;
-$menu-open-line: $menu-toggle-height / 5;
+.no-js .nav {
+    height: $header-height;
+    width: $header-height;
+}
 
 .menu,
 .menu-open,
@@ -47,19 +48,32 @@ $menu-open-line: $menu-toggle-height / 5;
     cursor: pointer;
 }
 
+$menu-toggle-height: 20px;
+$menu-toggle-top: ($header-height - $menu-toggle-height) / 2;
+$menu-open-line: $menu-toggle-height / 5;
+$menu-open-width: $menu-toggle-height + ($menu-open-line * 2);
+
 .menu-open {
-    border-bottom: $menu-open-line solid nth($color-palette, 5);
-    border-top: $menu-open-line solid nth($color-palette, 5);
-    height: $menu-toggle-height;
-    right: 24px; // Match logo margin.
-    top: $menu-toggle-top;
-    width: $menu-toggle-height + ($menu-open-line * 2);
+    height: $header-height;
+    width: $header-height;
+
+    &:before,
+    &:after {
+        height: $menu-open-line;
+        right: 24px; // Match logo margin.
+        width: $menu-open-width;
+    }
 
     &:before {
         background-color: nth($color-palette, 5);
-        height: $menu-open-line;
-        left: 0;
-        top: $menu-open-line;
+        top: $menu-toggle-top + ($menu-toggle-height / 2.5);
+    }
+
+    &:after {
+        border-bottom: $menu-open-line solid nth($color-palette, 5);
+        border-top: $menu-open-line solid nth($color-palette, 5);
+        height: $menu-toggle-height;
+        top: $menu-toggle-top;
     }
 }
 
@@ -84,19 +98,17 @@ $menu-open-line: $menu-toggle-height / 5;
 
 .menu-close {
     @include transition(transform, $animation-duration * 1.5);
-    border: 1px solid #fff;
-    height: $menu-toggle-height * 4;
+    height: $header-height;
     top: 0;
     transform: scale(0);
-    width: $menu-toggle-height * 4;
+    width: $header-height;
 
     &:before,
     &:after {
-        $compensate-rotation: $menu-toggle-height * 0.5;
         background-color: #fff;
-        height: 1px;
-        margin: ($compensate-rotation + $menu-toggle-top) 28px $compensate-rotation 0; // Multiplication: compensate rotation.
-        width: $menu-toggle-height;
+        height: 2px;
+        margin: 38px 24px 0 0;
+        width: 28px;
     }
 
     &:before {
@@ -122,12 +134,14 @@ $menu-open-line: $menu-toggle-height / 5;
         font-size: 18px;
     }
 
+    .no-js .nav:hover .menu,
     .menu.open {
         left: 68px; // Keep the logo visible.
     }
 }
 
 @media (min-width: (360em / 16)) {
+    .no-js .nav:hover .menu,
     .menu.open {
         left: 50%;
     }
