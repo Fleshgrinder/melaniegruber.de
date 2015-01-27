@@ -44,6 +44,7 @@ layout: The name of the layout that should be used for rendering (defaults to "d
 route: The route to the page that will be used in the URL (auto-generated based on filename).
 subtitle: The subtitle of the page (defaults to "Melanie Gruber").
 titleSeparator: The character that should be used to separate the title from the subtitle (defaults to " | ").
+typeof: The schema.org type of the actual webpage (defaults to "WebPage" and for projects to "ItemPage").
 ```
 
 The following meta information is only supported by projects and may be included:

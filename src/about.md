@@ -2,6 +2,7 @@
 
 title: About
 description: Kitty ipsum dolor …
+typeof: AboutPage
 
 ---
 

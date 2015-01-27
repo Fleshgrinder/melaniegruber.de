@@ -1,15 +1,13 @@
-<%
-
-// Some pages need special handling.
-var homepage    = page.route === "/";
-var aboutpage   = page.route === "/about";
-var contactpage = page.route === "/contact";
-var legalpage   = page.route === "/impressum";
-
-%><!DOCTYPE html>
-<html class="no-hover" lang="en" prefix="og: http://ogp.me/ns#" vocab="http://schema.org" typeof="WebPage">
+<!DOCTYPE html>
+<html class="hover no-js" lang="en" prefix="og: http://ogp.me/ns#" vocab="http://schema.org" typeof="<%= page.typeof %>">
 <head>
     <!-- No character encoding declaration because it is sent via HTTP headers. -->
+
+    <!-- We want to know if JavaScript is available - or not - even before we load the CSS. -->
+    <script>
+        document.documentElement.classList.remove("no-js");
+        document.documentElement.classList.add("js");
+    </script>
 
     <!--
     Stylesheets first, we want the browser to download it asap. Note that the code is optimized for SPDY and HTTP/2
@@ -59,13 +57,13 @@ var legalpage   = page.route === "/impressum";
     <meta property="og:description" content="<%= page.description %>">
     <meta property="og:image" content="<%= page.url("/images/logo/icon-270.png") %>">
     <meta property="og:site_name" content="<%= page.siteName %>">
-    <meta property="og:title" content="<%= homepage ? page.siteName : page.title %>">
-    <meta property="og:type" content="<% if (homepage) { %>website<% } else { %>article<% } %>">
+    <meta property="og:title" content="<%= page.index ? page.siteName : page.title %>">
+    <meta property="og:type" content="<% if (page.index) { %>website<% } else { %>article<% } %>">
     <meta property="og:url" content="<%= page.url(page.route) %>">
 </head>
 <body class="<%= page.layout %>">
     <header class="clearfix header">
-        <% if (homepage) { %>
+        <% if (page.index) { %>
             <h1 class="logo" property="title"><%= page.siteName %></h1>
         <% } else { %>
             <a href="/" rel="home"><h1 class="logo"><%= page.siteName %></h1></a>

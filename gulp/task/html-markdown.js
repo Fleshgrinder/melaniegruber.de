@@ -80,11 +80,13 @@ function prepareMetaInfo(vinyl) {
     vinyl[options.property] = merge({
         config:         config,
         description:    null,
+        index:          false,
         route:          vinyl.path.replace(path.root, "").replace(".md", "").replace(/\\/g, "/"),
         siteName:       config.siteName,
         subtitle:       config.siteName,
         title:          config.siteName,
         titleSeparator: config.titleSeparator,
+        typeof:         "WebPage",
         url:            url
     }, vinyl[options.property]);
 }
@@ -105,6 +107,7 @@ function sortProjects(a, b) {
  * @return {undefined}
  */
 function prepareIndexMetaInfo(vinyl) {
+    vinyl[options.property].index    = true;
     vinyl[options.property].route    = "/";
     vinyl[options.property].projects = projects.sort(sortProjects);
 }
@@ -121,6 +124,7 @@ function prepareProjectMetaInfo(vinyl) {
     vinyl[options.property] = merge({
         program: [],
         date:    date,
+        typeof:  "ItemPage",
         vimeo:   [],
         work:    [],
         year:    date.substring(0, 4)
