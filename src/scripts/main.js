@@ -1,4 +1,4 @@
-/* jshint browser: true */
+/* jshint browser:true */
 
 /*!
  * This is free and unencumbered software released into the public domain.
