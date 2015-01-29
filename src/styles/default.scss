@@ -18,67 +18,73 @@
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------------------------------------------------
-// Styles which only apply to devices which support hover.
+// Styles which only apply to default views.
 //
 // @author Richard Fussenegger <richard@fussenegger.info>
 // @copyright 2014 Richard Fussenegger
 // @license http://unlicense.org/ Unlicense.
 // ---------------------------------------------------------------------------------------------------------------------
 
-@import "variables";
+.additional-links {
+    padding-top: 20px;
+    text-align: center;
 
-.hover {
-
-    .project:active,
-    .project:focus,
-    .project:hover {
-        z-index: 1;
-
-        .project-overlay {
-            opacity: 1;
-        }
-
-        .project-title,
-        .project-subtitle {
-            opacity: 1;
-            top: 0;
-        }
-
-        .project-subtitle:before {
-            transform: scaleX(1);
-        }
+    .img-anchor {
+        padding: 10px;
     }
+}
 
-    .project-overlay {
-        @include transition(opacity);
-        height: 100%;
-        opacity: 0;
-        top: 0;
+.text {
+    background-color: #fff;
+    text-align: justify;
+}
+
+.text,
+.media {
+    padding: 0 20px 20px;
+}
+
+.text-title,
+.media-title {
+    font-weight: 200;
+    line-height: 1;
+    padding-top: 20px;
+}
+
+.text-title {
+    font-size: 64px;
+}
+
+.text-title,
+.text-content {
+    max-width: 600px;
+}
+
+.text-programs {
+    padding: 10px 0 20px;
+
+    img {
+        margin-right: 10px;
     }
+}
 
-    .project-title,
-    .project-subtitle {
-        opacity: 0;
-        top: -.5em;
-        transition: top $animation-duration * 2 $animation-function, opacity $animation-duration * 1.5 linear $animation-duration * .5;
-    }
+.media-title {
+    color: #fff;
+    font-size: 32px;
+    padding-bottom: 0;
+}
 
-    .project-subtitle:before {
-        @include transition(transform, $animation-duration * 2);
-        transform: scaleX(0);
-    }
+.media-element {
+    background-color: #000;
+    margin: 20px 0;
+    max-width: 600px;
+}
 
-    .additional-links {
-        .img-anchor {
-            @include transition(opacity);
-            opacity: .5;
-        }
+.media-video {
+    background: url("/images/icons/vimeo-wordmark.svg") center no-repeat #000;
+}
 
-        a:active,
-        a:focus,
-        a:hover {
-            opacity: 1;
-        }
-    }
-
+.dl-anchor {
+    display: inline-block;
+    padding: 100px 0 0;
 }

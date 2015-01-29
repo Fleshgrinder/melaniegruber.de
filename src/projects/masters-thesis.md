@@ -11,3 +11,5 @@ My master's thesis “Utilizing Animal Morphology to Enhance the Design and Anim
 about the connection between biological and digital creatures. In the course of the work I developed a set of
 guidelines, which stays undiminished by changes in technology. These guidelines provide artists with an
 unified approach to the creation of realistic and stylized digital creatures.
+
+<p class="additional-links">[Download PDF (3 MB)](/files/masters-thesis.pdf)</p>

@@ -80,6 +80,7 @@ function prepareMetaInfo(vinyl) {
     vinyl[options.property] = merge({
         config:         config,
         description:    null,
+        gallery:        [],
         index:          false,
         route:          vinyl.path.replace(path.root, "").replace(".md", "").replace(/\\/g, "/"),
         siteName:       config.siteName,
@@ -87,6 +88,7 @@ function prepareMetaInfo(vinyl) {
         title:          config.siteName,
         titleSeparator: config.titleSeparator,
         typeof:         "WebPage",
+        vimeo:          [],
         url:            url
     }, vinyl[options.property]);
 }
@@ -113,6 +115,44 @@ function prepareIndexMetaInfo(vinyl) {
 }
 
 /**
+ * Render the program icons.
+ * @param {Array} programs - The programs to render.
+ * @param {boolean} whiteBackground - Whether the icons are displayed on white background or not, defaults to FALSE.
+ * @return {string}
+ */
+function renderPrograms(programs, whiteBackground) {
+    var renderedPrograms = '';
+    whiteBackground = whiteBackground || false;
+
+    programs.forEach(function (program) {
+        program = { name: program, file: program.toLowerCase().replace(/ /g, "-") };
+
+        if (program.name.split(" ")[0] === "Autodesk") {
+            renderedPrograms +=
+                '<picture title="' + program.name + '">' +
+                    '<source srcset="/images/icons/' + program.file + '-24.webp, ' +
+                        '/images/icons/' + program.file + '-32.webp 1.5x, ' +
+                        '/images/icons/' + program.file + '-48.webp 2x, ' +
+                        '/images/icons/' + program.file + '-72.webp 3x" type="image/webp">' +
+                    '<img alt="' + program.name + ' icon." class="project-icon" height="24" ' +
+                        'src="/images/icons/' + program.file + '-24.png" ' +
+                        'srcset="/images/icons/' + program.file + '-32.png 1.5x, ' +
+                            '/images/icons/' + program.file + '-48.png 2x, ' +
+                            '/images/icons/' + program.file + '-72.png 3x" width="24">' +
+                '</picture>'
+            ;
+        } else {
+            if (whiteBackground === false && program.file === "unity") {
+                program.file += "-white";
+            }
+            renderedPrograms += '<img alt="' + program.name + ' icon." class="project-icon" height="24" src="/images/icons/' + program.file + '.svg" title="' + program.name + '" width="24">';
+        }
+    });
+
+    return renderedPrograms;
+}
+
+/**
  * Prepare meta information for project documents.
  * @param {Object} vinyl - Virtual file of the currently processed Markdown document.
  * @return {undefined}
@@ -122,12 +162,12 @@ function prepareProjectMetaInfo(vinyl) {
     var date = vinyl[options.property].date || "";
 
     vinyl[options.property] = merge({
-        program: [],
-        date:    date,
-        typeof:  "ItemPage",
-        vimeo:   [],
-        work:    [],
-        year:    date.substring(0, 4)
+        date:           date,
+        programs:       [],
+        renderPrograms: renderPrograms,
+        screenshots:    [],
+        work:           [],
+        year:           date.substring(0, 4)
     }, vinyl[options.property]);
 
     // The route still contains /project which we don't want.
@@ -185,7 +225,6 @@ gulp.task("html", ["html:markdown", "html:markdown:index"], function () {
 // Process all non-special Markdown documents in the source directory.
 gulp.task("html:markdown", function () {
     return gulp.src(["src/*.md", "!src/index.md"])
-        .pipe($.cached("html:markdown"))
         .pipe(extractMetaInfo())
         .pipe(renderHTML())
         .pipe(gulp.dest("tmp"));
@@ -202,8 +241,10 @@ gulp.task("html:markdown:index", ["html:markdown:projects"], function () {
 
 // Process all project Markdown documents.
 gulp.task("html:markdown:projects", function () {
+    // Reset, this is important for the serve task.
+    projects = [];
+
     return gulp.src("src/projects/*.md")
-        .pipe($.cached("html:markdown:projects"))
         .pipe(extractMetaInfo())
         .pipe($.tap(prepareProjectMetaInfo))
         .pipe(renderHTML())

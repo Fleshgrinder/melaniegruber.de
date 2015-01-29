@@ -8,8 +8,8 @@ programs:
     - Autodesk 3ds Max
     - Autodesk Maya
 vimeo:
-    - https://vimeo.com/115466285
-    - https://vimeo.com/115853516
+    - 115466285
+    - 115853516
 work:
     - Character Design
     - Low Poly Modeling

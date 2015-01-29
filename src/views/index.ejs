@@ -1,35 +1,16 @@
 <% include partials/head %>
 <h1 class="sr-only"><%= page.title %></h1>
-<div class="content gallery">
+<div class="gallery">
     <div class="intro">
         <div class="intro-content"><%- contents %></div>
     </div>
     <% page.projects.forEach(function (project) { %>
-        <a class="img-anchor project rel" href="/<%= project.route %>">
+        <a class="img-anchor project rel" href="<%= project.route %>">
             <article class="project-wrapper">
                 <div class="abs project-overlay">
                     <h2 class="project-title rel"><%= project.title %></h2>
                     <% if (project.programs.length > 0 ) { %>
-                        <p class="abs-before project-subtitle rel">
-                        <% project.programs.forEach(function (program) { %>
-                            <% program = { name: program, file: program.toLowerCase().replace(/ /g, "-") }; %>
-                            <% if (program.name.split(" ")[0] === "Autodesk") { %>
-                                <picture>
-                                    <source srcset="/images/icons/<%= program.file %>-24.webp, <%
-                                        %>/images/icons/<%= program.file %>-32.webp 1.5x, <%
-                                        %>/images/icons/<%= program.file %>-48.webp 2x, <%
-                                        %>/images/icons/<%= program.file %>-72.webp 3x" type="image/webp">
-                                    <img class="project-icon" alt="<%= program.name %>" width="24" height="24"
-                                         src="/images/icons/<%= program.file %>-24.png"
-                                         srcset="/images/icons/<% program.file %>-32.png 1.5x, <%
-                                             %>/images/icons/<% program.file %>-48.png 2x, <%
-                                             %>/images/icons/<% program.file %>-72.png 3x">
-                                </picture>
-                            <% } else { %>
-                                <img class="project-icon" src="/images/icons/<%= program.file %>.svg" alt="<%= program.name %>" width="24" height="24">
-                            <% } %>
-                        <% }); %>
-                        </p>
+                        <p class="abs-before project-subtitle rel"><%- project.renderPrograms(project.programs) %></p>
                     <% } %>
                 </div>
                 <picture>

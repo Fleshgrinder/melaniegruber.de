@@ -82,6 +82,7 @@ $menu-open-width: $menu-toggle-height + ($menu-open-line * 2);
     background-color: nth($color-palette, 5);
     bottom: 0;
     box-shadow: 0 0 1rem #000;
+    color: nth($color-palette, 6);
     left: 100%;
     padding-top: ($header-height - ($font-size * $line-height)) / 4;
     top: 0;
@@ -144,5 +145,22 @@ $menu-open-width: $menu-toggle-height + ($menu-open-line * 2);
     .no-js .nav:hover .menu,
     .menu.open {
         left: 50%;
+    }
+}
+
+@media (max-width: (640em / 16)) {
+    .media-video {
+        padding-bottom: 56.25%;
+        position: relative;
+
+        iframe {
+            bottom: 0;
+            height: 100%;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100%;
+        }
     }
 }

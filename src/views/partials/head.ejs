@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="hover no-js" lang="en" prefix="og: http://ogp.me/ns#" vocab="http://schema.org" typeof="<%= page.typeof %>">
+<html class="hover no-js" lang="en" prefix="og: http://ogp.me/ns#">
 <head>
     <!-- No character encoding declaration because it is sent via HTTP headers. -->
 
@@ -9,21 +9,8 @@
         document.documentElement.classList.add("js");
     </script>
 
-    <!--
-    Stylesheets first, we want the browser to download it asap. Note that the code is optimized for SPDY and HTTP/2
-    clients; optimization for older clients may be performed with the Google PageSpeed modules for Apache httpd and
-    nginx.
-    -->
+    <!-- Stylesheets first, we want the browser to download it asap. -->
     <link rel="stylesheet" href="/styles/main.css">
-    <!-- 640 pixels is the breakpoint we want and 16 is the assumed baseline; allow zooming! -->
-    <link rel="stylesheet" media="(max-width: <%= 960 / 16 %>em)" href="/styles/mobile.css?1">
-    <link rel="stylesheet" media="(min-width: <%= 960 / 16 %>em)" href="/styles/desktop.css?1">
-    <!--
-    http://dev.w3.org/csswg/mediaqueries-4/#hover
-
-    <link rel="stylesheet" media="(hover: none)" href="/styles/hover.css?1">
-    <link rel="stylesheet" media="(hover: hover)" href="/styles/no-hover.css?1">
-    -->
 
     <!--
     We want browsers to use the SVG, sadly that will not work for almost all of them. Next we provide the touch icon
@@ -49,51 +36,36 @@
 
     <!-- Browser and search engine information. -->
     <title><%= page.title %><%= page.titleSeparator %><%= page.subtitle %></title>
-    <meta name="description" content="<%= page.description %>">
-    <link rel="canonical" href="<%= page.route %>">
-    <link property="url" href="<%= page.route %>">
+    <meta content="<%= page.description %>" name="description" property="og:description">
+    <link href="<%= page.url(page.route) %>" property="og:url" rel="canonical">
 
-    <!-- Facebook -->
-    <meta property="og:description" content="<%= page.description %>">
     <meta property="og:image" content="<%= page.url("/images/logo/icon-270.png") %>">
     <meta property="og:site_name" content="<%= page.siteName %>">
     <meta property="og:title" content="<%= page.index ? page.siteName : page.title %>">
     <meta property="og:type" content="<% if (page.index) { %>website<% } else { %>article<% } %>">
-    <meta property="og:url" content="<%= page.url(page.route) %>">
 </head>
 <body class="<%= page.layout %>">
-    <header class="clearfix header">
+    <header class="header">
         <% if (page.index) { %>
-            <h1 class="logo" property="title"><%= page.siteName %></h1>
+            <h1 class="logo"><%= page.siteName %></h1>
         <% } else { %>
-            <a href="/" rel="home"><h1 class="logo"><%= page.siteName %></h1></a>
+            <a href="/"><h1 class="logo"><%= page.siteName %></h1></a>
         <% } %>
         <nav class="nav">
             <h2 class="sr-only">Main Navigation</h2>
             <span class="abs abs-before-after desktop-hidden menu-open menu-toggle"></span>
             <ul class="menu">
                 <li class="abs abs-before-after desktop-hidden menu-close menu-toggle"></li>
-                <%
-                    function menuItem(title, rel, type, route) {
-                        route = route || "/" + title.toLowerCase();
-                        %><li<%
-                        if (route === page.route) {
-                            %>><em class="menu-item"><%= title %></em><%
-                        } else {
-                            if (type) {
-                                %> <%- rel %> typeof="<%= title %>Page"><a type="url"<%
-                            } else {
-                                %>><a <%- rel %><%
-                            }
-                            %> class="menu-item" href="<%= route %>"><span><%= title %></span></a><%
-                        }
-                        %></li><%
-                    }
-
-                    menuItem("Work", 'rel="home"', false, "/");
-                    menuItem("About", ' rel="about contact"', true);
-                    menuItem("Impressum", 'property="copyright license publishingPrinciples"');
-                %>
+                <% [ "Work", "About", "Impressum"].forEach(function (title, index) { %>
+                <% var route = "/" + (index === 0 ? "" : title.toLowerCase()); %>
+                <li>
+                    <% if (route === page.route) { %>
+                    <em class="menu-item"><%= title %></em>
+                    <% } else { %>
+                    <a class="menu-item" href="<%= route %>"><span><%= title %></span></a>
+                    <% } %>
+                </li>
+                <% }); %>
             </ul>
         </nav>
     </header>

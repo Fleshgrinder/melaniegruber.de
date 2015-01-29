@@ -43,8 +43,12 @@
         menu.classList.toggle("open");
     }
 
-    [].forEach.call(document.querySelectorAll(".menu-toggle"), function (element) {
+    [].forEach.call(document.getElementsByClassName("menu-toggle"), function (element) {
         element.addEventListener("click", toggleMenu, false);
+    });
+
+    [].forEach.call(document.getElementsByTagName("iframe"), function (element) {
+        element.src = element.dataset.src;
     });
 
 })(window, window.document);

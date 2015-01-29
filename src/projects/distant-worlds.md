@@ -1,6 +1,6 @@
 ---
 
-title: Distant Worlds – Foreign Life?
+title: Distant Worlds
 date: 2012-03
 description: 'Fulldome Show (Northdocks: http://northdocks.com/)'
 programs:

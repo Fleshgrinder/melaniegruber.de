@@ -45,22 +45,29 @@
 }
 
 html {
+    min-width: 320px;
     overflow-x: hidden;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
 }
 
 html,
-body,
-button {
+body {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased;
 }
 
+html,
+body,
+main {
+    height: 100%;
+    width: 100%;
+}
+
 body {
     background-color: nth($color-palette, 5);
-    color: #666;
+    color: nth($color-palette, 5);
     font: normal $font-size#{"/"}$line-height $font-family, sans-serif;
     height: 100%;
     margin: 0;
@@ -153,6 +160,7 @@ h6 {
     font-weight: normal;
 }
 
+iframe,
 img {
     border: 0;
     vertical-align: middle;
@@ -170,28 +178,31 @@ h5,
 h6,
 p {
     margin: 0;
+    padding: 0;
     -webkit-margin-after: 0;
     -webkit-margin-before: 0;
     -webkit-margin-end: 0;
     -webkit-margin-start: 0;
 }
 
-p {
-    margin-bottom: 10px;
+main h1,
+main h2,
+main h3,
+main h4,
+main h5,
+main h6,
+main p {
+    padding-bottom: 10px;
 }
 
 .header {
     background-color: #f7f7f7;
     height: $header-height;
-    left: 0;
     line-height: $header-height;
-    right: 0;
-    top: 0;
-    z-index: 99;
 }
 
 .logo {
-    background: url("../images/logo/vector.svg") left 18px / 32px no-repeat;
+    background: url("/images/logo/vector.svg") left 18px / 32px no-repeat;
     color: nth($color-palette, 5);
     float: left;
     font-size: 18px;
@@ -202,7 +213,7 @@ p {
 
 .nav {
     float: right;
-    font-weight: 700;
+    font-weight: bold;
 }
 
 .menu {
@@ -211,94 +222,24 @@ p {
     padding: 0;
 }
 
-.gallery {
-    display: flex;
-    flex-wrap: wrap;
+@import "index";
+@import "default";
+
+@media (max-width: (960em / 16)) {
+    @import "mobile";
 }
 
-.intro,
-.project {
-    align-items: center;
-    color: #fff !important; // Overwrite :active, :focus, and :hover at once.
-    display: flex;
-    flex-basis: 100%;
-    justify-content: center;
+@media (min-width: (960em / 16)) {
+    @import "desktop";
 }
 
-@for $i from 2 through 16 {
-    @media (min-width: 320px * $i) {
-        .intro,
-        .project {
-            flex-basis: (100% / $i);
-        }
-    }
-}
-
-.intro-content {
-    font-size: 24px;
-    font-weight: 200;
-    padding: 48px;
-}
-
-.project {
-    display: block;
-    font-size: 24px;
-    line-height: 1;
-}
-
-.project-overlay {
-    align-items: center;
-    background-color: rgba(0, 0, 0, .8);
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    left: 0;
-    margin: 0;
-    text-align: center;
-    text-transform: uppercase;
-    width: 100%;
-    z-index: 1;
-}
-
-.project-title,
-.project-subtitle {
-    font-size: inherit;
-    width: 75%;
-}
-
-.project-subtitle {
-    margin: 2em 0 0;
-
-    &:before {
-        background-color: rgba(255, 255, 255, .5);
-        height: 1px;
-        left: 0;
-        top: -1em;
-        width: 100%;
-    }
-}
-
-.project-icon {
-    margin: 0 (24px / 4) (24px / 2);
-}
-
-main h1 {
-    color: #fff;
-    font-size: 64px;
-    font-weight: 200;
-    margin-bottom: 10px;
-    margin-top: 20px;
-}
-
-.container {
-    max-width: 1280px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-// @see /src/views/partials/head.ejs
-@import "hover";
+//@media (hover: none) {
 @import "no-hover";
+//}
+
+//@media (hover: hover) {
+@import "hover";
+//}
 
 // Utility classes must be last!
 .abs,
@@ -320,6 +261,10 @@ main h1 {
     clear: both;
     content: " ";
     display: table;
+}
+
+.img-anchor {
+    display: inline-block;
 }
 
 .img-anchor:before {

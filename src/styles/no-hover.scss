@@ -26,12 +26,21 @@
 // ---------------------------------------------------------------------------------------------------------------------
 
 @import "variables";
+@import "mixins/transition";
 
 .no-hover {
 
     .project-overlay {
         bottom: 0;
-        padding: 1em 0;
+        padding: 20px 0;
+    }
+
+    .project-tile {
+        @include transition(transform);
+    }
+
+    .project:focus .project-tile {
+        transform: scale(1.2) rotate(10deg);
     }
 
 }

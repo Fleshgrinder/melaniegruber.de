@@ -49,12 +49,13 @@ The following meta information is **required** in every Markdown file:
 title: The title of the web page.
 ```
 
-The following meta information may be included in any Markdown file (note that many have default values):
+The following meta information may be included in any Markdown file (note that many have default values and some have no
+effect on the index page):
 
 ```yaml
 description: Short description of the page's content (defaults to "").
 gallery:
-    - A YAML list of gallery image names that should be displayed on the page (defaults to empty list and has no effect on the index page).
+    - A YAML list of gallery image names that should be displayed on the page (defaults to empty list).
 layout: The name of the layout that should be used for rendering (defaults to "default").
 route: The route to the page that will be used in the URL (auto-generated based on filename).
 subtitle: The subtitle of the page (defaults to "Melanie Gruber").
