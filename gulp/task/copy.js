@@ -28,8 +28,12 @@
  * @license http://unlicense.org/ Unlicense.
  */
 
-var gulp = require('gulp');
+var gulp         = require('gulp');
+var mergeStreams = require('merge-stream');
 
 gulp.task('copy', function () {
-    return gulp.src('src/*.{ico,json,php,txt,xml}', { dot: true }).pipe(gulp.dest('dist'));
+    return mergeStreams(
+        gulp.src('src/*.{ico,txt,xml}').pipe(gulp.dest('dist')),
+        gulp.src('src/downloads/**/*').pipe(gulp.dest('dist/downloads'))
+    );
 });
