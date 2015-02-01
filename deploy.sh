@@ -27,8 +27,6 @@
 # @license http://unlicense.org/ Unlicense.
 # ----------------------------------------------------------------------------------------------------------------------
 
-printf "Starting deployment, this may several minutes ..."
+printf -- 'Starting deployment, this may take several minutes ...\n'
 [ -d ./node_modules ] || npm update
-./node_modules/.bin/bower update
 ./node_modules/.bin/gulp
-./node_modules/.bin/gulp upload

@@ -28,9 +28,6 @@ REM @license http://unlicense.org/ Unlicense.
 REM --------------------------------------------------------------------------------------------------------------------
 
 COLOR 07
-ECHO Starting deployment, this may several minutes ...
+ECHO Starting deployment, this may take several minutes ...
 IF NOT EXIST "%CD%\node_modules" CMD /K "npm update"
-SET JPEGTRAN="%CD%\node_modules\gulp-imagemin\node_modules\imagemin\node_modules\imagemin-jpegtran\node_modules\jpegtran-bin\vendor\jpegtran.exe"
-REG QUERY "HKLM\Hardware\Description\System\CentralProcessor\0" | FIND /i "x86" > NUL && SET BIT="x86" || SET BIT="x64"
-IF NOT EXIST "%JPEGTRAN%" BITSADMIN /TRANSFER "JPEGTRAN" "https://github.com/imagemin/jpegtran-bin/blob/master/vendor/win/%BIT%/jpegtran.exe?raw=true" "%JPEGTRAN%"
-CMD /K "%CD%\node_modules\.bin\bower update && %CD%\node_modules\.bin\gulp && %CD%\node_modules\.bin\gulp upload"
+CMD /K "%CD%\node_modules\.bin\gulp"
