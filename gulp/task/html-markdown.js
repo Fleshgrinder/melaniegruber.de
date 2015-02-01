@@ -122,14 +122,17 @@ function renderGalleryImages(page, type) {
         webExtension = webExtension || extension;
 
         if (suffix) {
-            suffix = '-tile-' + suffix;
+            var suffixes = ['-tile-' + suffix, '-tile'];
+            suffix = undefined;
 
-            if (!fs.existsSync(path.resolve('tmp' + webPath + suffix + '.' + webExtension))) {
-                suffix = '';
+            for (var i = 0; i < suffixes.length; ++i) {
+                if (fs.existsSync(path.resolve('tmp' + webPath + suffixes[i] + '.' + webExtension))) {
+                    suffix = suffixes[i];
+                    break;
+                }
             }
-        } else {
-            suffix = '';
         }
+        suffix = suffix || '';
 
         return asset(webPath + suffix + '.' + webExtension, webPath + '.' + extension);
     };
