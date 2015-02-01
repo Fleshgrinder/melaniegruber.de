@@ -1,11 +1,8 @@
 # TODO
-* Download PDFs:
-    * Melanie will send them again.
-    * Enter META data.
-    * Optimize PDFs (Standard; Compatibility Acorbat 10)
+* Direct navigation to previous/next project.
+* Styles for `:focus` in galleries.
 * Test with mobile devices.
 * Test with Apple devices.
-* Direct navigation to previous/next project.
 * Prepare animated GIFs in all sizes, resizing destroys animation:
     * 300
     * 450
@@ -13,7 +10,6 @@
     * 900
     * 1200
     * 1800
-* Logo via img element for cache busting?
 * [Facebook URL Debugger](https://developers.facebook.com/tools/debug/)
 * Write a wrapper module for FrontMatter and EJS which has a hook, or extend gulp-front-matter with such a hook.
 * gulp-cache is disabled during builds because the following error is emitted:

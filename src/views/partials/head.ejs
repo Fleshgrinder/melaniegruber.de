@@ -46,11 +46,9 @@
 </head>
 <body class="<%= page.layout %>">
     <header class="header">
-        <% if (page.index) { %>
-            <h1 class="logo"><%= page.siteName %></h1>
-        <% } else { %>
-            <a href="/"><h1 class="logo"><%= page.siteName %></h1></a>
-        <% } %>
+        <%- page.index ? '<h1 class="logo">' : '<a class="logo" href="/">' %>
+            <img alt="<%= page.siteName %> logo" height="48" src="<%= page.asset('/images/logo/vector.svg') %>" width="32"><%= page.siteName %>
+        <%- page.index ? '</h1>' : '</a>' %>
         <nav class="nav">
             <h2 class="sr-only">Main Navigation</h2>
             <span class="abs abs-before-after desktop-hidden menu-open menu-toggle"></span>

@@ -206,13 +206,17 @@ main p {
 }
 
 .logo {
-    background: url("/images/logo/vector.svg") left 18px / 32px no-repeat;
     color: nth($color-palette, 5);
+    display: block;
     float: left;
     font-size: 18px;
+    font-weight: bold;
     margin-left: 24px;
-    padding-left: 44px;
     text-transform: uppercase;
+
+    img {
+        margin-right: 12px;
+    }
 }
 
 .nav {
