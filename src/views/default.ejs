@@ -2,45 +2,53 @@
 <div class="container">
     <div class="text">
         <h1 class="text-title"><%= page.title %></h1>
-        <% if (page.programs && page.programs.length > 0) { %>
-            <p class="text-programs"><%- page.renderPrograms(page.programs, true) %></p>
+        <% if (page.description || page.programs || page.work) { %>
+                <% if (page.description) { %>
+                    <p class="text-subtitle"><%= page.description %></p>
+                <% } %>
+            <div class="text-meta">
+                <% if (page.programs && page.programs.length > 0) { %>
+                    <p class="text-programs"><%- page.renderProgramIcons(page.programs, true) %></p>
+                <% } %>
+                <% if (page.work && page.work.length > 0) { %>
+                    <ul class="text-work"><li><%- page.work.join("</li><li>") %></li></ul>
+                <% } %>
+            </div>
         <% } %>
         <div class="text-content">
             <%- contents %>
         </div>
     </div>
     <% if (page.gallery || page.screenshots || page.vimeo) { %>
-        <% if (page.gallery && page.gallery.length > 0) { %>
-            <section class="media">
-                <h2 class="media-title sr-only">Gallery</h2>
-                <div class="clearfix media-content">
-
-                </div>
-            </section>
-        <% } %>
-        <% if (page.screenshots && page.screenshots.length > 0) { %>
-            <section class="media">
-                <h2 class="media-title">Screenshots</h2>
-                <div class="clearfix media-content">
-
-                </div>
-            </section>
-        <% } %>
-        <% if (page.vimeo && page.vimeo.length > 0) { %>
-            <section class="media">
-                <h2 class="media-title">Videos</h2>
-                <div class="clearfix media-content">
-                    <% page.vimeo.forEach(function (id) { %>
-                        <div class="media-element media-video">
-                            <noscript>
-                                <iframe src="//player.vimeo.com/video/<%= id %>" height="337.5" webkitallowfullscreen mozallowfullscreen allowfullscreen width="600"></iframe>
-                            </noscript>
-                            <iframe data-src="//player.vimeo.com/video/<%= id %>" height="337.5" webkitallowfullscreen mozallowfullscreen allowfullscreen width="600"></iframe>
-                        </div>
-                    <% }); %>
-                </div>
-            </section>
-        <% } %>
+        <div id="gallery">
+            <% if (page.gallery && page.gallery.length > 0) { %>
+                <section class="media">
+                    <h2 class="media-title sr-only">Gallery</h2>
+                    <div class="clearfix media-content"><%- page.renderGalleryImages(page) %></div>
+                </section>
+            <% } %>
+            <% if (page.screenshots && page.screenshots.length > 0) { %>
+                <section class="media">
+                    <h2 class="media-title">Screenshots</h2>
+                    <div class="clearfix media-content"><%- page.renderGalleryImages(page, 'screenshots') %></div>
+                </section>
+            <% } %>
+            <% if (page.vimeo && page.vimeo.length > 0) { %>
+                <section class="media">
+                    <h2 class="media-title">Videos</h2>
+                    <div class="clearfix media-content">
+                        <% page.vimeo.forEach(function (id) { %>
+                            <div class="media-element media-video">
+                                <noscript>
+                                    <iframe src="//player.vimeo.com/video/<%= id %>" height="337.5" webkitallowfullscreen mozallowfullscreen allowfullscreen width="600"></iframe>
+                                </noscript>
+                                <iframe data-src="//player.vimeo.com/video/<%= id %>" height="337.5" webkitallowfullscreen mozallowfullscreen allowfullscreen width="600"></iframe>
+                            </div>
+                        <% }); %>
+                    </div>
+                </section>
+            <% } %>
+        </div>
     <% } %>
 </div>
 <% include partials/foot %>

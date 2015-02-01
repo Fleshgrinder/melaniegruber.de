@@ -1,9 +1,5 @@
 .idea
-bower_components
-composer.lock
-config.json
 dist
 desktop.ini
 node_modules
-src/contact.json
 tmp

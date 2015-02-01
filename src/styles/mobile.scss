@@ -28,127 +28,140 @@
 @import "variables";
 @import "mixins/transition";
 
-.no-js .nav {
-    height: $header-height;
-    width: $header-height;
-}
+@media (max-width: (960em / 16)) {
 
-.menu,
-.menu-open,
-.menu-open:before,
-.menu-close,
-.menu-close:before,
-.menu-close:after {
-    position: absolute;
-    right: 0;
-}
-
-.menu-open,
-.menu-close {
-    cursor: pointer;
-}
-
-$menu-toggle-height: 20px;
-$menu-toggle-top: ($header-height - $menu-toggle-height) / 2;
-$menu-open-line: $menu-toggle-height / 5;
-$menu-open-width: $menu-toggle-height + ($menu-open-line * 2);
-
-.menu-open {
-    height: $header-height;
-    width: $header-height;
-
-    &:before,
-    &:after {
-        height: $menu-open-line;
-        right: 24px; // Match logo margin.
-        width: $menu-open-width;
+    .no-js .nav {
+        height: $header-height;
+        width: $header-height;
     }
 
-    &:before {
+    .menu,
+    .menu-open,
+    .menu-open:before,
+    .menu-close,
+    .menu-close:before,
+    .menu-close:after {
+        position: absolute;
+        right: 0;
+    }
+
+    .menu-open,
+    .menu-close {
+        cursor: pointer;
+    }
+
+    $menu-toggle-height: 20px;
+    $menu-toggle-top: ($header-height - $menu-toggle-height) / 2;
+    $menu-open-line: $menu-toggle-height / 5;
+    $menu-open-width: $menu-toggle-height + ($menu-open-line * 2);
+
+    .menu-open {
+        height: $header-height;
+        width: $header-height;
+
+        &:before,
+        &:after {
+            height: $menu-open-line;
+            right: 24px; // Match logo margin.
+            width: $menu-open-width;
+        }
+
+        &:before {
+            background-color: nth($color-palette, 5);
+            top: $menu-toggle-top + ($menu-toggle-height / 2.5);
+        }
+
+        &:after {
+            border-bottom: $menu-open-line solid nth($color-palette, 5);
+            border-top: $menu-open-line solid nth($color-palette, 5);
+            height: $menu-toggle-height;
+            top: $menu-toggle-top;
+        }
+    }
+
+    .menu {
+        @include transition(left);
         background-color: nth($color-palette, 5);
-        top: $menu-toggle-top + ($menu-toggle-height / 2.5);
+        bottom: 0;
+        box-shadow: 0 0 1rem #000;
+        color: nth($color-palette, 6);
+        left: 100%;
+        padding-top: ($header-height - ($font-size * $line-height)) / 4;
+        top: 0;
+        z-index: 99;
+
+        a {
+            color: #fff !important; // Override :active, :focus, :hover at once.
+            outline-color: #fff !important;
+        }
+
+        &.open .menu-close {
+            transform: scale(1);
+        }
     }
 
-    &:after {
-        border-bottom: $menu-open-line solid nth($color-palette, 5);
-        border-top: $menu-open-line solid nth($color-palette, 5);
-        height: $menu-toggle-height;
-        top: $menu-toggle-top;
-    }
-}
+    .menu-close {
+        @include transition(transform, $animation-duration * 1.5);
+        height: $header-height;
+        top: 0;
+        transform: scale(0);
+        width: $header-height;
 
-.menu {
-    @include transition(left);
-    background-color: nth($color-palette, 5);
-    bottom: 0;
-    box-shadow: 0 0 1rem #000;
-    color: nth($color-palette, 6);
-    left: 100%;
-    padding-top: ($header-height - ($font-size * $line-height)) / 4;
-    top: 0;
-    z-index: 99;
+        &:before,
+        &:after {
+            background-color: #fff;
+            height: 2px;
+            margin: 38px 24px 0 0;
+            width: 28px;
+        }
 
-    a {
-        color: #fff !important; // Override :active, :focus, :hover at once.
-    }
+        &:before {
+            transform: rotate(45deg);
+        }
 
-    &.open .menu-close {
-        transform: scale(1);
-    }
-}
-
-.menu-close {
-    @include transition(transform, $animation-duration * 1.5);
-    height: $header-height;
-    top: 0;
-    transform: scale(0);
-    width: $header-height;
-
-    &:before,
-    &:after {
-        background-color: #fff;
-        height: 2px;
-        margin: 38px 24px 0 0;
-        width: 28px;
+        &:after {
+            transform: rotate(-45deg);
+        }
     }
 
-    &:before {
-        transform: rotate(45deg);
+    .menu-item {
+        display: block;
+        padding: 0 4rem 0 2rem;
+
+        span:before {
+            background-color: #fff;
+        }
     }
 
-    &:after {
-        transform: rotate(-45deg);
-    }
-}
-
-.menu-item {
-    display: block;
-    padding: 0 4rem 0 2rem;
-
-    span:before {
-        background-color: #fff;
-    }
 }
 
 @media (max-width: (360em / 16)) {
-    .project {
-        font-size: 18px;
-    }
 
     .no-js .nav:hover .menu,
     .menu.open {
         left: 68px; // Keep the logo visible.
     }
+
 }
 
 @media (min-width: (360em / 16)) {
+
     .no-js .nav:hover .menu,
     .menu.open {
         left: 50%;
     }
+
 }
 
 @media (max-width: (640em / 16)) {
+
+    .media-element img {
+        display: block;
+        height: auto;
+        max-width: 100%;
+        width: 100%;
+    }
+
     .media-video {
         padding-bottom: 56.25%;
         position: relative;
@@ -163,4 +176,5 @@ $menu-open-width: $menu-toggle-height + ($menu-open-line * 2);
             width: 100%;
         }
     }
+
 }

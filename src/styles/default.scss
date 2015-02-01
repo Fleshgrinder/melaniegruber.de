@@ -25,6 +25,8 @@
 // @license http://unlicense.org/ Unlicense.
 // ---------------------------------------------------------------------------------------------------------------------
 
+@import "variables";
+
 .additional-links {
     padding-top: 20px;
     text-align: center;
@@ -45,27 +47,45 @@
 }
 
 .text-title,
+.text-subtitle,
+.text-programs,
+.text-work,
+.text-content {
+    max-width: 600px;
+}
+
+.text-title,
 .media-title {
     font-weight: 200;
     line-height: 1;
-    padding-top: 20px;
+    padding: 20px 0;
 }
 
 .text-title {
     font-size: 64px;
 }
 
-.text-title,
-.text-content {
-    max-width: 600px;
-}
-
 .text-programs {
-    padding: 10px 0 20px;
+    padding: 20px 0;
 
     img {
         margin-right: 10px;
     }
+}
+
+.text-subtitle {
+    border-bottom: 1px solid nth($color-palette, 5);
+    padding-bottom: 20px;
+}
+
+.text-work {
+    border-bottom: 1px solid nth($color-palette, 5);
+    margin: 0;
+    padding: 0 0 20px 1em;
+}
+
+.text-content {
+    padding-top: 20px;
 }
 
 .media-title {
@@ -76,15 +96,10 @@
 
 .media-element {
     background-color: #000;
-    margin: 20px 0;
+    margin: 20px 0 0;
     max-width: 600px;
 }
 
 .media-video {
     background: url("/images/icons/vimeo-wordmark.svg") center no-repeat #000;
-}
-
-.dl-anchor {
-    display: inline-block;
-    padding: 100px 0 0;
 }

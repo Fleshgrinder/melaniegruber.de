@@ -1,5 +1,5 @@
 /* jshint node:true */
-"use strict";
+'use strict';
 
 /*!
  * This is free and unencumbered software released into the public domain.
@@ -28,11 +28,11 @@
  * @license http://unlicense.org/ Unlicense.
  */
 
-var gulp = require("gulp");
+var gulp = require('gulp');
 
-gulp.task("compress", function () {
-    return gulp.src(["dist/**/*", "!dist/**/*.{gif,gz,jpg,png,webp,woff,woff2}"])
-        .pipe(require("gulp-gzip")({ gzipOptions: { level: 9 } }))
-        .pipe(gulp.dest("dist"))
-        .pipe(require("gulp-size")({ title: "compress" }));
+gulp.task('compress', function () {
+    return gulp.src(['dist/**/*', '!dist/**/*.{gif,gz,jpg,png,webp,woff,woff2}'])
+        .pipe(require('gulp-gzip')({ gzipOptions: { level: 9 } }))
+        .pipe(gulp.dest('dist'))
+        .pipe(require('gulp-size')({ title: 'compress' }));
 });

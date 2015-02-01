@@ -1,5 +1,5 @@
 /* jshint node:true */
-"use strict";
+'use strict';
 
 /*!
  * This is free and unencumbered software released into the public domain.
@@ -21,15 +21,22 @@
  */
 
 /**
- * Gulp font tasks.
+ * Gulp script tasks.
  *
  * @author Richard Fussenegger <richard@fussenegger.info>
  * @copyright 2014 Richard Fussenegger
  * @license http://unlicense.org/ Unlicense.
  */
 
-var gulp = require("gulp");
+var $ = require('gulp-load-plugins')();
+var gulp = require('gulp');
 
-gulp.task("font", function () {
-    return gulp.src("src/fonts/**/*.{woff,woff2}").pipe(gulp.dest("dist/fonts"));
+gulp.task('scripts', function () {
+    return gulp.src(['tmp/**/*.js', 'src/**/*.js'])
+        .pipe($.if('!*.min.js', $.uglify({
+            preserveComments: function () {
+                return false;
+            }
+        })))
+        .pipe(gulp.dest('dist'));
 });

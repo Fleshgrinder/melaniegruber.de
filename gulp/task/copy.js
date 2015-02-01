@@ -1,5 +1,5 @@
 /* jshint node:true */
-"use strict";
+'use strict';
 
 /*!
  * This is free and unencumbered software released into the public domain.
@@ -28,8 +28,8 @@
  * @license http://unlicense.org/ Unlicense.
  */
 
-var gulp = require("gulp");
+var gulp = require('gulp');
 
-gulp.task("copy", function () {
-    return gulp.src("src/*.{ico,json,php,txt,xml}", { dot: true }).pipe(gulp.dest("dist"));
+gulp.task('copy', function () {
+    return gulp.src('src/*.{ico,json,php,txt,xml}', { dot: true }).pipe(gulp.dest('dist'));
 });

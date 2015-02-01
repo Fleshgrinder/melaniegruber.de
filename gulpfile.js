@@ -1,5 +1,5 @@
 /* jshint node:true */
-"use strict";
+'use strict';
 
 /*!
  * This is free and unencumbered software released into the public domain.
@@ -28,16 +28,25 @@
  * @license http://unlicense.org/ Unlicense.
  */
 
-require("gulp").task("default", ["clean"], function (done) {
-    require("run-sequence")(
-        ["font", "script", "style"],
-        ["html", "image"],
-        "copy",
-        "clean:dist",
-        "compress",
+/**
+ * Whether to generate cache buster strings in templates or not.
+ * @see gulp/task/html-markdown.js
+ * @type {boolean}
+ */
+var cacheBuster = false;
+
+require('gulp').task('default', ['clean'], function (done) {
+    cacheBuster = true;
+    require('run-sequence')(
+        ['fonts', 'scripts', 'styles'],
+        'images',
+        'html',
+        'copy',
+        'clean:dist',
+        'compress',
         done
     );
 });
 
 // Include all other tasks (including this after the default task ensures that the default task has highest priority).
-require("require-dir")("./gulp/task");
+require('require-dir')('./gulp/task');

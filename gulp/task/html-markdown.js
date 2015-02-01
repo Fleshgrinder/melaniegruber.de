@@ -1,5 +1,5 @@
 /* jshint node:true */
-"use strict";
+'use strict';
 
 /*!
  * This is free and unencumbered software released into the public domain.
@@ -27,28 +27,31 @@
  * @copyright 2014 Richard Fussenegger
  * @license http://unlicense.org/ Unlicense.
  */
-
-var $        = require("gulp-load-plugins")();
-var config   = require("../../config.json").page;
-var gulp     = require("gulp");
-var lazyPipe = require("lazypipe");
-var merge    = require("merge");
-var path     = require("path");
+var $         = require('gulp-load-plugins')();
+var config    = require('../../config.json');
+var crypto    = require('crypto');
+var fs        = require('fs');
+var glob      = require('glob');
+var gulp      = require('gulp');
+var imageSize = require('image-size');
+var lazyPipe  = require('lazypipe');
+var merge     = require('merge');
+var path      = require('path');
 
 // Append the source directory to the path module for easy removal from routes.
-path.root = path.dirname(path.dirname(__dirname)) + "\\src";
+path.root = path.dirname(path.dirname(__dirname)) + '\\src';
 
 /**
  * Default options for gulp-front-matter and gulp-multi-renderer.
  * @type {{property: String, templateDir: String}}
  */
-var options = { property: "page", templateDir: "./src/views" };
+var options = { property: 'page', templateDir: './src/views' };
 
 /**
  * Options for gulp-multi-renderer for content insertion.
  * @type {{property: String, templateDir: String, target: String}}
  */
-var optionsContent = merge({ target: "content" }, options);
+var optionsContent = merge({ target: 'content' }, options);
 
 /**
  * Options for gulp-front-matter for meta information extraction.
@@ -63,12 +66,213 @@ var optionsFrontMatter = merge({ remove: true }, options);
 var projects = [];
 
 /**
+ * Hash used to cache generated cache buster strings.
+ * @type {Object}
+ */
+var cacheBusters = {};
+
+/**
+ * Generate web accessible URL with cache buster appended.
+ * @param {string} url - The URL of the asset.
+ * @param {string} pattern - The glob pattern of the files to generate the cache buster hash.
+ * @return {string} The web accessible URL with the cache buster hash appended if applicable.
+ */
+function asset(url, pattern) {
+    // @see gulpfile.js
+    var cacheBuster = cacheBuster || false;
+
+    if (cacheBuster === true) {
+        pattern = 'src' + (pattern || url);
+
+        if (!(pattern in cacheBusters)) {
+            cacheBusters[pattern] = '';
+            glob.sync(pattern).forEach(function (filePath) {
+                cacheBusters[pattern] += fs.readFileSync(filePath, { encoding: 'utf8' });
+            });
+            cacheBusters[pattern] = crypto.createHash('md5').update(cacheBusters[pattern]).digest('hex');
+        }
+
+        return url + '?' + cacheBusters[pattern];
+    }
+
+    return url;
+}
+
+/**
  * Build absolute URL.
  * @param {string|null} path - The absolute URL's path (query, etc.).
  * @return {string} The absolute URL.
  */
 function url(path) {
-    return config.uri.scheme + "://" + config.uri.authority + path;
+    return config.uri.scheme + '://' + config.uri.authority + path;
+}
+
+/**
+ * Render gallery images.
+ * @param {Object} page - The current page's object.
+ * @param {string} type - The gallery type, defaults to `gallery`.
+ * @return {string} The rendered gallery images.
+ */
+function renderGalleryImages(page, type) {
+    var anchor, extension, webPath;
+    var extensions = ['gif', 'jpg', 'png', 'svg'];
+    var rendered   = '';
+
+    var url = function (suffix, webExtension) {
+        webExtension = webExtension || extension;
+
+        if (suffix) {
+            suffix = '-tile-' + suffix;
+
+            if (!fs.existsSync(path.resolve('tmp' + webPath + suffix + '.' + webExtension))) {
+                suffix = '';
+            }
+        } else {
+            suffix = '';
+        }
+
+        return asset(webPath + suffix + '.' + webExtension, webPath + '.' + extension);
+    };
+
+    type = type || 'gallery';
+
+    page[type].forEach(function (title, index) {
+        // Build the absolute web accessible path to the file without file extension.
+        webPath = '/images' + page.route + '/' + type + '/' + title.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-_]/g, '');
+
+        // Determine what kind of file we have.
+        for (var i = 0; i < extensions.length; ++i) {
+            if (fs.existsSync(path.resolve('src' + webPath + '.' + extensions[i]))) {
+                extension = extensions[i];
+                break;
+            }
+        }
+
+        // Vector images can always be displayed in full size, otherwise determine if the source image is greater than
+        // it is displayed in the gallery.
+        anchor = (extension === 'svg') || (imageSize(path.resolve('src' + webPath + '.' + extension)).width > 600);
+
+        // Wrap the rendered image in an anchor for full-screen display if applicable.
+        if (anchor === true) {
+            rendered += '<a class="img-anchor media-element" data-id="' + type + '-' + index + '" href="' + url() + '" target="_blank">';
+        } else {
+            rendered += '<div class="media-element">';
+        }
+
+        if (extension === 'svg') {
+            rendered += '<img alt="' + title + '" height="337.5" src="' + url() + '" width="600">';
+        } else {
+            rendered += '<picture>';
+            if (extension !== 'gif') {
+                rendered += '<source sizes="(min-width: ' + (320 / 16) + 'em) 600px, 100vw" srcset="' +
+                    url(300, 'webp') + ' 300w, ' +
+                    url(450, 'webp') + ' 450w, ' +
+                    url(600, 'webp') + ' 600w, ' +
+                    url(900, 'webp') + ' 900w, ' +
+                    url(1200, 'webp') + ' 1200w, ' +
+                    url(1800, 'webp') + ' 1800w" type="image/webp">'
+                ;
+            }
+            rendered += '<img alt="' + title + '" height="337.5" src="' + url(600) + '" srcset="' +
+                url(900) + ' 1.5x, ' +
+                url(1200) + ' 2x, ' +
+                url(1800) + ' 3x" width="600">' +
+            '</picture>';
+        }
+
+        // Be sure to close the opened media element wrapper tag.
+        rendered += anchor ? '</a>' : '</div>';
+    });
+
+    return rendered;
+}
+
+/**
+ * Render index tile image.
+ * @param {Object} project - The project to render the index tile for.
+ * @return {string} The rendered index tile for the project.
+ */
+function renderIndexTile(project) {
+    var url = function (dimension, extension) {
+        return asset(project.tilePrefix + '-' + dimension + '.' + (extension || 'jpg'), project.tilePattern);
+    };
+
+    var sizes = '';
+    for (var i = 2; i < 13; ++i) {
+        var width = 320 * i;
+        sizes += '(min-width: ' + width + 'px) and (max-width: ' + (width + 20) + 'px) 320px, ';
+    }
+
+    // The source with its sizes attribute covers all devices up to 4k UHD (3840px) as e.g. found in Apple's MacBook Pro
+    // since ~2012. Note that WebP is only supported in the Blink rendering engine; other browsers currently use the
+    // <img> fallback below.
+    //
+    // Browsers without WebP support currently also have no support for the sizes attribute. The srcset attribute has
+    // some support in Apple based software, but only for the x syntax; therefore we use that syntax since we want to
+    // supply the Retina displays with good looking images. This forces us to deliver higher resolution images and waste
+    // bandwidth, since we cannot anticipate the size of the device without the aid of the sizes attribute.
+    return '' +
+        '<source sizes="(max-width: 339px) 320px, ' + sizes + ' 640px" srcset="' +
+            url(320, 'webp') + ' 320w, ' +
+            url(480, 'webp') + ' 480w, ' +
+            url(640, 'webp') + ' 640w, ' +
+            url(960, 'webp') + ' 960w, ' +
+            url(1280, 'webp') + ' 1280w, ' +
+            url(1920, 'webp') + ' 1920w" type="image/webp">' +
+        '<img alt="' + project.title + '" class="img-responsive project-tile" height="640" src="' + url(640) + '" srcset="' +
+            url(960) + ' 1.5x, ' +
+            url(1280) + ' 2x, ' +
+            url(1920) + ' 3x" width="640">';
+}
+
+/**
+ * Render the program icons.
+ * @param {Array} programs - The programs to render.
+ * @param {boolean} whiteBackground - Whether the icons are displayed on white background or not, defaults to FALSE.
+ * @return {string} The rendered program icons.
+ */
+function renderProgramIcons(programs, whiteBackground) {
+    var basename;
+    var rendered = '';
+
+    var url = function (suffix, extension) {
+        suffix = suffix ? '-' + suffix : '';
+        extension = extension || 'svg';
+        return asset(
+            '/images/icons/' + basename + suffix + '.' + extension,
+            '/images/icons/' + basename + '.' + (extension === 'svg' ? 'svg' : 'png')
+        );
+    };
+
+    programs.forEach(function (program) {
+        basename = program.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-_]/g, '');
+
+        if (program.split(' ')[0] === 'Autodesk') {
+            rendered +=
+                '<picture title="' + program + '">' +
+                    '<source srcset="' +
+                        url(24, 'webp') + ', ' +
+                        url(32, 'webp') + ' 1.5x, ' +
+                        url(48, 'webp') + ' 2x, ' +
+                        url(72, 'webp') + ' 3x" type="image/webp">' +
+                    '<img alt="' + program + ' icon." class="project-icon" height="24" src="' +
+                        url(24, 'png') + '" srcset="' +
+                        url(32, 'png') + ' 1.5x, ' +
+                        url(48, 'png') + ' 2x, ' +
+                        url(72, 'png') + ' 3x" width="24">' +
+                '</picture>'
+            ;
+        } else {
+            if (!whiteBackground && basename === 'unity') {
+                basename += '-white';
+            }
+            rendered +=
+                '<img alt="' + program + ' icon." class="project-icon" height="24" src="' + url() + '" title="' + program + '" width="24">'
+            ;
+        }
+    });
+
+    return rendered;
 }
 
 /**
@@ -78,25 +282,27 @@ function url(path) {
  */
 function prepareMetaInfo(vinyl) {
     vinyl[options.property] = merge({
-        config:         config,
-        description:    null,
-        gallery:        [],
-        index:          false,
-        route:          vinyl.path.replace(path.root, "").replace(".md", "").replace(/\\/g, "/"),
-        siteName:       config.siteName,
-        subtitle:       config.siteName,
-        title:          config.siteName,
-        titleSeparator: config.titleSeparator,
-        typeof:         "WebPage",
-        vimeo:          [],
-        url:            url
+        asset:               asset,
+        config:              config,
+        description:         null,
+        gallery:             [],
+        index:               false,
+        renderGalleryImages: renderGalleryImages,
+        renderProgramIcons:  renderProgramIcons,
+        route:               vinyl.path.replace(path.root, '').replace('.md', '').replace(/\\/g, '/'),
+        siteName:            config.siteName,
+        subtitle:            config.siteName,
+        title:               config.siteName,
+        titleSeparator:      config.titleSeparator,
+        vimeo:               [],
+        url:                 url
     }, vinyl[options.property]);
 }
 
 /**
  * Sort function for projects on index page.
- * @param (Object} a - Project "a".
- * @param {Object} b - Project "b".
+ * @param (Object} a - Project 'a'.
+ * @param {Object} b - Project 'b'.
  * @return {boolean}
  */
 function sortProjects(a, b) {
@@ -109,47 +315,10 @@ function sortProjects(a, b) {
  * @return {undefined}
  */
 function prepareIndexMetaInfo(vinyl) {
-    vinyl[options.property].index    = true;
-    vinyl[options.property].route    = "/";
-    vinyl[options.property].projects = projects.sort(sortProjects);
-}
-
-/**
- * Render the program icons.
- * @param {Array} programs - The programs to render.
- * @param {boolean} whiteBackground - Whether the icons are displayed on white background or not, defaults to FALSE.
- * @return {string}
- */
-function renderPrograms(programs, whiteBackground) {
-    var renderedPrograms = '';
-    whiteBackground = whiteBackground || false;
-
-    programs.forEach(function (program) {
-        program = { name: program, file: program.toLowerCase().replace(/ /g, "-") };
-
-        if (program.name.split(" ")[0] === "Autodesk") {
-            renderedPrograms +=
-                '<picture title="' + program.name + '">' +
-                    '<source srcset="/images/icons/' + program.file + '-24.webp, ' +
-                        '/images/icons/' + program.file + '-32.webp 1.5x, ' +
-                        '/images/icons/' + program.file + '-48.webp 2x, ' +
-                        '/images/icons/' + program.file + '-72.webp 3x" type="image/webp">' +
-                    '<img alt="' + program.name + ' icon." class="project-icon" height="24" ' +
-                        'src="/images/icons/' + program.file + '-24.png" ' +
-                        'srcset="/images/icons/' + program.file + '-32.png 1.5x, ' +
-                            '/images/icons/' + program.file + '-48.png 2x, ' +
-                            '/images/icons/' + program.file + '-72.png 3x" width="24">' +
-                '</picture>'
-            ;
-        } else {
-            if (whiteBackground === false && program.file === "unity") {
-                program.file += "-white";
-            }
-            renderedPrograms += '<img alt="' + program.name + ' icon." class="project-icon" height="24" src="/images/icons/' + program.file + '.svg" title="' + program.name + '" width="24">';
-        }
-    });
-
-    return renderedPrograms;
+    vinyl[options.property].index           = true;
+    vinyl[options.property].renderIndexTile = renderIndexTile;
+    vinyl[options.property].route           = '/';
+    vinyl[options.property].projects        = projects.sort(sortProjects);
 }
 
 /**
@@ -159,22 +328,36 @@ function renderPrograms(programs, whiteBackground) {
  */
 function prepareProjectMetaInfo(vinyl) {
     // Make sure we always have date available for each project.
-    var date = vinyl[options.property].date || "";
-
-    vinyl[options.property] = merge({
-        date:           date,
-        programs:       [],
-        renderPrograms: renderPrograms,
-        screenshots:    [],
-        work:           [],
-        year:           date.substring(0, 4)
-    }, vinyl[options.property]);
+    var date = vinyl[options.property].date || '';
 
     // The route still contains /project which we don't want.
-    vinyl[options.property].route = vinyl[options.property].route.replace("/projects", "");
+    vinyl[options.property].route = vinyl[options.property].route.replace('/projects', '');
+
+    vinyl[options.property] = merge({
+        date:        date,
+        programs:    [],
+        screenshots: [],
+        tilePattern: '/images' + vinyl[options.property].route + '/tile.jpg',
+        tilePrefix:  '/images' + vinyl[options.property].route + '/tile',
+        work:        [],
+        year:        date.substring(0, 4)
+    }, vinyl[options.property]);
+
+    // We assume that the project is not part of the index array yet.
+    var push = true;
+
+    // Search the array and if the project is already part of the index array update it.
+    for (var i = 0; i < projects.length; ++i) {
+        if (projects[i].route === vinyl[options.property].route) {
+            projects[i] = vinyl[options.property];
+            push = false;
+        }
+    }
 
     // Push this project to the projects array for the index gallery.
-    projects.push(vinyl[options.property]);
+    if (push === true) {
+        projects.push(vinyl[options.property]);
+    }
 }
 
 /**
@@ -195,8 +378,8 @@ var renderHTML = lazyPipe()
     .pipe($.multiRenderer, options);
 
 // Optimize HTML for distribution.
-gulp.task("html", ["html:markdown", "html:markdown:index"], function () {
-    return gulp.src(["src/**/*.html", "tmp/**/*.html"])
+gulp.task('html', ['html:markdown', 'html:markdown:index'], function () {
+    return gulp.src(['src/**/*.html', 'tmp/**/*.html'])
         .pipe($.htmlMinifier({
             removeComments: true,
             removeCommentsFromCDATA: true,
@@ -218,38 +401,36 @@ gulp.task("html", ["html:markdown", "html:markdown:index"], function () {
                 schemeRelative: true
             }
         }))
-        .pipe(gulp.dest("dist"))
-        .pipe($.size({ title: "html" }));
+        .pipe(gulp.dest('dist'));
 });
 
 // Process all non-special Markdown documents in the source directory.
-gulp.task("html:markdown", function () {
-    return gulp.src(["src/*.md", "!src/index.md"])
+gulp.task('html:markdown', function () {
+    return gulp.src(['src/*.md', '!src/index.md'])
+        .pipe($.cached('html_markdown'))
         .pipe(extractMetaInfo())
         .pipe(renderHTML())
-        .pipe(gulp.dest("tmp"));
+        .pipe(gulp.dest('tmp'));
 });
 
 // Process the special index Markdown document.
-gulp.task("html:markdown:index", ["html:markdown:projects"], function () {
-    return gulp.src("src/index.md")
+gulp.task('html:markdown:index', ['html:markdown:projects'], function () {
+    return gulp.src('src/index.md')
         .pipe(extractMetaInfo())
         .pipe($.tap(prepareIndexMetaInfo))
         .pipe(renderHTML())
-        .pipe(gulp.dest("tmp"));
+        .pipe(gulp.dest('tmp'));
 });
 
 // Process all project Markdown documents.
-gulp.task("html:markdown:projects", function () {
-    // Reset, this is important for the serve task.
-    projects = [];
-
-    return gulp.src("src/projects/*.md")
+gulp.task('html:markdown:projects', function () {
+    return gulp.src('src/projects/*.md')
+        .pipe($.cached('html_markdown_projects'))
         .pipe(extractMetaInfo())
         .pipe($.tap(prepareProjectMetaInfo))
         .pipe(renderHTML())
         .pipe($.rename(function (filePath) {
-            filePath.dirname = "";
+            filePath.dirname = '';
         }))
-        .pipe(gulp.dest("tmp"));
+        .pipe(gulp.dest('tmp'));
 });

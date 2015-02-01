@@ -27,38 +27,46 @@
 
 @import "variables";
 
-body {
-    padding-top: $header-height;
-}
+@media (min-width: (960em / 16)) {
 
-.header {
-    box-shadow: 0 0 1rem #000;
-    left: 0;
-    margin-left: -20%;
-    padding-left: 20%;
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 120%;
-    z-index: 99;
-}
-
-.menu {
-    padding-right: $header-height / 3;
-
-    li {
-        display: inline-block;
+    body {
+        padding-top: $header-height;
     }
-}
 
-.menu-item {
-    display: block;
-    height: 100%;
-    padding: 0 $header-height / 3;
-}
+    .header {
+        box-shadow: 0 0 1rem #000;
+        left: 0;
+        margin-left: -20%;
+        padding-left: 20%;
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 120%;
+        z-index: 99;
+    }
 
-.desktop-hidden {
-    display: none !important;
+    .menu {
+        padding-right: $header-height / 3;
+
+        li {
+            display: inline-block;
+        }
+    }
+
+    .menu-item {
+        display: block;
+        height: 100%;
+        padding: 0 $header-height / 3;
+    }
+
+    .desktop-hidden {
+        display: none !important;
+    }
+
+    .media-element {
+        margin: 20px 20px 0 0;
+    }
+
 }
 
 @media (min-width: (1280em / 16)) {
@@ -76,9 +84,8 @@ body {
         width: calc(100% + 20px);
     }
 
-    .media-video {
+    .media-element {
         float: left;
-        margin: 20px 20px 0 0;
     }
 
 }

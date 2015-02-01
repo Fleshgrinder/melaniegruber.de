@@ -1,5 +1,5 @@
 /* jshint node:true */
-"use strict";
+'use strict';
 
 /*!
  * This is free and unencumbered software released into the public domain.
@@ -28,39 +28,39 @@
  * @license http://unlicense.org/ Unlicense.
  */
 
-var $ = require("gulp-load-plugins")();
-var gulp = require("gulp");
+var $ = require('gulp-load-plugins')();
+var gulp = require('gulp');
 
-gulp.task("style", ["style:scss"], function () {
-    return gulp.src("tmp/styles/**/*.css")
+gulp.task('style', ['styles:scss'], function () {
+    return gulp.src('tmp/styles/**/*.css')
         .pipe($.csso())
-        .pipe(gulp.dest("dist/styles"))
-        .pipe($.size({ title: "style" }));
+        .pipe(gulp.dest('dist/styles'));
 });
 
-gulp.task("style:scss", function () {
+gulp.task('styles:scss', function () {
     var src = function (name) {
-        return "src/styles/" + name + ".scss";
+        return 'src/styles/' + name + '.scss';
     };
 
-    return gulp.src([ src("main"), src("mobile"), src("desktop"), src("placeholder") ])
+    return gulp.src('src/styles/**/*.scss')
+        .pipe($.cached('styles_scss'))
         .pipe($.sass({ precision: 10 }))
-        .on("error", console.error.bind(console))
+        .on('error', console.error.bind(console))
         .pipe($.autoprefixer({
             // We only require flexbox support, which is actually pretty decent:
             // - http://caniuse.com/#feat=flexbox
             // - http://html5please.com/#flexbox
             browsers: [
-                "ie >= 10",
-                "ie_mob >= 10",
-                "ff >= 22",
-                "chrome >= 21",
-                "safari >= 6.1",
-                "opera >= 12.1",
-                "ios >= 7",
-                "android >= 3",
-                "bb >= 10"
+                'ie >= 10',
+                'ie_mob >= 10',
+                'ff >= 22',
+                'chrome >= 21',
+                'safari >= 6.1',
+                'opera >= 12.1',
+                'ios >= 7',
+                'android >= 3',
+                'bb >= 10'
             ]
         }))
-        .pipe(gulp.dest("tmp/styles"));
+        .pipe(gulp.dest('tmp/styles'));
 });

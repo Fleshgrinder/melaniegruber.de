@@ -1,5 +1,5 @@
 /* jshint node:true */
-"use strict";
+'use strict';
 
 /*!
  * This is free and unencumbered software released into the public domain.
@@ -28,11 +28,14 @@
  * @license http://unlicense.org/ Unlicense.
  */
 
-var del  = require("del");
-var gulp = require("gulp");
+var cache = require('gulp-cache');
+var del   = require('del');
+var gulp  = require('gulp');
 
-gulp.task("clean", ["clean:tmp"], del.bind(null, "dist", { dot: true }));
+gulp.task('clean', ['clean:tmp'], del.bind(null, 'dist', { dot: true }));
 
-gulp.task("clean:dist", del.bind(null, ["dist/tmp", "dist/projects", "dist/views"], { dot: true }));
+gulp.task('clean:cache', cache.clearAll);
 
-gulp.task("clean:tmp", del.bind(null, "tmp", { dot: true }));
+gulp.task('clean:dist', del.bind(null, ['dist/tmp', 'dist/projects', 'dist/views'], { dot: true }));
+
+gulp.task('clean:tmp', del.bind(null, 'tmp', { dot: true }));

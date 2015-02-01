@@ -1,5 +1,5 @@
 /* jshint node:true */
-"use strict";
+'use strict';
 
 /*!
  * This is free and unencumbered software released into the public domain.
@@ -28,9 +28,10 @@
  * @license http://unlicense.org/ Unlicense.
  */
 
-var $           = require("gulp-load-plugins")();
-var browserSync = require("browser-sync");
-var gulp        = require("gulp");
+var $           = require('gulp-load-plugins')();
+var browserSync = require('browser-sync');
+var gulp        = require('gulp');
+var runSequence = require('run-sequence');
 
 /**
  * Get browserSync server configuration.
@@ -43,7 +44,7 @@ function server(baseDirectory) {
         notify: false,
         server: {
             baseDir: baseDirectory,
-            middleware: require("connect-modrewrite")(["^/([^\\.]+)$ /$1.html [NC,L]"])
+            middleware: require('connect-modrewrite')(['^/([^\\.]+)$ /$1.html [NC,L]'])
         }
     };
 }
@@ -54,7 +55,7 @@ function server(baseDirectory) {
  * @return {undefined}
  */
 function watchlog(event) {
-    $.util.log("File " + $.util.colors.cyan(event.path) + " was " + $.util.colors.green(event.type) + ", running tasks ...");
+    $.util.log('File ' + $.util.colors.cyan(event.path) + ' was ' + $.util.colors.green(event.type) + ', running tasks ...');
 }
 
 /**
@@ -64,18 +65,22 @@ function watchlog(event) {
  * @return {undefined}
  */
 function watch(watch, tasks) {
-    gulp.watch(watch, tasks).on("change", watchlog);
+    gulp.watch(watch, tasks).on('change', watchlog);
 }
 
-gulp.task("serve", ["html:markdown", "html:markdown:index", "image:dev", "style:scss", "script:flatten"], function () {
-    browserSync(server(["src", "tmp"]));
-    watch(["src/views/**/*.ejs", "src/*.md", "!src/projects/*.md", "!src/index.md"], ["html:markdown", browserSync.reload]);
-    watch(["src/views/**/*.ejs", "src/projects/*.md", "src/index.md"], ["html:markdown:index", browserSync.reload]);
-    watch(["src/styles/**/*.scss", "!src/styles/**/*_*.scss"], ["style:scss", browserSync.reload]);
-    watch("src/scripts/**/*.js", browserSync.reload);
-    watch("src/images/**/*.{gif,jpg,png,svg}", ["image:dev", browserSync.reload]);
+gulp.task('serve', ['images:dev', 'styles:scss'], function () {
+    runSequence(['html:markdown', 'html:markdown:index'], 'serve:dev');
 });
 
-gulp.task("serve:dist", ["default"], function () {
-    browserSync(server("dist"));
+gulp.task('serve:dev', function () {
+    browserSync(server(['src', 'tmp']));
+    watch(['src/views/**/*.ejs', 'src/*.md', '!src/projects/*.md', '!src/index.md'], ['html:markdown', browserSync.reload]);
+    watch(['src/views/**/*.ejs', 'src/projects/*.md', 'src/index.md'], ['html:markdown:index', browserSync.reload]);
+    watch(['src/styles/**/*.scss', '!src/styles/**/*_*.scss'], ['styles:scss', browserSync.reload]);
+    watch('src/scripts/**/*.js', browserSync.reload);
+    watch('src/images/**/*.{gif,jpg,png,svg}', ['images:dev', browserSync.reload]);
+});
+
+gulp.task('serve:dist', ['default'], function () {
+    browserSync(server('dist'));
 });

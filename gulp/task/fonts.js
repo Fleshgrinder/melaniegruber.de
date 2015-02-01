@@ -1,5 +1,5 @@
 /* jshint node:true */
-"use strict";
+'use strict';
 
 /*!
  * This is free and unencumbered software released into the public domain.
@@ -21,27 +21,15 @@
  */
 
 /**
- * Gulp upload tasks.
+ * Gulp font tasks.
  *
  * @author Richard Fussenegger <richard@fussenegger.info>
  * @copyright 2014 Richard Fussenegger
  * @license http://unlicense.org/ Unlicense.
  */
 
-var $      = require("gulp-load-plugins")();
-var config = require("../../config.json");
-var gulp   = require("gulp");
+var gulp = require('gulp');
 
-gulp.task("upload", ["default"], function () {
-    var modes = ["sftp", "ftp"];
-
-    for (var i = 0; i < 2; ++i) {
-        if (config[modes[i]]) {
-            return gulp.src("dist/**/*", { dot: true })
-                .pipe($.cached("upload"))
-                .pipe($[modes[i]](config[modes[i]]));
-        }
-    }
-
-    throw new $.util.PluginError("upload", "No FTP nor SFTP configuration found.");
+gulp.task('fonts', function () {
+    return gulp.src('src/fonts/**/*.{woff,woff2}').pipe(gulp.dest('dist/fonts'));
 });

@@ -25,6 +25,8 @@
 // @license http://unlicense.org/ Unlicense.
 // ---------------------------------------------------------------------------------------------------------------------
 
+@import "../variables";
+
 @mixin transition($property, $duration: $animation-duration, $function: $animation-function, $delay: "") {
     @if type-of($property) == list {
         transition: $duration $function unquote($delay);

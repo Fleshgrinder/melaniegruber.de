@@ -25,6 +25,9 @@
 // @license http://unlicense.org/ Unlicense.
 // ---------------------------------------------------------------------------------------------------------------------
 
+@import "variables";
+@import "mixins/transition";
+
 .index {
 
     .gallery {
@@ -88,6 +91,7 @@
         justify-content: center;
         left: 0;
         margin: 0;
+        overflow: hidden;
         text-align: center;
         text-transform: uppercase;
         width: 100%;
@@ -97,6 +101,7 @@
     .project-title,
     .project-subtitle {
         font-size: inherit;
+        font-weight: bold;
         padding: 0;
         width: 75%;
     }

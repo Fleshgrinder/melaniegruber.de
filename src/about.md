@@ -1,27 +1,26 @@
 ---
 
 title: About
-description: Kitty ipsum dolor …
+gallery:
+    - Melanie Gruber
 
 ---
 
+<q>“Around here, however, we don’t look backwards for very long. We keep moving forward, opening up new doors and doing
+new things, because we're curious… and curiosity keeps leading us down new paths.” — 
+<cite><a href="https://en.wikiquote.org/wiki/Walt_Disney" target="_blank">Walt Disney</a></cite></q>
 
+I think looking backwards and knowing where we come from is very important for an artist. This is why I am very
+interested in traditional art and like to go to museums. Further, I chose to study because I wanted to have a solid
+theoretical background for my professional work as an artist.
 
-Kitty ipsum dolor sit amet, iaculis bibendum toss the mousie sagittis chase the red dot give me fish, attack stuck in a 
-tree hiss nullam run bibendum. Zzz tincidunt a cras nec vel in viverra rip the couch, vehicula tortor nam rutrum. 
-Vehicula tincidunt a scratched chuf, sollicitudin leap stuck in a tree catnip give me fish nibh. Sleep in the sink quis 
-sollicitudin sniff consectetur orci turpis, puking sleep in the sink egestas sleep in the sink meow. Orci turpis purr 
-amet justo, run claw meow in viverra etiam iaculis enim. Litter box consectetur consectetur suspendisse nam, consectetur 
-attack sagittis sunbathe tail flick. Rhoncus catnip attack your ankles shed everywhere quis nunc, kittens dolor vehicula 
-catnip sleep on your keyboard.
+However, it is most important for me to keep moving forward – improving my skills, trying out different styles, and
+learning new techniques. This is why I always search for new things to fuel my creativity, and constantly look at new
+technologies. I am also very passionate about being an artist in the games industry, and part of that community.
 
-Nam hairball non vel run sagittis, pellentesque puking non hiss et jump on the table. Vulputate sleep in the sink attack 
-your ankles feed me, etiam shed everywhere et et kittens toss the mousie. Catnip egestas adipiscing nibh vel, pharetra 
-ac dolor zzz attack your ankles. Justo iaculis tortor iaculis leap claw, hiss tristique tempus orci turpis leap. 
-Stretching attack your ankles iaculis meow sleep in the sink tincidunt a, sleep on your face puking nullam eat judging 
-you accumsan. Toss the mousie amet rutrum etiam, claw in viverra neque jump tail flick nibh. 
-
-Drop me a line via [contact@melaniegruber.de](mailto:contact@melaniegruber.de) or via one of the following sites.  
+It is my curiosity that always leaves me wanting to learn and experience more. And I am very curious about the new paths
+it will lead me down in the future. If you are curious too, contact me to learn more about my personality and passions:
+[contact@melaniegruber.de](mailto:contact@melaniegruber.de)  
 
 <section class="additional-links">
     <h2 class="sr-only">Weblinks</h2>
