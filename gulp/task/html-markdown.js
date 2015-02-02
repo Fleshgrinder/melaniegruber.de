@@ -151,16 +151,8 @@ function renderGalleryImages(page, type) {
             }
         }
 
-        // Vector images can always be displayed in full size, otherwise determine if the source image is greater than
-        // it is displayed in the gallery.
-        anchor = (extension === 'svg') || (imageSize(path.resolve('src' + webPath + '.' + extension)).width > 600);
-
-        // Wrap the rendered image in an anchor for full-screen display if applicable.
-        if (anchor === true) {
-            rendered += '<a class="img-anchor media-element" data-id="' + type + '-' + index + '" href="' + url() + '" target="_blank">';
-        } else {
-            rendered += '<div class="media-element">';
-        }
+        var size = imageSize(path.resolve('src' + webPath + '.' + extension));
+        rendered += '<a class="img-anchor media-element" data-height="' + size.height + '" data-id="' + type + '-' + index + '" data-width="' + size.width + '" href="' + url() + '" target="_blank">';
 
         if (extension === 'svg') {
             rendered += '<img alt="' + title + '" height="337.5" src="' + url() + '" width="600">';
@@ -184,7 +176,7 @@ function renderGalleryImages(page, type) {
         }
 
         // Be sure to close the opened media element wrapper tag.
-        rendered += anchor ? '</a>' : '</div>';
+        rendered += '</a>';
     });
 
     return rendered;

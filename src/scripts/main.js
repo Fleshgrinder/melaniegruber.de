@@ -125,7 +125,9 @@
                 // Create the image from the anchor's target.
                 var fullScreenImage = new Image();
                 fullScreenImage.alt = '';
+                fullScreenImage.height = element.dataset.height;
                 fullScreenImage.src = element.href;
+                fullScreenImage.width = element.dataset.width;
 
                 // Create a wrapping element for hiding the element in the default DOM.
                 fullScreenElement = document.createElement('div');
