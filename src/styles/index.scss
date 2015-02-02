@@ -28,99 +28,95 @@
 @import "variables";
 @import "mixins/transition";
 
-.index {
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+}
 
-    .gallery {
-        display: flex;
-        flex-wrap: wrap;
-    }
+.intro,
+.project {
+    align-items: center;
+    color: #fff !important; // Overwrite :active, :focus, and :hover at once.
+    display: flex;
+    flex-basis: 100%;
+    justify-content: center;
+}
 
-    .intro,
-    .project {
-        align-items: center;
-        color: #fff !important; // Overwrite :active, :focus, and :hover at once.
-        display: flex;
-        flex-basis: 100%;
-        justify-content: center;
-    }
-
-    @for $i from 2 through 16 {
-        @media (min-width: 320px * $i) {
-            .intro,
-            .project {
-                flex-basis: (100% / $i);
-            }
+@for $i from 2 through 16 {
+    @media (min-width: 320px * $i) {
+        .intro,
+        .project {
+            flex-basis: (100% / $i);
         }
     }
+}
 
-    .intro-content {
-        font-size: 24px;
-        font-weight: 200;
-        padding: 48px;
-    }
+.intro-content {
+    font-size: 24px;
+    font-weight: 200;
+    padding: 48px;
+}
 
-    .project {
-        font-size: 24px;
-        line-height: 1;
-        overflow: hidden;
-    }
+.project {
+    font-size: 24px;
+    line-height: 1;
+    overflow: hidden;
+}
+
+.project-tile {
+    @include transition(transform);
+}
+
+.project:active,
+.project:focus,
+.project:hover {
+    outline: none;
 
     .project-tile {
-        @include transition(transform);
+        transform: scale(1.2) rotate(10deg);
     }
+}
 
-    .project:active,
-    .project:focus,
-    .project:hover {
-        outline: none;
+.project:focus {
+    border: 1px dotted #fff;
+}
 
-        .project-tile {
-            transform: scale(1.2) rotate(10deg);
-        }
-    }
+.project-overlay {
+    align-items: center;
+    background-color: rgba(0, 0, 0, .8);
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+    z-index: 1;
+}
 
-    .project:focus {
-        border: 1px dotted #fff;
-    }
+.project-title,
+.project-subtitle {
+    font-size: inherit;
+    font-weight: bold;
+    padding: 0;
+    width: 75%;
+}
 
-    .project-overlay {
-        align-items: center;
-        background-color: rgba(0, 0, 0, .8);
-        display: flex;
-        flex-flow: column;
-        justify-content: center;
+.project-subtitle {
+    margin-bottom: -12px;
+    margin-top: 18px;
+
+    &:before {
+        background-color: rgba(255, 255, 255, .5);
+        height: 1px;
         left: 0;
-        margin: 0;
-        overflow: hidden;
-        text-align: center;
-        text-transform: uppercase;
+        top: -11px;
         width: 100%;
-        z-index: 1;
     }
+}
 
-    .project-title,
-    .project-subtitle {
-        font-size: inherit;
-        font-weight: bold;
-        padding: 0;
-        width: 75%;
-    }
-
-    .project-subtitle {
-        margin-bottom: -12px;
-        margin-top: 18px;
-
-        &:before {
-            background-color: rgba(255, 255, 255, .5);
-            height: 1px;
-            left: 0;
-            top: -11px;
-            width: 100%;
-        }
-    }
-
-    .project-icon {
-        margin: 0 (24px / 4) (24px / 2);
-    }
-
+.project-icon {
+    margin: 0 (24px / 4) (24px / 2);
 }
