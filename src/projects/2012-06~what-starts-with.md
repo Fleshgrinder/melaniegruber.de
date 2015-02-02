@@ -1,7 +1,6 @@
 ---
 
 title: What Starts With …?
-date: 2012-06
 description: Android-App for Tablets (Bachelor’s Project)
 programs:
     - Adobe Photoshop

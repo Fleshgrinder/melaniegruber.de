@@ -2,7 +2,6 @@
 
 title: Animal Morphology
 description: Master’s Thesis
-date: 2014-11
 programs:
     - Adobe InDesign
 work:

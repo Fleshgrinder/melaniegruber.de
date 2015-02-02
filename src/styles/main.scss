@@ -114,35 +114,37 @@ a {
     }
 }
 
-.menu-item:focus {
+.span-anchor:focus {
     outline-color: nth($color-palette, 4);
 }
 
 // We need the span child in order to increase the click area for touch devices.
-.menu-item span,
-main a {
+.span-anchor span,
+.text-content a {
     @include transition(color);
     position: relative;
 }
 
-.menu-item span:before,
-main a:before {
+.span-anchor span:before,
+.text-content a:before {
     @include transition(transform);
     background-color: nth($color-palette, 4);
     bottom: -2px;
     content: "";
     height: 1px;
+    left: 0;
     position: absolute;
+    right: 0;
     transform: scaleX(0);
     width: 100%;
 }
 
-.menu-item:active span:before,
-.menu-item:focus span:before,
-.menu-item:hover span:before,
-main a:active:before,
-main a:focus:before,
-main a:hover:before {
+.span-anchor:active span:before,
+.span-anchor:focus span:before,
+.span-anchor:hover span:before,
+.text-content a:active:before,
+.text-content a:focus:before,
+.text-content a:hover:before {
     transform: scaleX(1);
 }
 
@@ -228,6 +230,60 @@ main p {
     list-style: none;
     margin: 0;
     padding: 0;
+}
+
+.pager-wrapper {
+    background-color: #fff;
+    height: 64px;
+    line-height: 64px;
+    width: 100%;
+}
+
+.pager-top {
+    height: 44px; // Compensate bottom padding of div.text which wraps everything.
+}
+
+.pager-bottom {
+    padding: 0 20px;
+}
+
+.pager {
+    max-width: 600px;
+
+    a {
+        display: block;
+        width: 50%;
+
+        &:before,
+        &:after {
+            display: inline-block;
+            font-size: 32px;
+            vertical-align: -3px;
+        }
+    }
+}
+
+.pager-next {
+    float: right;
+    margin-right: -20px;
+    padding-right: 20px;
+    text-align: right;
+
+    &:after {
+        content: "›";
+        padding-left: 10px;
+    }
+}
+
+.pager-previous {
+    float: left;
+    margin-left: -20px;
+    padding-left: 20px;
+
+    &:before {
+        content: "‹";
+        padding-right: 10px;
+    }
 }
 
 @import "index";

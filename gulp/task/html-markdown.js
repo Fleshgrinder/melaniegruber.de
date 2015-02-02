@@ -303,16 +303,6 @@ function prepareMetaInfo(vinyl) {
 }
 
 /**
- * Sort function for projects on index page.
- * @param (Object} a - Project 'a'.
- * @param {Object} b - Project 'b'.
- * @return {boolean}
- */
-function sortProjects(a, b) {
-    return (b.date + b.title).localeCompare(a.date + a.title);
-}
-
-/**
  * Prepare meta information for index document.
  * @param {Object} vinyl - Virtual file of the currently processed Markdown document.
  * @return {undefined}
@@ -321,7 +311,7 @@ function prepareIndexMetaInfo(vinyl) {
     vinyl[options.property].index           = true;
     vinyl[options.property].renderIndexTile = renderIndexTile;
     vinyl[options.property].route           = '/';
-    vinyl[options.property].projects        = projects.sort(sortProjects);
+    vinyl[options.property].projects        = projects;
 }
 
 /**
@@ -330,37 +320,25 @@ function prepareIndexMetaInfo(vinyl) {
  * @return {undefined}
  */
 function prepareProjectMetaInfo(vinyl) {
-    // Make sure we always have date available for each project.
-    var date = vinyl[options.property].date || '';
-
     // The route still contains /project which we don't want.
-    vinyl[options.property].route = vinyl[options.property].route.replace('/projects', '');
+    vinyl[options.property].route = vinyl[options.property].route.replace(/\/projects\/[0-9]{4}(-[0-9]{1,2}){0,2}~/, '/');
 
-    vinyl[options.property] = merge({
-        date:        date,
+    // Get the index of this project in the projects array.
+    for (var i = 0; i < projects.length; ++i) {
+        if (projects[i].route === vinyl[options.property].route) {
+            break;
+        }
+    }
+
+    // Merge default properties with the ones defined in the project's file and the ones generated at the beginning.
+    // Afterwards update all existing references to this object.
+    projects[i] = vinyl[options.property] = merge({
         programs:    [],
         screenshots: [],
         tilePattern: '/images' + vinyl[options.property].route + '/tile.jpg',
         tilePrefix:  '/images' + vinyl[options.property].route + '/tile',
-        work:        [],
-        year:        date.substring(0, 4)
-    }, vinyl[options.property]);
-
-    // We assume that the project is not part of the index array yet.
-    var push = true;
-
-    // Search the array and if the project is already part of the index array update it.
-    for (var i = 0; i < projects.length; ++i) {
-        if (projects[i].route === vinyl[options.property].route) {
-            projects[i] = vinyl[options.property];
-            push = false;
-        }
-    }
-
-    // Push this project to the projects array for the index gallery.
-    if (push === true) {
-        projects.push(vinyl[options.property]);
-    }
+        work:        []
+    }, vinyl[options.property], projects[i]);
 }
 
 /**
@@ -410,7 +388,6 @@ gulp.task('html', ['html:markdown', 'html:markdown:index'], function () {
 // Process all non-special Markdown documents in the source directory.
 gulp.task('html:markdown', function () {
     return gulp.src(['src/*.md', '!src/index.md'])
-        .pipe($.cached('html_markdown'))
         .pipe(extractMetaInfo())
         .pipe(renderHTML())
         .pipe(gulp.dest('tmp'));
@@ -427,13 +404,52 @@ gulp.task('html:markdown:index', ['html:markdown:projects'], function () {
 
 // Process all project Markdown documents.
 gulp.task('html:markdown:projects', function () {
+    // Prepare the projects array for linking of next/previous projects and the index page.
+    if (projects.length === 0) {
+        // Go through the projects directory and fill the array with the available information.
+        glob.sync('src/projects/*.md').forEach(function (filePath) {
+            var basename = path.basename(filePath, '.md').split('~');
+
+            if (basename.length !== 2) {
+                throw new $.util.PluginError(
+                    'html:markdown:projects',
+                    "A project's file name must contain the date and the title separated by a tilde (~) character."
+                );
+            }
+
+            projects.push({
+                date:     basename[0],
+                next:     undefined,
+                previous: undefined,
+                route:    '/' + basename[1],
+                year:     basename[0].substring(0, 4)
+            });
+        });
+
+        // Sort the projects in descending order.
+        projects.sort(function (a, b) {
+            return (b.date + b.route).localeCompare(a.date + a.route);
+        });
+
+        // Go through the array again and insert next/previous pointers.
+        for (var i = 0, n = 1, p = -1; i < projects.length; ++i, ++n, ++p) {
+            if (n in projects) {
+                projects[i].next = projects[n];
+            }
+            if (p in projects) {
+                projects[i].previous = projects[p];
+            }
+        }
+    }
+
+    // Render the projects.
     return gulp.src('src/projects/*.md')
-        .pipe($.cached('html_markdown_projects'))
         .pipe(extractMetaInfo())
         .pipe($.tap(prepareProjectMetaInfo))
         .pipe(renderHTML())
         .pipe($.rename(function (filePath) {
-            filePath.dirname = '';
+            filePath.basename = filePath.basename.split('~')[1];
+            filePath.dirname  = '';
         }))
         .pipe(gulp.dest('tmp'));
 });

@@ -1,6 +1,6 @@
 # TODO
-* Direct navigation to previous/next project.
 * Styles for `:focus` in galleries.
+* Work in Progress (WIP) badge.
 * Test with mobile devices.
 * Test with Apple devices.
 * Prepare animated GIFs in all sizes, resizing destroys animation:

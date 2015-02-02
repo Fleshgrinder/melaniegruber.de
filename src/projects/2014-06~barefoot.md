@@ -1,7 +1,6 @@
 ---
 
 title: BareFoot
-date: 2014-06
 description: Game (Master’s Project)
 programs:
     - Adobe Photoshop

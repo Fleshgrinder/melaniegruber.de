@@ -18,6 +18,9 @@
         <div class="text-content">
             <%- contents %>
         </div>
+        <% if (page.next || page.previous) { %>
+            <div class="pager-top pager-wrapper"><% include partials/pager %></div>
+        <% } %>
     </div>
     <% if (page.gallery || page.screenshots || page.vimeo) { %>
         <div id="gallery">
@@ -49,6 +52,9 @@
                 </section>
             <% } %>
         </div>
+        <% if (page.next || page.previous) { %>
+            <div class="pager-bottom pager-wrapper"><% include partials/pager %></div>
+        <% } %>
     <% } %>
 </div>
 <% include partials/foot %>

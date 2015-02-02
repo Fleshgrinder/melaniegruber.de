@@ -94,7 +94,6 @@ gulp.task('images:resize:gallery', function () {
 gulp.task('images:resize:gallery:tiles', function () {
     var resize = function (dimension) {
         return gulp.src('src/images/**/{gallery,screenshots}/*.{jpg,png}')
-            .pipe($.cached('images_resize_projects_tile_' + dimension))
             .pipe($.ignore.exclude(function (vinyl) {
                 var extension = path.extname(vinyl.path);
                 return fs.existsSync(vinyl.path.replace(extension, '-tile' + extension));
@@ -102,11 +101,11 @@ gulp.task('images:resize:gallery:tiles', function () {
             .pipe($.ignore.exclude(function (vinyl) {
                 return imageSize(vinyl.path).width < dimension;
             }))
-            .pipe($.rename(function (path) {
-                if (!path.basename.match(/-tile$/)) {
-                    path.basename += '-tile';
+            .pipe($.rename(function (filePath) {
+                if (!filePath.basename.match(/-tile$/)) {
+                    filePath.basename += '-tile';
                 }
-                path.basename += '-' + dimension;
+                filePath.basename += '-' + dimension;
             }))
             //.pipe($.cache(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length)))
             .pipe(concurrentTransform($.imageResize(resizeOptions(dimension, ((dimension / 16) * 9))), os.cpus().length))
@@ -126,7 +125,6 @@ gulp.task('images:resize:gallery:tiles', function () {
 gulp.task('images:resize:icons', function () {
     var resize = function (dimension) {
         return gulp.src('src/images/icons/*.png')
-            .pipe($.cached('images_resize_icons_' + dimension))
             .pipe($.rename({ suffix: '-' + dimension }))
             //.pipe($.cache(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length)))
             .pipe(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length))
@@ -144,7 +142,6 @@ gulp.task('images:resize:icons', function () {
 gulp.task('images:resize:logo', function () {
     var resize = function (dimension) {
         return gulp.src('src/images/logo/icon.png')
-            .pipe($.cached('images_resize_logo_' + dimension))
             .pipe($.rename({ suffix: '-' + dimension }))
             //.pipe($.cache(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length)))
             .pipe(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length))
@@ -163,7 +160,6 @@ gulp.task('images:resize:logo', function () {
 gulp.task('images:resize:tiles', function () {
     var resize = function (dimension) {
         return gulp.src('src/images/**/tile.jpg')
-            .pipe($.cached('images_resize_tiles_' + dimension))
             .pipe($.rename({ suffix: '-' + dimension }))
             //.pipe($.cache(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length)))
             .pipe(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length))

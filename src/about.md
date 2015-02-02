@@ -20,6 +20,7 @@ technologies. I am also very passionate about being an artist in the games indus
 
 It is my curiosity that always leaves me wanting to learn and experience more. And I am very curious about the new paths
 it will lead me down in the future. If you are curious too, contact me to learn more about my personality and passions:
+
 [contact@melaniegruber.de](mailto:contact@melaniegruber.de)  
 
 <section class="additional-links">

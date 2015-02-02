@@ -38,6 +38,8 @@
     <title><%= page.title %><%= page.titleSeparator %><%= page.subtitle %></title>
     <meta content="<%= page.description %>" name="description" property="og:description">
     <link href="<%= page.url(page.route) %>" property="og:url" rel="canonical">
+    <% if (page.next) { %><link href="<%= page.next.route %>" rel="next"><% } %>
+    <% if (page.previous) { %><link href="<%= page.previous.route %>" rel="prev"><% } %>
 
     <meta property="og:image" content="<%= page.url(page.asset('/images/logo/icon-270.png')) %>">
     <meta property="og:site_name" content="<%= page.siteName %>">
@@ -54,13 +56,13 @@
             <span class="abs abs-before-after desktop-hidden menu-open menu-toggle"></span>
             <ul class="menu">
                 <li class="abs abs-before-after desktop-hidden menu-close menu-toggle"></li>
-                <% [ "Work", "About", "Impressum"].forEach(function (title, index) { %>
+                <% [ "Projects", "About", "Impressum"].forEach(function (title, index) { %>
                 <% var route = "/" + (index === 0 ? "" : title.toLowerCase()); %>
                 <li>
                     <% if (route === page.route) { %>
-                    <em class="menu-item"><%= title %></em>
+                        <em class="menu-item"><%= title %></em>
                     <% } else { %>
-                    <a class="menu-item" href="<%= route %>"><span><%= title %></span></a>
+                        <a class="menu-item span-anchor" href="<%= route %>"><span><%= title %></span></a>
                     <% } %>
                 </li>
                 <% }); %>

@@ -88,4 +88,17 @@
         float: left;
     }
 
+    .pager-wrapper {
+        bottom: 0;
+        height: 64px;
+        left: 0;
+        padding: 0 20px;
+        position: fixed;
+        width: 640px;
+    }
+
+    .pager-bottom {
+        display: none !important;
+    }
+
 }

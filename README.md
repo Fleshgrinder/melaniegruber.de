@@ -17,10 +17,15 @@ Details of the various components a project is made of are explained in subseque
 the actions which are necessary to create a new project:
 
 1. Check out the repository to your local computer.
-2. Create the new project's markdown file in `/src/projects/%project-name%.md`.
-    * *NOTE:* The `%project-name%` is the actual name of the project with special characters removed and spaces replaced
-      with dashes. This means in effect that `My Awesome Project’s Name` translates to `/src/projects/my-awesome-projects-name.md`.
-3. Enter the meta information and project text in the file, according to the available features (see subsequent sections).
+2. Create the new project's markdown file in `/src/projects/%project-date%~%project-name%.md`.
+    * **NOTE:** The `%project-date%` is mandatory, in ISO 8601 format, and must contain at least the project’s year,
+      month and day are optional. It is possible to use an insane value for a work in progress project (e.g. *3000*),
+      any project with a year part greater than the current year is considered to be a work in progress project.
+    * **NOTE:** The `%project-name%` is the actual name of the project with special characters removed and spaces
+      replaced with dashes. This means in effect that `My Awesome Project’s Name` translates to
+      `/src/projects/2000-01-01~my-awesome-projects-name.md`.
+3. Enter the meta information and project text in the file, according to the available features (see subsequent
+   sections).
 4. Create a new directory for the project's images: `/src/images/%project-name%`
 5. Create the project's tile image for the index page at `/src/images/%project-name%/tile.jpg`.
 6. Create a gallery `/src/images/%project-name%/gallery` and/or screenshots `/src/images/%project-name%/screenshots`.
@@ -66,7 +71,6 @@ typeof: The schema.org type of the actual webpage (defaults to "WebPage" and for
 The following meta information is only supported by projects and may be included:
 
 ```yaml
-date: The date when the project was finished given as ISO 8601 date string (defaults to "").
 programs:
    - A YAML list that contains all programs which where used to create the project (defaults to empty list).
 screenshots:

@@ -1,7 +1,6 @@
 ---
 
 title: Let’s Roll
-date: 2011-06
 description: Short Film (Bachelor’s Project)
 programs:
     - Autodesk Maya 

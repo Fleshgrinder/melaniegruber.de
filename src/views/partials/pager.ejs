@@ -1,0 +1,8 @@
+<div class="clearfix pager">
+    <% if (page.previous) { %>
+        <a class="pager-previous span-anchor" href="<%= page.previous.route %>"><span>Previous Project</span></a>
+    <% } %>
+    <% if (page.next) { %>
+        <a class="pager-next span-anchor" href="<%= page.next.route %>"><span>Next Project</span></a>
+    <% } %>
+</div>

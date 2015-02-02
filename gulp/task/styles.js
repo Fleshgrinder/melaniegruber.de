@@ -43,7 +43,6 @@ gulp.task('styles:scss', function () {
     };
 
     return gulp.src('src/styles/**/*.scss')
-        .pipe($.cached('styles_scss'))
         .pipe($.sass({ precision: 10 }))
         .on('error', console.error.bind(console))
         .pipe($.autoprefixer({
