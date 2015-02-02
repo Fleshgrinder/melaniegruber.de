@@ -28,12 +28,5 @@
 @import "../variables";
 
 @mixin transition($property, $duration: $animation-duration, $function: $animation-function, $delay: "") {
-    @if type-of($property) == list {
-        transition: $duration $function unquote($delay);
-        @each $p in $property {
-            transition-property: $p;
-        }
-    } @else {
-        transition: $property $duration $function unquote($delay);
-    }
+    transition: $property $duration $function unquote($delay);
 }

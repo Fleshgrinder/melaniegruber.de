@@ -1,5 +1,5 @@
 # TODO
-* Styles for `:focus` in galleries.
+* Next/previous for gallery images.
 * Work in Progress (WIP) badge.
 * Test with mobile devices.
 * Test with Apple devices.

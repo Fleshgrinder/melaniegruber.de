@@ -26,6 +26,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 
 @import "variables";
+@import "mixins/transition";
 
 .additional-links {
     padding-top: 20px;
@@ -69,7 +70,7 @@
     padding: 20px 0;
 
     img {
-        margin-right: 10px;
+        margin: 0 10px 0 0;
     }
 }
 
@@ -98,6 +99,15 @@
     background-color: #000;
     margin: 20px 0 0;
     max-width: 600px;
+    overflow: hidden;
+
+    img {
+        @include transition(transform);
+    }
+
+    &:focus img {
+        transform: scale(1.2);
+    }
 }
 
 .media-video {

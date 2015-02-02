@@ -208,16 +208,27 @@ main p {
 }
 
 .logo {
-    color: nth($color-palette, 5);
+    color: nth($color-palette, 5) !important;
     display: block;
     float: left;
     font-size: 18px;
     font-weight: bold;
-    margin-left: 24px;
+    padding: 0 20px;
     text-transform: uppercase;
 
     img {
+        @include transition(transform);
         margin-right: 12px;
+    }
+
+    &:active img,
+    &:focus img,
+    &:hover img {
+        transform: scale(1.2) rotate(-10deg);
+    }
+
+    &:focus {
+        outline-color: nth($color-palette, 4);
     }
 }
 
