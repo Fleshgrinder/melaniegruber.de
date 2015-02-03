@@ -3,13 +3,6 @@
 * Work in Progress (WIP) badge.
 * Test with mobile devices.
 * Test with Apple devices.
-* Prepare animated GIFs in all sizes, resizing destroys animation:
-    * 300
-    * 450
-    * 600
-    * 900
-    * 1200
-    * 1800
 * [Facebook URL Debugger](https://developers.facebook.com/tools/debug/)
 * Write a wrapper module for FrontMatter and EJS which has a hook, or extend gulp-front-matter with such a hook.
 * gulp-cache is disabled during builds because the following error is emitted:
