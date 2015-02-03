@@ -1,5 +1,4 @@
 # TODO
-* Next/previous for gallery images.
 * Work in Progress (WIP) badge.
 * Test with mobile devices.
 * Test with Apple devices.
@@ -25,3 +24,5 @@ Possibly unhandled Error: No path specified! Can not get relative.
     at Promise._settlePromiseFromHandler (d:\Projects\melaniegruber.de\www\node_modules\gulp-cache\node_modules\bluebird\js\main\promise.js:475:31)
     at Promise._settlePromiseAt (d:\Projects\melaniegruber.de\www\node_modules\gulp-cache\node_modules\bluebird\js\main\promise.js:554:18)
 ```
+* It is a shame that I ended up requiring inline styles for the full-size image gallery. There is definitely a way to
+  solve it without the inline styles. Find it!

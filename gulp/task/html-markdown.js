@@ -139,7 +139,9 @@ function renderGalleryImages(page, type) {
 
     type = type || 'gallery';
 
-    page[type].forEach(function (title, index) {
+    page.imageIndex = page.imageIndex || 0;
+
+    page[type].forEach(function (title) {
         // Build the absolute web accessible path to the file without file extension.
         webPath = '/images' + page.route + '/' + type + '/' + title.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-_]/g, '');
 
@@ -152,7 +154,15 @@ function renderGalleryImages(page, type) {
         }
 
         var size = imageSize(path.resolve('src' + webPath + '.' + extension));
-        rendered += '<a class="img-anchor media-element" data-height="' + size.height + '" data-id="' + type + '-' + index + '" data-width="' + size.width + '" href="' + url() + '" target="_blank">';
+        rendered +=
+            '<a class="img-anchor media-element" ' +
+                'data-height="' + size.height + '" ' +
+                'data-index="' + page.imageIndex + '" ' +
+                'data-width="' + size.width + '" ' +
+                'href="' + url() + '" ' +
+                'id="media-element-' + page.imageIndex + '" ' +
+                'target="_blank">'
+        ;
 
         if (extension === 'svg') {
             rendered += '<img alt="' + title + '" height="337.5" src="' + url() + '" width="600">';
@@ -177,6 +187,9 @@ function renderGalleryImages(page, type) {
 
         // Be sure to close the opened media element wrapper tag.
         rendered += '</a>';
+
+        // Increase the global counter for the next image (no matter which gallery type).
+        ++page.imageIndex;
     });
 
     return rendered;

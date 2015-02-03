@@ -57,4 +57,21 @@
         <% } %>
     <% } %>
 </div>
+<% if (page.gallery || page.screenshots) { %>
+<% var total = (page.gallery ? page.gallery.length : 0) + (page.screenshots ? page.screenshots.length : 0); %>
+    <div id="full-screen" class="full-screen sr-only">
+        <nav class="full-screen-nav">
+            <% if (total > 1) { %>
+                <a id="full-screen-previous" href="#">◀</a>
+                <b>
+                    <span id="full-screen-current"></span>
+                    /
+                    <span id="full-screen-total"><%= total %></span>
+                </b>
+                <a id="full-screen-next" href="#">▶</a>
+            <% } %>
+            <a id="full-screen-close" href="#">✖</a>
+        </nav>
+    </div>
+<% } %>
 <% include partials/foot %>
