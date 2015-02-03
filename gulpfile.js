@@ -24,8 +24,8 @@
  * Default gulp task and task loading file.
  *
  * @author Richard Fussenegger <richard@fussenegger.info>
- * @copyright 2014 Richard Fussenegger
- * @license http://unlicense.org/ Unlicense.
+ * @copyright Copyright (c) 2014-15 Richard Fussenegger
+ * @license http://unlicense.org/ PD
  */
 
 /**

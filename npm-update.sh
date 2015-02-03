@@ -22,9 +22,9 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # Because npm pretty much always fails to install the dependencies.
 #
-# @author Richard Fussenegger <richard@fussenegger.info>
-# @copyright 2014-15 Richard Fussenegger
-# @license http://unlicense.org/ PD
+# AUTHOR: Richard Fussenegger <richard@fussenegger.info>
+# COPYRIGHT: Copyright (c) 2014-15 Richard Fussenegger
+# LICENSE: http://unlicense.org/ PD
 # ----------------------------------------------------------------------------------------------------------------------
 
 npm update npm --global

@@ -24,8 +24,8 @@
  * Gulp cleanup tasks.
  *
  * @author Richard Fussenegger <richard@fussenegger.info>
- * @copyright 2014 Richard Fussenegger
- * @license http://unlicense.org/ Unlicense.
+ * @copyright Copyright (c) 2014-15 Richard Fussenegger
+ * @license http://unlicense.org/ PD
  */
 
 var $ = require('gulp-load-plugins')();
@@ -124,6 +124,12 @@ gulp.task('clean:dist', function (done) {
 
     // All of these directories are always unused and we can directly delete them.
     del.sync(['dist/tmp', 'dist/projects', 'dist/views'], { dot: true });
+
+    // Do not attempt to delete all files if this script is executed on the server.
+    if (require('os').platform() === 'linux' && fs.existsSync('/etc/nginx')) {
+        done();
+        return;
+    }
 
     if (fs.existsSync(checksumsPath)) {
         var filePath, newChecksums;

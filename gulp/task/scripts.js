@@ -24,8 +24,8 @@
  * Gulp script tasks.
  *
  * @author Richard Fussenegger <richard@fussenegger.info>
- * @copyright 2014 Richard Fussenegger
- * @license http://unlicense.org/ Unlicense.
+ * @copyright Copyright (c) 2014-15 Richard Fussenegger
+ * @license http://unlicense.org/ PD
  */
 
 var $ = require('gulp-load-plugins')();

@@ -22,14 +22,19 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # Linux shell script for easy deployment (for people who do not know what a command line is).
 #
-# @author Richard Fussenegger <richard@fussenegger.info>
-# @copyright 2014 Richard Fussenegger
-# @license http://unlicense.org/ Unlicense.
+# AUTHOR: Richard Fussenegger <richard@fussenegger.info>
+# COPYRIGHT: Copyright (c) 2014-15 Richard Fussenegger
+# LICENSE: http://unlicense.org/ PD
 # ----------------------------------------------------------------------------------------------------------------------
 
 printf -- 'Starting deployment, this may take several minutes ...\n'
-sudo apt-get install --yes -- build-essentials libjpeg-dev libpng-dev
-sudo npm update npm --global
-sudo npm install gulp --global
-[ -d ./node_modules ] || npm update
+
+if [ ! -d ./node_modules ]
+then
+    sudo apt-get install --yes -- build-essentials libjpeg-dev libpng-dev
+    sudo npm update npm --global
+    [ $(command -v gulp) = '' ] && sudo npm install gulp --global
+    npm update
+fi
+
 gulp
