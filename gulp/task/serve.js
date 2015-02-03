@@ -28,9 +28,8 @@
  * @license http://unlicense.org/ Unlicense.
  */
 
-var $           = require('gulp-load-plugins')();
-var browserSync = require('browser-sync');
-var gulp        = require('gulp');
+var $ = require('gulp-load-plugins')();
+var gulp = require('gulp');
 var runSequence = require('run-sequence');
 
 /**
@@ -73,8 +72,12 @@ gulp.task('serve', ['images:dev', 'styles:scss'], function () {
 });
 
 gulp.task('serve:dev', function () {
+    var browserSync = require('browser-sync');
     browserSync(server(['src', 'tmp']));
-    watch(['src/views/**/*.ejs', 'src/*.md', '!src/projects/*.md', '!src/index.md'], ['html:markdown', browserSync.reload]);
+    watch(['src/views/**/*.ejs', 'src/*.md', '!src/projects/*.md', '!src/index.md'], [
+        'html:markdown',
+        browserSync.reload
+    ]);
     watch(['src/views/**/*.ejs', 'src/projects/*.md', 'src/index.md'], ['html:markdown:index', browserSync.reload]);
     watch(['src/styles/**/*.scss', '!src/styles/**/*_*.scss'], ['styles:scss', browserSync.reload]);
     watch('src/scripts/**/*.js', browserSync.reload);
@@ -82,5 +85,5 @@ gulp.task('serve:dev', function () {
 });
 
 gulp.task('serve:dist', ['default'], function () {
-    browserSync(server('dist'));
+    require('browser-sync')(server('dist'));
 });

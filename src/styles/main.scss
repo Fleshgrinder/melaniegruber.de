@@ -46,8 +46,8 @@
 
 html {
     min-width: 320px;
-    overflow-x: hidden;
     -ms-text-size-adjust: 100%;
+    overflow-x: hidden;
     -webkit-text-size-adjust: 100%;
 }
 
@@ -83,6 +83,7 @@ body {
 .abs-before:before,
 .abs-after:after {
     content: "";
+    position: absolute;
 }
 
 article,
@@ -103,10 +104,12 @@ q {
 a {
     background-color: transparent;
     color: nth($color-palette, 1);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     text-decoration: none;
 
     &:active,
-    &:hover {
+    &:hover,
+    &.click-focus {
         outline: 0 !important; // Only use outlines with keyboard navigation.
     }
 
@@ -224,14 +227,7 @@ main p {
     text-transform: uppercase;
 
     img {
-        @include transition(transform);
         margin-right: 12px;
-    }
-
-    &:active img,
-    &:focus img,
-    &:hover img {
-        transform: scale(1.2) rotate(-10deg);
     }
 
     &:focus {
@@ -278,6 +274,7 @@ main p {
 
 .pager-wrapper {
     background-color: #fff;
+    font-size: $font-size;
     height: 64px;
     line-height: 64px;
     width: 100%;
@@ -348,18 +345,15 @@ main p {
     position: absolute !important;
 }
 
-// Utility classes must be last!
-.abs-before-after:before,
-.abs-before-after:after,
-.abs-before:before,
-.abs-after:after {
-    position: absolute;
-}
-
 .clearfix:after {
     clear: both;
     content: " ";
     display: table;
+}
+
+.hidden {
+    display: none !important;
+    transition: none !important;
 }
 
 hr {
@@ -384,6 +378,11 @@ hr {
     height: auto;
     max-width: 100%;
     width: 100%;
+}
+
+.label {
+    display: inline-block;
+    min-width: 50px;
 }
 
 .rel {

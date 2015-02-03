@@ -78,13 +78,31 @@
     @include transition(transform);
 }
 
+// We hide the small images by default.
+// **NOTE** that the !important flags are necessary because all images are .img-responsive.
+.project-tile-small {
+    display: none !important;
+}
+
+// And hide the bigger ones if applicable.
+// TODO: How could this be done in SASS/SCSS? The loop is easy (see gulp/task/html-markdown.js#renderIndexTile body).
+@media (max-width: 339px), (min-width: 640px) and (max-width: 660px), (min-width: 960px) and (max-width: 980px), (min-width: 1280px) and (max-width: 1300px), (min-width: 1600px) and (max-width: 1620px), (min-width: 1920px) and (max-width: 1940px), (min-width: 2240px) and (max-width: 2260px), (min-width: 2560px) and (max-width: 2580px), (min-width: 2880px) and (max-width: 2900px), (min-width: 3200px) and (max-width: 3220px), (min-width: 3520px) and (max-width: 3540px), (min-width: 3840px) and (max-width: 3860px) {
+    .project-tile-small {
+        display: block !important;
+    }
+
+    .project-tile-big {
+        display: none !important;
+    }
+}
+
 .project:active,
 .project:focus,
 .project:hover {
     outline: none;
 
     .project-tile {
-        transform: scale(1.2) rotate(10deg);
+        transform: scale(1.2);
     }
 }
 

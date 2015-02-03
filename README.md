@@ -58,27 +58,26 @@ The following meta information may be included in any Markdown file (note that m
 effect on the index page):
 
 ```yaml
-description: Short description of the page's content (defaults to "").
+description: Short description of the page's content.
 gallery:
-    - A YAML list of gallery image names that should be displayed on the page (defaults to empty list).
+    - A YAML list of gallery image names that should be displayed on the page.
 layout: The name of the layout that should be used for rendering (defaults to "default").
 route: The route to the page that will be used in the URL (auto-generated based on filename).
 subtitle: The subtitle of the page (defaults to "Melanie Gruber").
 titleSeparator: The character that should be used to separate the title from the subtitle (defaults to " | ").
-typeof: The schema.org type of the actual webpage (defaults to "WebPage" and for projects to "ItemPage").
 ```
 
 The following meta information is only supported by projects and may be included:
 
 ```yaml
 programs:
-   - A YAML list that contains all programs which where used to create the project (defaults to empty list).
+   - A YAML list that contains all programs which where used to create the project.
 screenshots:
-   - A YAML list of screenshot image names that should be rendered on the project's page (defaults to empty list).
+   - A YAML list of screenshot image names that should be rendered on the project's page.
 vimeo:
-   - A YAML list of Vimeo IDs that should be rendered on the project's page (defaults to empty list).
+   - A YAML list of Vimeo IDs that should be rendered on the project's page.
 work:
-   - A YAML list of the work (jobs/responsibilities) done on the project (defaults to empty list).
+   - A YAML list of the work (jobs/responsibilities) done on the project.
 ```
 
 ##### Gallery and Screenshots

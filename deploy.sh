@@ -28,5 +28,8 @@
 # ----------------------------------------------------------------------------------------------------------------------
 
 printf -- 'Starting deployment, this may take several minutes ...\n'
+sudo apt-get install --yes -- build-essentials libjpeg-dev libpng-dev
+sudo npm update npm --global
+sudo npm install gulp --global
 [ -d ./node_modules ] || npm update
-./node_modules/.bin/gulp
+gulp

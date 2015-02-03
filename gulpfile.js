@@ -33,17 +33,17 @@
  * @see gulp/task/html-markdown.js
  * @type {boolean}
  */
-var cacheBuster = false;
+global.cacheBuster = false;
 
 require('gulp').task('default', ['clean'], function (done) {
-    cacheBuster = true;
+    global.cacheBuster = true;
     require('run-sequence')(
         ['fonts', 'scripts', 'styles'],
         'images',
         'html',
         'copy',
         'clean:dist',
-        'compress',
+        ['clean:tmp', 'compress:zopfli'],
         done
     );
 });

@@ -27,19 +27,19 @@
  * @copyright 2014 Richard Fussenegger
  * @license http://unlicense.org/ Unlicense.
  */
-var $         = require('gulp-load-plugins')();
-var config    = require('../../config.json');
-var crypto    = require('crypto');
-var fs        = require('fs');
-var glob      = require('glob');
-var gulp      = require('gulp');
+var $ = require('gulp-load-plugins')();
+var config = require('../../config.json');
+var crypto = require('crypto');
+var fs = require('fs');
+var glob = require('glob');
+var gulp = require('gulp');
 var imageSize = require('image-size');
-var lazyPipe  = require('lazypipe');
-var merge     = require('merge');
-var path      = require('path');
+var lazyPipe = require('lazypipe');
+var merge = require('merge');
+var path = require('path');
 
 // Append the source directory to the path module for easy removal from routes.
-path.root = path.dirname(path.dirname(__dirname)) + '\\src';
+path.root = path.dirname(path.dirname(__dirname)) + path.sep + 'src';
 
 /**
  * Default options for gulp-front-matter and gulp-multi-renderer.
@@ -78,10 +78,7 @@ var cacheBusters = {};
  * @return {string} The web accessible URL with the cache buster hash appended if applicable.
  */
 function asset(url, pattern) {
-    // @see gulpfile.js
-    var cacheBuster = cacheBuster || false;
-
-    if (cacheBuster === true) {
+    if (global.cacheBuster === true) {
         pattern = 'src' + (pattern || url);
 
         if (!(pattern in cacheBusters)) {
@@ -89,7 +86,16 @@ function asset(url, pattern) {
             glob.sync(pattern).forEach(function (filePath) {
                 cacheBusters[pattern] += fs.readFileSync(filePath, { encoding: 'utf8' });
             });
-            cacheBusters[pattern] = crypto.createHash('md5').update(cacheBusters[pattern]).digest('hex');
+            cacheBusters[pattern] = crypto.createHash('md5')
+                .update(cacheBusters[pattern])
+                .digest('base64')
+                // Remove trailing equal signs, we do not need them for proper cache busting.
+                .replace(/=*$/, '')
+                // Everything else needs encoding because these characters have a special meaning in a URL.
+                .replace(/\+/g, '%2B')
+                .replace(/\//g, '%2F')
+                .replace(/=/g, '%3D')
+            ;
         }
 
         return url + '?' + cacheBusters[pattern];
@@ -116,7 +122,7 @@ function url(path) {
 function renderGalleryImages(page, type) {
     var anchor, extension, webPath;
     var extensions = ['gif', 'jpg', 'png', 'svg'];
-    var rendered   = '';
+    var rendered = '';
 
     var url = function (suffix, webExtension) {
         webExtension = webExtension || extension;
@@ -146,11 +152,16 @@ function renderGalleryImages(page, type) {
         webPath = '/images' + page.route + '/' + type + '/' + title.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-_]/g, '');
 
         // Determine what kind of file we have.
+        extension = undefined;
         for (var i = 0; i < extensions.length; ++i) {
             if (fs.existsSync(path.resolve('src' + webPath + '.' + extensions[i]))) {
                 extension = extensions[i];
                 break;
             }
+        }
+
+        if (extension === undefined) {
+            throw new $.util.PluginError('html:markdown:renderGalleryImages', 'Could not find extension for ' + webPath);
         }
 
         var size = imageSize(path.resolve('src' + webPath + '.' + extension));
@@ -168,21 +179,26 @@ function renderGalleryImages(page, type) {
             rendered += '<img alt="' + title + '" height="337.5" src="' + url() + '" width="600">';
         } else {
             rendered += '<picture>';
+
             if (extension !== 'gif') {
-                rendered += '<source sizes="(min-width: ' + (320 / 16) + 'em) 600px, 100vw" srcset="' +
-                    url(300, 'webp') + ' 300w, ' +
-                    url(450, 'webp') + ' 450w, ' +
-                    url(600, 'webp') + ' 600w, ' +
-                    url(900, 'webp') + ' 900w, ' +
-                    url(1200, 'webp') + ' 1200w, ' +
-                    url(1800, 'webp') + ' 1800w" type="image/webp">'
+                rendered +=
+                    '<source sizes="(min-width: ' + (320 / 16) + 'em) 600px, 100vw" srcset="' +
+                        url(300, 'webp') + ' 300w, ' +
+                        url(450, 'webp') + ' 450w, ' +
+                        url(600, 'webp') + ' 600w, ' +
+                        url(900, 'webp') + ' 900w, ' +
+                        url(1200, 'webp') + ' 1200w, ' +
+                        url(1800, 'webp') + ' 1800w" type="image/webp">'
                 ;
             }
-            rendered += '<img alt="' + title + '" height="337.5" src="' + url(600) + '" srcset="' +
-                url(900) + ' 1.5x, ' +
-                url(1200) + ' 2x, ' +
-                url(1800) + ' 3x" width="600">' +
-            '</picture>';
+
+            rendered +=
+                    '<img alt="' + title + '" height="337.5" src="' + url(600) + '" srcset="' +
+                        url(900) + ' 1.5x, ' +
+                        url(1200) + ' 2x, ' +
+                        url(1800) + ' 3x" width="600">' +
+                '</picture>'
+            ;
         }
 
         // Be sure to close the opened media element wrapper tag.
@@ -192,8 +208,8 @@ function renderGalleryImages(page, type) {
         ++page.imageIndex;
 
         // Export the first image we find to be our Facebook image.
-        if (extension !== 'svg' && !('facebookImage' in page)) {
-            page.facebookImage = url(300);
+        if (extension !== 'svg' && !page.facebookImage) {
+            page.facebookImage = url(600);
         }
     });
 
@@ -216,26 +232,22 @@ function renderIndexTile(project) {
         sizes += '(min-width: ' + width + 'px) and (max-width: ' + (width + 20) + 'px) 320px, ';
     }
 
-    // The source with its sizes attribute covers all devices up to 4k UHD (3840px) as e.g. found in Apple's MacBook Pro
-    // since ~2012. Note that WebP is only supported in the Blink rendering engine; other browsers currently use the
-    // <img> fallback below.
-    //
-    // Browsers without WebP support currently also have no support for the sizes attribute. The srcset attribute has
-    // some support in Apple based software, but only for the x syntax; therefore we use that syntax since we want to
-    // supply the Retina displays with good looking images. This forces us to deliver higher resolution images and waste
-    // bandwidth, since we cannot anticipate the size of the device without the aid of the sizes attribute.
-    return '' +
-        '<source sizes="(max-width: 339px) 320px, ' + sizes + ' 640px" srcset="' +
+    return '<source sizes="(max-width: 339px) 320px, ' + sizes + ' 640px" srcset="' +
             url(320, 'webp') + ' 320w, ' +
             url(480, 'webp') + ' 480w, ' +
             url(640, 'webp') + ' 640w, ' +
             url(960, 'webp') + ' 960w, ' +
             url(1280, 'webp') + ' 1280w, ' +
             url(1920, 'webp') + ' 1920w" type="image/webp">' +
-        '<img alt="' + project.title + '" class="img-responsive project-tile" height="640" src="' + url(640) + '" srcset="' +
+        '<img alt="' + project.title + '" class="img-responsive project-tile project-tile-small" height="320" src="' + url(320) + '" srcset="' +
+            url(480) + ' 1.5x, ' +
+            url(640) + ' 2x, ' +
+            url(960) + ' 3x" width="320">' +
+        '<img alt="' + project.title + '" class="img-responsive project-tile project-tile-big" height="640" src="' + url(640) + '" srcset="' +
             url(960) + ' 1.5x, ' +
             url(1280) + ' 2x, ' +
-            url(1920) + ' 3x" width="640">';
+            url(1920) + ' 3x" width="640">'
+        ;
 }
 
 /**
@@ -295,20 +307,16 @@ function renderProgramIcons(programs, whiteBackground) {
  */
 function prepareMetaInfo(vinyl) {
     vinyl[options.property] = merge({
-        asset:               asset,
-        config:              config,
-        description:         null,
-        gallery:             [],
-        index:               false,
+        asset: asset,
+        config: config,
         renderGalleryImages: renderGalleryImages,
-        renderProgramIcons:  renderProgramIcons,
-        route:               vinyl.path.replace(path.root, '').replace('.md', '').replace(/\\/g, '/'),
-        siteName:            config.siteName,
-        subtitle:            config.siteName,
-        title:               config.siteName,
-        titleSeparator:      config.titleSeparator,
-        vimeo:               [],
-        url:                 url
+        renderProgramIcons: renderProgramIcons,
+        route: vinyl.path.replace(path.root, '').replace(/\.md$/, '').replace(/\\/g, '/'),
+        siteName: config.siteName,
+        subtitle: config.siteName,
+        title: config.siteName,
+        titleSeparator: config.titleSeparator,
+        url: url
     }, vinyl[options.property]);
 }
 
@@ -318,10 +326,10 @@ function prepareMetaInfo(vinyl) {
  * @return {undefined}
  */
 function prepareIndexMetaInfo(vinyl) {
-    vinyl[options.property].index           = true;
+    vinyl[options.property].index = true;
     vinyl[options.property].renderIndexTile = renderIndexTile;
-    vinyl[options.property].route           = '/';
-    vinyl[options.property].projects        = projects;
+    vinyl[options.property].route = '/';
+    vinyl[options.property].projects = projects;
 }
 
 /**
@@ -331,7 +339,7 @@ function prepareIndexMetaInfo(vinyl) {
  */
 function prepareProjectMetaInfo(vinyl) {
     // The route still contains /project which we don't want.
-    vinyl[options.property].route = vinyl[options.property].route.replace(/\/projects\/[0-9]{4}(-[0-9]{1,2}){0,2}~/, '/');
+    vinyl[options.property].route = vinyl[options.property].route.replace(/.projects.[0-9]{4}(-[0-9]{1,2}){0,2}~/, '/');
 
     // Get the index of this project in the projects array.
     for (var i = 0; i < projects.length; ++i) {
@@ -343,11 +351,8 @@ function prepareProjectMetaInfo(vinyl) {
     // Merge default properties with the ones defined in the project's file and the ones generated at the beginning.
     // Afterwards update all existing references to this object.
     projects[i] = vinyl[options.property] = merge({
-        programs:    [],
-        screenshots: [],
         tilePattern: '/images' + vinyl[options.property].route + '/tile.jpg',
-        tilePrefix:  '/images' + vinyl[options.property].route + '/tile',
-        work:        []
+        tilePrefix: '/images' + vinyl[options.property].route + '/tile'
     }, vinyl[options.property], projects[i]);
 }
 
@@ -428,11 +433,9 @@ gulp.task('html:markdown:projects', function () {
             }
 
             projects.push({
-                date:     basename[0],
-                next:     undefined,
-                previous: undefined,
-                route:    '/' + basename[1],
-                year:     parseInt(basename[0].substring(0, 4))
+                date: basename[0],
+                route: '/' + basename[1],
+                year: parseInt(basename[0].substring(0, 4))
             });
         });
 
@@ -459,7 +462,7 @@ gulp.task('html:markdown:projects', function () {
         .pipe(renderHTML())
         .pipe($.rename(function (filePath) {
             filePath.basename = filePath.basename.split('~')[1];
-            filePath.dirname  = '';
+            filePath.dirname = '';
         }))
         .pipe(gulp.dest('tmp'));
 });

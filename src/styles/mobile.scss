@@ -41,7 +41,6 @@
     .menu-close,
     .menu-close:before,
     .menu-close:after {
-        position: absolute;
         right: 0;
     }
 
@@ -87,6 +86,7 @@
         color: nth($color-palette, 6);
         left: 100%;
         padding-top: ($header-height - ($font-size * $line-height)) / 4;
+        position: fixed;
         top: 0;
         z-index: 99;
 

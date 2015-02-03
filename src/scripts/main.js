@@ -102,6 +102,7 @@
     // Only continue if we have a gallery wrapper element and fullscreen API support.
     if (gallery && (document.fullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled || document.webkitFullscreenEnabled || document.webkitFullScreenEnabled)) {
 
+        // -------------------------------------------------------------------------------------------------------------
         // Normalize request full-screen methods and properties if non-standard.
         if (!document.fullscreenEnabled) {
             var normalizeMap = [
@@ -134,13 +135,39 @@
             }
         }
 
-        document.getElementById('full-screen-close').addEventListener('click', function (event) {
-            event.preventDefault();
-            document.exitFullscreen();
-        }, false);
+        // -------------------------------------------------------------------------------------------------------------
+        // CSS class used throughout the code, better defined once in case one should change.
 
         /**
-         * The HTML element which wraps the full-screen content.
+         * Class name to apply when an image should be hidden. Usually a very generic class name.
+         * @type {string}
+         */
+        var hiddenClass = 'hidden';
+
+        /**
+         * Class name to apply when the controls should be inactive. Again a very specific class name.
+         * @type {string}
+         */
+        var inactiveClass = 'full-screen-inactive';
+
+        /**
+         * Class name to apply when an image was loaded and should be animated. This should be a very specific class
+         * name, since it has a transition attached.
+         * @type {string}
+         */
+        var loadedClass = 'full-screen-image-loaded';
+
+        /**
+         * Class name to apply when an image was pre-loaded. This class is only used in JS!
+         * @type {string}
+         */
+        var preLoadedClass = 'pre-loaded';
+
+        // -------------------------------------------------------------------------------------------------------------
+        // Variables for full-screen handling.
+
+        /**
+         * The HTML element wrapping the complete full-screen content.
          * @type {HTMLElement}
          */
         var fullScreenElement = document.getElementById('full-screen');
@@ -162,6 +189,8 @@
          * @type {*}
          */
         var fullScreenTotal = document.getElementById('full-screen-total');
+
+        // Extract the total count of full-screen images, if the element is available.
         if (fullScreenTotal) {
             fullScreenTotal = parseInt(fullScreenTotal.innerHTML);
         }
@@ -171,26 +200,6 @@
          * @type {*}
          */
         var fullScreenNext = document.getElementById('full-screen-next');
-
-        /**
-         * Update the full-screen navigation.
-         * @type {Function}
-         * @param {Number} index - The current full-screen image's index.
-         * @return {Number} The index.
-         */
-        var fullScreenUpdateNavigation = function (index) {
-            fullScreenCurrent.innerHTML = index + 1;
-
-            if ((fullScreenPrevious = index - 1) < 0) {
-                fullScreenPrevious = fullScreenTotal - 1;
-            }
-
-            if ((fullScreenNext = index + 1) >= fullScreenTotal) {
-                fullScreenNext = 0;
-            }
-
-            return index;
-        };
 
         /**
          * Array containing all full-screen images.
@@ -226,14 +235,39 @@
          */
         var fullScreenImageNext;
 
+        // -------------------------------------------------------------------------------------------------------------
+        // Functions for full-screen handling.
+
+        /**
+         * Update the full-screen navigation.
+         * @type {Function}
+         * @param {Number} index - The current full-screen image's index.
+         * @return {Number} The index.
+         */
+        var fullScreenUpdateNavigation = function (index) {
+            if (fullScreenCurrent) {
+                fullScreenCurrent.innerHTML = index + 1;
+
+                if ((fullScreenPrevious = index - 1) < 0) {
+                    fullScreenPrevious = fullScreenTotal - 1;
+                }
+
+                if ((fullScreenNext = index + 1) >= fullScreenTotal) {
+                    fullScreenNext = 0;
+                }
+            }
+
+            return index;
+        };
+
         /**
          * Hides the full-screen image by adding the hidden class and removing the loaded class.
          * @type {Function}
          * @return {HTMLElement}
          */
         var fullScreenImageHide = function () {
-            this.classList.add('hidden');
-            this.classList.remove('loaded');
+            this.classList.add(hiddenClass);
+            this.classList.remove(loadedClass);
 
             return this;
         };
@@ -244,10 +278,10 @@
          * @return {HTMLElement}
          */
         var fullScreenImageShow = function () {
-            this.classList.remove('hidden');
+            this.classList.remove(hiddenClass);
 
             // The small timeout is necessary for the CSS transition; IE11 seems to require 20 ms.
-            window.setTimeout(this.classList.add.bind(this.classList, 'loaded'), 20);
+            window.setTimeout(this.classList.add.bind(this.classList, loadedClass), 20);
 
             return this;
         };
@@ -259,9 +293,10 @@
          */
         var fullScreenImageOnLoad = function () {
             this.wrapper.style.backgroundImage = 'url(' + this.src + ')';
+            this.wrapper.classList.add(preLoadedClass);
 
             if (this.wrapper !== fullScreenImageNext) {
-                this.wrapper.classList.add('loaded');
+                this.wrapper.classList.add(loadedClass);
             }
 
             return this.wrapper;
@@ -277,6 +312,7 @@
             image.onload = fullScreenImageOnLoad;
 
             var fullScreenImage             = document.createElement('div');
+            fullScreenImage.__loaded        = false;
             fullScreenImage.className       = 'full-screen-image';
             fullScreenImage.onload          = fullScreenImageOnLoad;
             fullScreenImage.hide            = fullScreenImageHide;
@@ -305,6 +341,8 @@
             if (fullScreenImageNext !== undefined) {
                 return;
             }
+            fullScreenElement.classList.add(inactiveClass);
+            document.activeElement.blur();
 
             if (index in fullScreenImages) {
                 fullScreenImageNext = fullScreenImages[index];
@@ -313,8 +351,43 @@
             }
 
             fullScreenUpdateNavigation(index);
-            fullScreenImage.classList.remove('loaded');
+            fullScreenImage.classList.remove(loadedClass);
         };
+
+        /**
+         * Observer for transition end event.
+         * @return {undefined}
+         */
+        var fullScreenImageTransitionEnd = function () {
+            // NULL means that we already exchanged the full-screen image but wait for its fade-in transition to
+            // complete. We need to exchange the NULL with UNDEFINED since we just received the transition end event for
+            // the fade-in transition. This releases the lock which prevents additional advances (either via click or
+            // keys).
+            if (fullScreenImageNext === null) {
+                fullScreenElement.classList.remove(inactiveClass);
+                fullScreenImageNext = undefined;
+            }
+            // Only continue if we actually have a next full-screen (not NULL and not UNDEFINED) which we can show.
+            else if (fullScreenImageNext) {
+                fullScreenImage.hide();
+
+                fullScreenImage = fullScreenImageNext;
+                fullScreenImageNext = null;
+
+                fullScreenElement.appendChild(fullScreenImage);
+                if (fullScreenImage.classList.contains(preLoadedClass)) {
+                    fullScreenImage.show();
+                }
+            }
+        };
+
+        // -------------------------------------------------------------------------------------------------------------
+        // Bind event listeners to all events we want to observe.
+
+        document.getElementById('full-screen-close').addEventListener('click', function (event) {
+            event.preventDefault();
+            document.exitFullscreen();
+        }, false);
 
         if (fullScreenPrevious && fullScreenNext) {
             fullScreenPrevious.addEventListener('click', function (event) {
@@ -341,35 +414,6 @@
                 }
             });
         }
-
-        /**
-         * Observer for transition end event.
-         * @return {undefined}
-         */
-        var fullScreenImageTransitionEnd = function () {
-            // NULL means that we already exchanged the full-screen image but wait for its fade-in transition to
-            // complete. We need to exchange the NULL with UNDEFINED since we just received the transition end event for
-            // the fade-in transition. This releases the lock which prevents additional advances (either via click or
-            // keys).
-            if (fullScreenImageNext === null) {
-                fullScreenImageNext = undefined;
-            }
-            // Only continue if we actually have a next full-screen (not NULL and not UNDEFINED) which we can show.
-            else if (fullScreenImageNext) {
-                fullScreenImage.hide();
-
-                fullScreenImage = fullScreenImageNext;
-                fullScreenImageNext = null;
-
-                while (!fullScreenImage.style.backgroundImage) {
-                    // Block while the image is not loaded; the image might already be loaded, since we started to load
-                    // it right away or it was already part of the DOM.
-                }
-
-                fullScreenElement.appendChild(fullScreenImage);
-                fullScreenImage.show();
-            }
-        };
 
         // We want to support older Webkit browsers as well, we can ignore other event types for this.
         fullScreenElement.addEventListener('transitionend', fullScreenImageTransitionEnd, false);

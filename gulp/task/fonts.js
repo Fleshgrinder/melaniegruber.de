@@ -27,7 +27,6 @@
  * @copyright 2014 Richard Fussenegger
  * @license http://unlicense.org/ Unlicense.
  */
-
 var gulp = require('gulp');
 
 gulp.task('fonts', function () {

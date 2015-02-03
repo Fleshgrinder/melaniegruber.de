@@ -27,26 +27,26 @@ it will lead me down in the future. If you are curious too, contact me to learn 
     <h2 class="sr-only">Weblinks</h2>
     <p>
         <a class="img-anchor" href="callto:melaniegruber.de" target="_blank" title="Call me via Skype.">
-            <img alt="Skype icon" height="24" src="/images/icons/skype.svg" width="24">
+            <img alt="Skype icon" height="24" src="<%= page.asset('/images/icons/skype.svg') %>" width="24">
         </a>
-        <a class="img-anchor" href="https://www.linkedin.com/in/melaniegruber" target="_blank" title="Visit my LinkedIN profile.">
-            <img alt="LinkedIN icon" height="24" src="/images/icons/linkedin.svg" width="24">
+        <a class="img-anchor" href="https://www.linkedin.com/in/melaniegruber" target="_blank" title="Visit my LinkedIn profile.">
+            <img alt="LinkedIn icon" height="24" src="<%= page.asset('/images/icons/linkedin.svg') %>" width="24">
         </a>
-        <a class="img-anchor" href="http://www.melaniegruber.gameartisans.org" target="_blank">
+        <a class="img-anchor" href="http://www.melaniegruber.gameartisans.org" target="_blank" title="Visit my Game Artisans profile.">
             <picture>
-                <source srcset="/images/icons/game-artisans-24.webp, /images/icons/game-artisans-32.webp 1.5x, /images/icons/game-artisans-48.webp 2x, /images/icons/game-artisans-72.webp 3x" type="image/webp">
-                <img alt="Game Artisans" height="24" src="/images/icons/game-artisans-24.png" srcset="/images/icons/game-artisans-32.png 1.5x, /images/icons/game-artisans-48.png 2x, /images/icons/game-artisans-72.png 3x" width="24">
+                <source srcset="<%= page.asset('/images/icons/game-artisans-24.webp') %>, <%= page.asset('/images/icons/game-artisans-32.webp') %> 1.5x, <%= page.asset('/images/icons/game-artisans-48.webp') %> 2x, <%= page.asset('/images/icons/game-artisans-72.webp') %> 3x" type="image/webp">
+                <img alt="Game Artisans" height="24" src="<%= page.asset('/images/icons/game-artisans-24.png') %>" srcset="<%= page.asset('/images/icons/game-artisans-32.png') %> 1.5x, <%= page.asset('/images/icons/game-artisans-48.png') %> 2x, <%= page.asset('/images/icons/game-artisans-72.png') %> 3x" width="24">
             </picture>
         </a>
         <!-- <a class="img-anchor" href="http://melaniegruber.cgsociety.org/" target="_blank">CG Society</a>-->
-        <a class="img-anchor" href="http://melaniegruber.deviantart.com/" target="_blank" title="Visit my DeviantART profile.">
-            <img alt="DeviantART icon" height="24" src="/images/icons/deviantart.svg" width="24">
+        <a class="img-anchor" href="http://melaniegruber.deviantart.com/" target="_blank" title="Visit my DeviantArt profile.">
+            <img alt="DeviantArt icon" height="24" src="<%= page.asset('/images/icons/deviantart.svg') %>" width="24">
         </a>
         <a class="img-anchor" href="https://vimeo.com/melaniegruber" target="_blank" title="Visit my Vimeo profile.">
-            <img alt="Vimeo icon" height="24" src="/images/icons/vimeo.svg" width="24">
+            <img alt="Vimeo icon" height="24" src="<%= page.asset('/images/icons/vimeo.svg') %>" width="24">
         </a>
-        <a class="img-anchor" href="http://www.pinterest.com/GruberMelanie/inspiration/" target="_blank" title="Visit my Pinterest profile.">
-            <img alt="Pinterest icon" height="24" src="/images/icons/pinterest.svg" width="24">
+        <a class="img-anchor" href="http://www.pinterest.com/GruberMelanie/inspiration/" target="_blank" title="Visit my Pinterest board.">
+            <img alt="Pinterest icon" height="24" src="<%= page.asset('/images/icons/pinterest.svg') %>" width="24">
         </a>
     </p>
 </section>

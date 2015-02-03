@@ -33,10 +33,6 @@ var gulp = require('gulp');
 
 gulp.task('scripts', function () {
     return gulp.src(['tmp/**/*.js', 'src/**/*.js'])
-        .pipe($.if('!*.min.js', $.uglify({
-            preserveComments: function () {
-                return false;
-            }
-        })))
+        .pipe($.uglify({ preserveComments: function () { return false; }}))
         .pipe(gulp.dest('dist'));
 });

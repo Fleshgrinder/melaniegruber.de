@@ -27,7 +27,6 @@
  * @copyright 2014 Richard Fussenegger
  * @license http://unlicense.org/ Unlicense.
  */
-
 var $ = require('gulp-load-plugins')();
 var gulp = require('gulp');
 
@@ -38,11 +37,7 @@ gulp.task('styles', ['styles:scss'], function () {
 });
 
 gulp.task('styles:scss', function () {
-    var src = function (name) {
-        return 'src/styles/' + name + '.scss';
-    };
-
-    return gulp.src('src/styles/**/*.scss')
+    return gulp.src('src/styles/?(main|placeholder).scss')
         .pipe($.sass({ precision: 10 }))
         .on('error', console.error.bind(console))
         .pipe($.autoprefixer({

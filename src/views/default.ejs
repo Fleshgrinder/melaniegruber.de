@@ -1,11 +1,17 @@
 <%
 
+// Total amount of images on the page.
+var total = 0;
+
 // We generate the galleries right away because we want to use the first image for Facebook.
-if (page.gallery && page.gallery.length > 0) {
-    page.gallery = page.renderGalleryImages(page);
+if (page.gallery) {
+    total += page.gallery.length;
+    var gallery = page.renderGalleryImages(page);
 }
-if (page.screenshots && page.screenshots.length > 0) {
-    page.screenshots = page.renderGalleryImages(page, 'screenshots');
+
+if (page.screenshots) {
+    total += page.screenshots.length;
+    var screenshots = page.renderGalleryImages(page, 'screenshots');
 }
 
 %>
@@ -18,10 +24,10 @@ if (page.screenshots && page.screenshots.length > 0) {
                     <p class="text-subtitle"><%= page.description %></p>
                 <% } %>
             <div class="text-meta">
-                <% if (page.programs && page.programs.length > 0) { %>
+                <% if (page.programs) { %>
                     <p class="text-programs"><%- page.renderProgramIcons(page.programs, true) %></p>
                 <% } %>
-                <% if (page.work && page.work.length > 0) { %>
+                <% if (page.work) { %>
                     <ul class="text-work"><li><%- page.work.join("</li><li>") %></li></ul>
                 <% } %>
             </div>
@@ -38,16 +44,16 @@ if (page.screenshots && page.screenshots.length > 0) {
             <% if (page.gallery) { %>
                 <section class="media">
                     <h2 class="media-title sr-only">Gallery</h2>
-                    <div class="clearfix media-content"><%- page.gallery %></div>
+                    <div class="clearfix media-content"><%- gallery %></div>
                 </section>
             <% } %>
             <% if (page.screenshots) { %>
                 <section class="media">
                     <h2 class="media-title">Screenshots</h2>
-                    <div class="clearfix media-content"><%- page.screenshots %></div>
+                    <div class="clearfix media-content"><%- screenshots %></div>
                 </section>
             <% } %>
-            <% if (page.vimeo && page.vimeo.length > 0) { %>
+            <% if (page.vimeo) { %>
                 <section class="media">
                     <h2 class="media-title">Videos</h2>
                     <div class="clearfix media-content">
@@ -69,19 +75,18 @@ if (page.screenshots && page.screenshots.length > 0) {
     <% } %>
 </div>
 <% if (page.gallery || page.screenshots) { %>
-<% var total = (page.gallery ? page.gallery.length : 0) + (page.screenshots ? page.screenshots.length : 0); %>
-    <div id="full-screen" class="full-screen sr-only">
+    <div id="full-screen" class="abs-before sr-only">
         <nav class="full-screen-nav">
             <% if (total > 1) { %>
-                <a id="full-screen-previous" href="#">◀</a>
-                <b>
+                <a id="full-screen-previous" class="full-screen-pager" href="#" title="Go to the previous image."><span aria-hidden="true" role="presentation">◀</span></a>
+                <b class="full-screen-position">
                     <span id="full-screen-current"></span>
                     /
                     <span id="full-screen-total"><%= total %></span>
                 </b>
-                <a id="full-screen-next" href="#">▶</a>
+                <a id="full-screen-next" class="full-screen-pager" href="#" title="Go to the next image."><span aria-hidden="true" role="presentation">▶</span></a>
             <% } %>
-            <a id="full-screen-close" href="#">✖</a>
+            <a id="full-screen-close" href="#" title="Exit full-screen mode."><span aria-hidden="true" role="presentation">✖</span></a>
         </nav>
     </div>
 <% } %>

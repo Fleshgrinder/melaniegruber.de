@@ -29,23 +29,24 @@
     <link rel="icon" href="<%= page.asset('/images/logo/icon-32.png') %>">
 
     <!-- Force latest rendering engine in IE. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="no" name="msapplication-tap-highlight">
 
     <!-- Tell mobile devices how to behave. -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Browser and search engine information. -->
-    <title><%= page.title %><%= page.titleSeparator %><%= page.subtitle %></title>
-    <meta content="<%= page.description %>" name="description" property="og:description">
+    <title><%= page.index ? page.siteName : page.title %><%= page.titleSeparator %><%= page.subtitle %></title>
+    <meta content="<%= (page.description || page.siteName) %>" name="description" property="og:description">
     <link href="<%= page.url(page.route) %>" rel="canonical">
     <% if (page.next) { %><link href="<%= page.next.route %>" rel="next"><% } %>
     <% if (page.previous) { %><link href="<%= page.previous.route %>" rel="prev"><% } %>
 
-    <meta property="og:image" content="<%= page.url(page.facebookImage || page.asset('/images/logo/icon-270.png')) %>">
-    <meta property="og:site_name" content="<%= page.siteName %>">
-    <meta property="og:title" content="<%= page.index ? page.siteName : page.title %>">
-    <meta property="og:type" content="<% if (page.index) { %>website<% } else { %>article<% } %>">
-    <meta property="og:url" content="<%= page.url(page.route) %>">
+    <meta content="<%= page.url(page.facebookImage || page.asset('/images/logo/icon-270.png')) %>" property="og:image">
+    <meta content="<%= page.siteName %>" property="og:site_name">
+    <meta content="<%= page.index ? page.siteName : page.title %>" property="og:title">
+    <meta content="<% if (page.index) { %>website<% } else { %>article<% } %>" property="og:type">
+    <meta content="<%= page.url(page.route) %>" property="og:url">
 </head>
 <body class="<%= page.layout %>">
     <header class="header">

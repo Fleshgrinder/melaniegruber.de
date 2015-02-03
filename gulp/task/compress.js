@@ -27,11 +27,17 @@
  * @copyright 2014 Richard Fussenegger
  * @license http://unlicense.org/ Unlicense.
  */
-
+var $ = require('gulp-load-plugins')();
 var gulp = require('gulp');
 
-gulp.task('compress', function () {
+gulp.task('compress:gzip', function () {
     return gulp.src(['dist/**/*', '!dist/**/*.{gif,gz,jpg,png,webp,woff,woff2}'])
-        .pipe(require('gulp-gzip')({ gzipOptions: { level: 9 } }))
+        .pipe($.gzip({ gzipOptions: { level: 9 } }))
+        .pipe(gulp.dest('dist'));
+});
+
+gulp.task('compress:zopfli', function () {
+    return gulp.src(['dist/**/*', '!dist/**/*.{gif,gz,jpg,png,webp,woff,woff2}'])
+        .pipe($.zopfli())
         .pipe(gulp.dest('dist'));
 });

@@ -28,17 +28,23 @@
  * @license http://unlicense.org/ Unlicense.
  */
 
-var $                   = require('gulp-load-plugins')();
+var $ = require('gulp-load-plugins')();
+var cachedOptions = { optimizeMemory: true };
 var concurrentTransform = require('concurrent-transform');
-var fs                  = require('fs');
-var gulp                = require('gulp');
-var imageSize           = require('image-size');
-var lazyPipe            = require('lazypipe');
-var mergeStreams        = require('merge-stream');
-var os                  = require('os');
-var path                = require('path');
-var resizeTasks         = ['images:resize:gallery', 'images:resize:gallery:tiles', 'images:resize:icons', 'images:resize:logo', 'images:resize:tiles'];
-var runSequence         = require('run-sequence');
+var fs = require('fs');
+var gulp = require('gulp');
+var imageSize = require('image-size');
+var mergeStreams = require('merge-stream');
+var os = require('os');
+var path = require('path');
+var resizeTasks = [
+    'images:resize:gallery',
+    'images:resize:gallery:tiles',
+    'images:resize:icons',
+    'images:resize:logo',
+    'images:resize:tiles'
+];
+var runSequence = require('run-sequence');
 
 /**
  * Get the gulp-image-resize options for the given dimension.
@@ -53,7 +59,7 @@ function resizeOptions(width, height) {
         filter: 'Catrom',
         height: height,
         imageMagick: true,
-        quality: 0.7,
+        quality: 1,
         sharpen: true,
         width: width
     };
@@ -64,8 +70,7 @@ gulp.task('images', function (done) {
 });
 
 gulp.task('images:dist', function () {
-    return gulp.src('tmp/images/**/*')
-        .pipe(gulp.dest('dist/images'));
+    return gulp.src('tmp/images/**/*').pipe(gulp.dest('dist/images'));
 });
 
 gulp.task('images:dev', function (done) {
@@ -74,26 +79,27 @@ gulp.task('images:dev', function (done) {
 
 gulp.task('images:optimize', function () {
     return gulp.src(['src/images/**/*.svg', 'tmp/images/**/*.{gif,jpg,png}'])
-        .pipe($.cache($.imagemin({
+        .pipe($.cached('images_optimize', cachedOptions))
+        .pipe($.imagemin({
             interlaced: true,
             optimizationLevel: 7,
             progressive: true,
             quality: '65-80',
             svgoPlugins: [{ removeViewBox: false }],
             use: [require('imagemin-mozjpeg')(), require('imagemin-pngquant')()]
-        })))
+        }))
         .pipe(gulp.dest('tmp/images'));
 });
 
 gulp.task('images:resize:gallery', function () {
     // We keep the originals (for now).
-    return gulp.src('src/images/**/{gallery,screenshots}/*.{gif,jpg,png,svg}')
-        .pipe(gulp.dest('tmp/images'));
+    return gulp.src('src/images/**/{gallery,screenshots}/*.{gif,jpg,png,svg}').pipe(gulp.dest('tmp/images'));
 });
 
 gulp.task('images:resize:gallery:tiles', function () {
     var resize = function (dimension) {
         return gulp.src('src/images/**/{gallery,screenshots}/*.{jpg,png}')
+            .pipe($.cached('images_resize_gallery_tiles_' + dimension, cachedOptions))
             .pipe($.ignore.exclude(function (vinyl) {
                 var extension = path.extname(vinyl.path);
                 return fs.existsSync(vinyl.path.replace(extension, '-tile' + extension));
@@ -107,7 +113,6 @@ gulp.task('images:resize:gallery:tiles', function () {
                 }
                 filePath.basename += '-' + dimension;
             }))
-            //.pipe($.cache(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length)))
             .pipe(concurrentTransform($.imageResize(resizeOptions(dimension, ((dimension / 16) * 9))), os.cpus().length))
             .pipe(gulp.dest('tmp/images'));
     };
@@ -125,8 +130,8 @@ gulp.task('images:resize:gallery:tiles', function () {
 gulp.task('images:resize:icons', function () {
     var resize = function (dimension) {
         return gulp.src('src/images/icons/*.png')
+            .pipe($.cached('images_resize_icons_' + dimension, cachedOptions))
             .pipe($.rename({ suffix: '-' + dimension }))
-            //.pipe($.cache(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length)))
             .pipe(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length))
             .pipe(gulp.dest('tmp/images/icons'));
     };
@@ -142,8 +147,8 @@ gulp.task('images:resize:icons', function () {
 gulp.task('images:resize:logo', function () {
     var resize = function (dimension) {
         return gulp.src('src/images/logo/icon.png')
+            .pipe($.cached('images_resize_logo_' + dimension, cachedOptions))
             .pipe($.rename({ suffix: '-' + dimension }))
-            //.pipe($.cache(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length)))
             .pipe(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length))
             .pipe(gulp.dest('tmp/images/logo'));
     };
@@ -160,8 +165,8 @@ gulp.task('images:resize:logo', function () {
 gulp.task('images:resize:tiles', function () {
     var resize = function (dimension) {
         return gulp.src('src/images/**/tile.jpg')
+            .pipe($.cached('images_resize_tiles_' + dimension, cachedOptions))
             .pipe($.rename({ suffix: '-' + dimension }))
-            //.pipe($.cache(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length)))
             .pipe(concurrentTransform($.imageResize(resizeOptions(dimension)), os.cpus().length))
             .pipe(gulp.dest('tmp/images'));
     };
@@ -178,6 +183,7 @@ gulp.task('images:resize:tiles', function () {
 
 gulp.task('images:webp', function () {
     return gulp.src(['tmp/images/**/*.{jpg,png}', '!tmp/images/logo/*'])
-        .pipe($.cache($.webp()))
+        .pipe($.cached('images_webp', cachedOptions))
+        .pipe($.webp())
         .pipe(gulp.dest('tmp/images'));
 });

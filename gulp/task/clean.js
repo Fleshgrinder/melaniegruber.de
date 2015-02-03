@@ -34,7 +34,10 @@ var gulp = require('gulp');
 
 gulp.task('clean', ['clean:tmp'], del.bind(null, 'dist', { dot: true }));
 
-gulp.task('clean:cache', $.cache.clearAll);
+gulp.task('clean:cache', function (done) {
+    $.cached.caches = {};
+    done();
+});
 
 gulp.task('clean:dist', function (done) {
     var checksums = {};
@@ -65,14 +68,34 @@ gulp.task('clean:dist', function (done) {
     };
 
     /**
-     * Helper function to read/collect SCSS files for single hash.
+     * Hash EJS files.
      * @type {Function}
-     * @param {string} filePath - Path to the SCSS file.
-     * @return {readSCSS}
+     * @param {Object} checksums - The variable used to collect the hashes.
+     * @return {Object} The passed in checksums variable.
      */
-    var readSCSS = function (filePath) {
-        this.css += fs.readFileSync(filePath, fsOptions);
-        return this;
+    var md5EJS = function (checksums) {
+        checksums.ejs = '';
+        glob.sync('src/views/**/*.ejs').forEach(function (filePath) {
+            checksums.ejs += fs.readFileSync(filePath, fsOptions);
+        });
+        checksums.ejs += fs.readFileSync('gulp/task/html-markdown.js', fsOptions);
+        checksums.ejs = md5(checksums.ejs);
+        return checksums;
+    };
+
+    /**
+     * Hash SCSS files.
+     * @type {Function}
+     * @param {Object} checksums - The variable used to collect the hases.
+     * @return {Object} The passed in checksums variable.
+     */
+    var md5SCSS = function (checksums) {
+        checksums.css = '';
+        glob.sync('src/styles/**/*.scss').forEach(function (filePath) {
+            checksums.css += fs.readFileSync(filePath, fsOptions);
+        });
+        checksums.css = md5(checksums.css);
+        return checksums;
     };
 
     /**
@@ -100,26 +123,38 @@ gulp.task('clean:dist', function (done) {
     };
 
     // All of these directories are always unused and we can directly delete them.
-    del(['dist/tmp', 'dist/projects', 'dist/views', 'dist/styles', '!dist/styles/main*'], { dot: true });
+    del.sync(['dist/tmp', 'dist/projects', 'dist/views'], { dot: true });
 
     if (fs.existsSync(checksumsPath)) {
-        checksums = JSON.parse(fs.readFileSync(checksumsPath));
-        var newChecksums = checksums;
-        newChecksums.css = '';
+        var filePath, newChecksums;
 
-        for (var filePath in checksums) {
-            if (checksums.hasOwnProperty(filePath)) {
-                if (filePath === 'css') {
-                    glob.sync('src/styles/**/*.scss', { nodir: true }).forEach(readSCSS.bind(newChecksums));
-                } else if (md5File.call(newChecksums, filePath) === checksums[filePath]) {
-                    var pattern = filePath
-                            .replace(/^src.(projects.[\d-]*~)?/, 'dist/')
-                            .replace(/\.md$/, '.html')
-                            .replace(/\.(jpg|png)$/, '*')
-                        ;
+        checksums = fs.readFileSync(checksumsPath);
+        newChecksums = JSON.parse(checksums);
+        checksums = JSON.parse(checksums);
 
-                    glob.sync(pattern + '?(.gz)').forEach(fs.unlinkSync.bind(fs));
+        md5SCSS(newChecksums);
+        if (newChecksums.css === checksums.css) {
+            del.sync('dist/styles');
+        }
+
+        md5EJS(newChecksums);
+        if (newChecksums.ejs !== checksums.ejs) {
+            for (filePath in checksums) {
+                if (checksums.hasOwnProperty(filePath) && filePath.match(/\.md$/)) {
+                    delete checksums[filePath];
                 }
+            }
+        }
+
+        for (filePath in checksums) {
+            if (checksums.hasOwnProperty(filePath) && filePath !== 'css' && filePath !== 'ejs' && md5File.call(newChecksums, filePath) === checksums[filePath]) {
+                var pattern = filePath
+                        .replace(/^src.(projects.[\d-]*~)?/, 'dist/')
+                        .replace(/\.md$/, '.html')
+                        .replace(/\.(jpg|png)$/, '*')
+                    ;
+
+                glob.sync(pattern + '?(.gz)').forEach(fs.unlinkSync.bind(fs));
             }
         }
 
@@ -129,15 +164,13 @@ gulp.task('clean:dist', function (done) {
 
         rmdirRecursiveSync('dist');
     } else {
-        checksums.css = '';
-        glob.sync('src/**/!(*.cfg|*.ejs|FONTLOG.txt|OFL*.txt|README.md)', { nodir: true }).forEach(function (filePath) {
-            if (filePath.match(/\.scss$/)) {
-                readSCSS.call(checksums, filePath);
-            } else {
-                md5File.call(checksums, filePath);
-            }
+        md5EJS(checksums);
+        md5SCSS(checksums);
+
+        glob.sync('src/**/!(*.cfg|*.ejs|*.scss|FONTLOG.txt|OFL*.txt|README.md)', { nodir: true }).forEach(function (filePath) {
+            md5File.call(checksums, filePath);
         });
-        checksums.css = md5(checksums.css);
+
         fs.writeFileSync(checksumsPath, JSON.stringify(checksums));
     }
 

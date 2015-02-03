@@ -28,7 +28,7 @@
  * @license http://unlicense.org/ Unlicense.
  */
 
-var gulp         = require('gulp');
+var gulp = require('gulp');
 var mergeStreams = require('merge-stream');
 
 gulp.task('copy', function () {

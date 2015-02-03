@@ -105,6 +105,10 @@
         @include transition(transform);
     }
 
+    &.click-focus img {
+        transform: none !important;
+    }
+
     &:focus img {
         transform: scale(1.2);
     }
