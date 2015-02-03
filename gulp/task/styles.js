@@ -31,7 +31,7 @@
 var $ = require('gulp-load-plugins')();
 var gulp = require('gulp');
 
-gulp.task('style', ['styles:scss'], function () {
+gulp.task('styles', ['styles:scss'], function () {
     return gulp.src('tmp/styles/**/*.css')
         .pipe($.csso())
         .pipe(gulp.dest('dist/styles'));
