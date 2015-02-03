@@ -32,6 +32,12 @@ it will lead me down in the future. If you are curious too, contact me to learn 
         <a class="img-anchor" href="https://www.linkedin.com/in/melaniegruber" target="_blank" title="Visit my LinkedIN profile.">
             <img alt="LinkedIN icon" height="24" src="/images/icons/linkedin.svg" width="24">
         </a>
+        <a class="img-anchor" href="http://www.melaniegruber.gameartisans.org" target="_blank">
+            <picture>
+                <source srcset="/images/icons/game-artisans-24.webp, /images/icons/game-artisans-32.webp 1.5x, /images/icons/game-artisans-48.webp 2x, /images/icons/game-artisans-72.webp 3x" type="image/webp">
+                <img alt="Game Artisans" height="24" src="/images/icons/game-artisans-24.png" srcset="/images/icons/game-artisans-32.png 1.5x, /images/icons/game-artisans-48.png 2x, /images/icons/game-artisans-72.png 3x" width="24">
+            </picture>
+        </a>
         <!-- <a class="img-anchor" href="http://melaniegruber.cgsociety.org/" target="_blank">CG Society</a>-->
         <a class="img-anchor" href="http://melaniegruber.deviantart.com/" target="_blank" title="Visit my DeviantART profile.">
             <img alt="DeviantART icon" height="24" src="/images/icons/deviantart.svg" width="24">
