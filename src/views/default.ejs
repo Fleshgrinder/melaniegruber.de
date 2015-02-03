@@ -1,3 +1,14 @@
+<%
+
+// We generate the galleries right away because we want to use the first image for Facebook.
+if (page.gallery && page.gallery.length > 0) {
+    page.gallery = page.renderGalleryImages(page);
+}
+if (page.screenshots && page.screenshots.length > 0) {
+    page.screenshots = page.renderGalleryImages(page, 'screenshots');
+}
+
+%>
 <% include partials/head %>
 <div class="container">
     <div class="text<% if (page.year && page.year > new Date().getFullYear()) { %> abs-before-after project-wip<% } %>">
@@ -24,16 +35,16 @@
     </div>
     <% if (page.gallery || page.screenshots || page.vimeo) { %>
         <div id="gallery">
-            <% if (page.gallery && page.gallery.length > 0) { %>
+            <% if (page.gallery) { %>
                 <section class="media">
                     <h2 class="media-title sr-only">Gallery</h2>
-                    <div class="clearfix media-content"><%- page.renderGalleryImages(page) %></div>
+                    <div class="clearfix media-content"><%- page.gallery %></div>
                 </section>
             <% } %>
-            <% if (page.screenshots && page.screenshots.length > 0) { %>
+            <% if (page.screenshots) { %>
                 <section class="media">
                     <h2 class="media-title">Screenshots</h2>
-                    <div class="clearfix media-content"><%- page.renderGalleryImages(page, 'screenshots') %></div>
+                    <div class="clearfix media-content"><%- page.screenshots %></div>
                 </section>
             <% } %>
             <% if (page.vimeo && page.vimeo.length > 0) { %>

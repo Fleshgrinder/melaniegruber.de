@@ -190,6 +190,11 @@ function renderGalleryImages(page, type) {
 
         // Increase the global counter for the next image (no matter which gallery type).
         ++page.imageIndex;
+
+        // Export the first image we find to be our Facebook image.
+        if (extension !== 'svg' && !('facebookImage' in page)) {
+            page.facebookImage = url(300);
+        }
     });
 
     return rendered;

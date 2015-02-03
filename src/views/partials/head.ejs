@@ -41,7 +41,7 @@
     <% if (page.next) { %><link href="<%= page.next.route %>" rel="next"><% } %>
     <% if (page.previous) { %><link href="<%= page.previous.route %>" rel="prev"><% } %>
 
-    <meta property="og:image" content="<%= page.url(page.asset('/images/logo/icon-270.png')) %>">
+    <meta property="og:image" content="<%= page.url(page.facebookImage || page.asset('/images/logo/icon-270.png')) %>">
     <meta property="og:site_name" content="<%= page.siteName %>">
     <meta property="og:title" content="<%= page.index ? page.siteName : page.title %>">
     <meta property="og:type" content="<% if (page.index) { %>website<% } else { %>article<% } %>">
