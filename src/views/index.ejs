@@ -5,12 +5,12 @@
         <div class="intro-content"><%- contents %></div>
     </div>
     <% page.projects.forEach(function (project) { %>
-        <a class="img-anchor project rel" href="<%= project.route %>">
+        <a class="project rel<% if (project.year > new Date().getFullYear()) { %> abs-before-after project-wip<% } %>" href="<%= project.route %>">
             <article class="project-wrapper">
                 <div class="abs project-overlay">
                     <h2 class="project-title rel"><%= project.title %></h2>
                     <% if (project.programs.length > 0 ) { %>
-                        <p class="abs-before project-subtitle rel"><%- page.renderProgramIcons(project.programs) %></p>
+                        <p class="abs-before project-subtitle"><%- page.renderProgramIcons(project.programs) %></p>
                     <% } %>
                 </div>
                 <picture><%- page.renderIndexTile(project) %></picture>

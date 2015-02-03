@@ -78,6 +78,13 @@ body {
     text-shadow: none;
 }
 
+.abs-before-after:before,
+.abs-before-after:after,
+.abs-before:before,
+.abs-after:after {
+    content: "";
+}
+
 article,
 header,
 figcaption,
@@ -243,6 +250,32 @@ main p {
     padding: 0;
 }
 
+.project-wip {
+
+    &:before {
+        color: #fff;
+        content: "WiP";
+        font-size: $font-size; // Keep font-size equal among all devices.
+        font-weight: bold;
+        left: 4px;
+        top: 8px;
+        transform: rotate(-45deg);
+        z-index: 2;
+    }
+
+    &:after {
+        border-color: nth($color-palette, 2) transparent transparent;
+        border-style: solid;
+        border-width: 60px 60px 0 0;
+        height: 0;
+        left: 0;
+        top: 0;
+        width: 0;
+        z-index: 1;
+    }
+
+}
+
 .pager-wrapper {
     background-color: #fff;
     height: 64px;
@@ -311,20 +344,16 @@ main p {
 @import "hover";
 //}
 
+.abs {
+    position: absolute !important;
+}
+
 // Utility classes must be last!
-.abs,
 .abs-before-after:before,
 .abs-before-after:after,
 .abs-before:before,
 .abs-after:after {
     position: absolute;
-}
-
-.abs-before-after:before,
-.abs-before-after:after,
-.abs-before:before,
-.abs-after:after {
-    content: "";
 }
 
 .clearfix:after {
@@ -358,6 +387,12 @@ hr {
 }
 
 .rel {
+    position: relative !important;
+}
+
+.abs-before-after,
+.abs-before,
+.abs-after {
     position: relative;
 }
 

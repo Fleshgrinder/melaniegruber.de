@@ -427,7 +427,7 @@ gulp.task('html:markdown:projects', function () {
                 next:     undefined,
                 previous: undefined,
                 route:    '/' + basename[1],
-                year:     basename[0].substring(0, 4)
+                year:     parseInt(basename[0].substring(0, 4))
             });
         });
 

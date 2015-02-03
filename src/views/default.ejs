@@ -1,6 +1,6 @@
 <% include partials/head %>
 <div class="container">
-    <div class="text">
+    <div class="text<% if (page.year && page.year > new Date().getFullYear()) { %> abs-before-after project-wip<% } %>">
         <h1 class="text-title"><%= page.title %></h1>
         <% if (page.description || page.programs || page.work) { %>
                 <% if (page.description) { %>

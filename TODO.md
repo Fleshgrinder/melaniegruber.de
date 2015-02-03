@@ -1,5 +1,4 @@
 # TODO
-* Work in Progress (WIP) badge.
 * Test with mobile devices.
 * Test with Apple devices.
 * [Facebook URL Debugger](https://developers.facebook.com/tools/debug/)

@@ -63,6 +63,17 @@
     overflow: hidden;
 }
 
+.index .project-wip {
+    &:before {
+        left: 12px;
+        top: 22px;
+    }
+
+    &:after {
+        border-width: 100px 100px 0 0;
+    }
+}
+
 .project-tile {
     @include transition(transform);
 }
