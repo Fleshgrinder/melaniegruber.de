@@ -37,7 +37,7 @@
     <!-- Browser and search engine information. -->
     <title><%= page.title %><%= page.titleSeparator %><%= page.subtitle %></title>
     <meta content="<%= page.description %>" name="description" property="og:description">
-    <link href="<%= page.url(page.route) %>" property="og:url" rel="canonical">
+    <link href="<%= page.url(page.route) %>" rel="canonical">
     <% if (page.next) { %><link href="<%= page.next.route %>" rel="next"><% } %>
     <% if (page.previous) { %><link href="<%= page.previous.route %>" rel="prev"><% } %>
 
@@ -45,6 +45,7 @@
     <meta property="og:site_name" content="<%= page.siteName %>">
     <meta property="og:title" content="<%= page.index ? page.siteName : page.title %>">
     <meta property="og:type" content="<% if (page.index) { %>website<% } else { %>article<% } %>">
+    <meta property="og:url" content="<%= page.url(page.route) %>">
 </head>
 <body class="<%= page.layout %>">
     <header class="header">
