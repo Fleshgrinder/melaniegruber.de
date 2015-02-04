@@ -176,7 +176,7 @@ function renderGalleryImages(page, type) {
         ;
 
         if (extension === 'svg') {
-            rendered += '<img alt="' + title + '" height="337.5" src="' + url() + '" width="600">';
+            rendered += '<img alt="' + title + '" height="338" src="' + url() + '" width="600">';
         } else {
             rendered += '<picture>';
 
@@ -193,7 +193,7 @@ function renderGalleryImages(page, type) {
             }
 
             rendered +=
-                    '<img alt="' + title + '" height="337.5" src="' + url(600) + '" srcset="' +
+                    '<img alt="' + title + '" height="338" src="' + url(600) + '" srcset="' +
                         url(900) + ' 1.5x, ' +
                         url(1200) + ' 2x, ' +
                         url(1800) + ' 3x" width="600">' +
