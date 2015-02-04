@@ -354,6 +354,10 @@ function prepareProjectMetaInfo(vinyl) {
         tilePattern: '/images' + vinyl[options.property].route + '/tile.jpg',
         tilePrefix: '/images' + vinyl[options.property].route + '/tile'
     }, vinyl[options.property], projects[i]);
+
+    // We use the tile which is used on the index page for Facebook since its already an image prepared to represent
+    // the project.
+    vinyl[options.property].facebookImage = asset(vinyl[options.property].tilePrefix + '-320.jpg', vinyl[options.property].tilePattern);
 }
 
 /**
