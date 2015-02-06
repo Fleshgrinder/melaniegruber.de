@@ -1,7 +1,8 @@
 ---
 
 title: Zombie Pin-Up
-description: Digital Painting (Personal Project)
+type: Digital Painting (Personal Project)
+description: Digital painting of a zombie pin-up as a personal project.
 programs:
     - Adobe Photoshop
 work:

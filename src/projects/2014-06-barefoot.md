@@ -1,7 +1,8 @@
 ---
 
 title: BareFoot
-description: Game (Master’s Project)
+type: Game (Master’s Project)
+description: Modeling and texturing of various game assets for a racing game with a stylized look.
 programs:
     - Adobe Photoshop
     - Autodesk 3ds Max

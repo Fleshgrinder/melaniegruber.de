@@ -1,7 +1,8 @@
 ---
 
 title: Simetry
-description: Game (Master’s Project)
+type:Game (Master’s Project)
+description: Character design and animations for an abstract game character.
 programs:
     - Adobe Photoshop
     - Autodesk 3ds Max

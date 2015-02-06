@@ -1,7 +1,8 @@
 ---
 
 title: Let’s Roll
-description: Short Film (Bachelor’s Project)
+type: Short Film (Bachelor’s Project)
+description: Character design, lighting, and shading for a short film.
 programs:
     - Autodesk Maya 
     - Autodesk Mental Ray
