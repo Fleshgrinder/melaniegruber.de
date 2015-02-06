@@ -31,13 +31,13 @@ screenshots:
 ---
 
 ## Personal Experience
-I designed the abstract character for this game and realized it in 3D. This included the modeling, rigging, and
-animation of the character. As this was the first time that I created a character rig, I gained a lot of knowledge about
-how this is done in Autodesk Maya. Further, I learned much about how animations for a game have to be created. It was a
-great challenge to develop a design and way of movement for such an abstract character, but it also was a lot of fun, as
+I designed the abstract character for this game and realized it in 3D. This included the modeling, rigging, and 
+animation of the character. As this was the first time that I created a character rig, I gained a lot of knowledge about 
+how this is done in Autodesk Maya. Further, I learned much about how animations for a game have to be created. It was a 
+great challenge to develop a design and way of movement for such an abstract character, but it also was a lot of fun, as 
 I had much artistic freedom.
 
 ## Project Summary
-This game mixes jump 'n' run with puzzle elements in a classical 2.5 D setting. Everything is constructed of simple
-geometric forms, which creates an abstract world. The player can remove parts of the environment, and use these parts to
+This game mixes jump 'n' run with puzzle elements in a classical 2.5 D setting. Everything is constructed of simple 
+geometric forms, which creates an abstract world. The player can remove parts of the environment, and use these parts to 
 build new forms. This core mechanic helps the player to solve the puzzles and progress through the game.

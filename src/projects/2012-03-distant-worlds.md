@@ -30,12 +30,12 @@ gallery:
 ---
 
 ## Personal Experience
-I modeled various plants for this fulldome show in Autodesk 3ds Max at
-<a href="http://www.northdocks.com" href-lang="de" target="_blank">Northdocks</a>,
-including small plants and large trees. Therefore, I learned a lot about how organic structures can be created in 3D.
-For some of the trees I used particles to create the large amount of leaves, which was the first time that I set up a
+I modeled various plants for this fulldome show in Autodesk 3ds Max at 
+<a href="http://www.northdocks.com" href-lang="de" target="_blank">Northdocks</a>, 
+including small plants and large trees. Therefore, I learned a lot about how organic structures can be created in 3D. 
+For some of the trees I used particles to create the large amount of leaves, which was the first time that I set up a 
 particle system.
 
 ## Project Summary
-The show was created for a dome-based video projection environment that immerses the viewer. A journey to earth-like
+The show was created for a dome-based video projection environment that immerses the viewer. A journey to earth-like 
 planets far away, showing how life on these foreign planets could have developed.

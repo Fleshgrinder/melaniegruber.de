@@ -18,6 +18,6 @@ gallery:
 ---
 
 ## Personal Experience
-I started this project to improve my digital painting skills using a graphics tablet and Adobe Photoshop. It helped me
-to test some techniques and understand the digital painting process better. Also, I always enjoy to work on characters
+I started this project to improve my digital painting skills using a graphics tablet and Adobe Photoshop. It helped me 
+to test some techniques and understand the digital painting process better. Also, I always enjoy to work on characters 
 and improve my character design skills.
