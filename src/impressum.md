@@ -17,7 +17,7 @@ Germany
 Concept, design, hosting, and implementation:
 
 <p class="additional-links">
-    <a class="img-anchor" href="<%= page.asset('/images/logo/richard-fussenegger.svg') %>" target="_blank">
-        <img alt="Richard Fussenegger" height="60" src="http://cdn.fussenegger.info/richard/logo-320x60.png" width="320">
+    <a class="img-anchor" href="http://richard.fussenegger.info/" target="_blank">
+        <img alt="Richard Fussenegger" height="60" src="<%= page.asset('/images/logo/richard-fussenegger.svg') %>" width="320">
     </a>
 </p>
