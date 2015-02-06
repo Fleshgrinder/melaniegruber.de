@@ -5,7 +5,7 @@ type: Fulldome Show (Internship Project)
 description: Modeling, texturing, and shading of a sailing ship for a fulldome show. 
 programs:
     - Autodesk 3ds Max
-    - Vray
+    - V-Ray
 work:
     - Modeling
     - UV-Layouts
