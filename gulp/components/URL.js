@@ -72,15 +72,12 @@ URL.prototype = {
                     self.__cacheBusters[pattern] += $.fs.readFileSync(filePath, { encoding: 'utf8' });
                 });
 
-                this.__cacheBusters[pattern] = $.crypto.createHash('md5')
+                this.__cacheBusters[pattern] = encodeURIComponent($.crypto.createHash('md5')
                     .update(this.__cacheBusters[pattern])
                     .digest('base64')
                     // Remove trailing equal signs, we do not need them for proper cache busting.
                     .replace(/=*$/, '')
-                    // Everything else needs encoding because these characters have a special meaning in a URL.
-                    .replace(/\+/g, '%2B')
-                    .replace(/\//g, '%2F')
-                    .replace(/=/g, '%3D');
+                );
             }
 
             return path + '?' + this.__cacheBusters[pattern];
