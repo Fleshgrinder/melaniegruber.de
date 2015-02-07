@@ -21,22 +21,22 @@
 // Main style file containing all rules.
 //
 // @author Richard Fussenegger <richard@fussenegger.info>
-// @copyright 2014 Richard Fussenegger
-// @license http://unlicense.org/ Unlicense.
+// @copyright Copyright (c) 2014-15 Richard Fussenegger
+// @license http://unlicense.org/ PD
 // ---------------------------------------------------------------------------------------------------------------------
 
-@import "variables";
+@import "components/variables";
 @import "mixins/font-face";
 @import "mixins/transition";
 
 // TODO: Remove the fonts which are not used anywhere in the design and try limiting to very few!
 @include font-face($font-family, extralight, 200);
-@include font-face($font-family, light, 300);
+//@include font-face($font-family, light, 300);
 @include font-face($font-family, regular, 400);
-@include font-face($font-family, medium, 500);
-@include font-face($font-family, semibold, 600);
+//@include font-face($font-family, medium, 500);
+//@include font-face($font-family, semibold, 600);
 @include font-face($font-family, bold, 700);
-@include font-face($font-family, extrabold, 800);
+//@include font-face($font-family, extrabold, 800);
 
 *,
 *::before,
@@ -327,19 +327,13 @@ main p {
     }
 }
 
-@import "index";
-@import "default";
-@import "full-screen";
-@import "mobile";
-@import "desktop";
-
-//@media (hover: none) {
-@import "no-hover";
-//}
-
-//@media (hover: hover) {
-@import "hover";
-//}
+@import "components/index";
+@import "components/default";
+@import "components/mobile";
+@import "components/desktop";
+@import "components/no-hover";
+@import "components/hover";
+@import "components/full-screen";
 
 .abs {
     position: absolute !important;

@@ -21,13 +21,14 @@
 // Styles which only apply to devices which do not support hover.
 //
 // @author Richard Fussenegger <richard@fussenegger.info>
-// @copyright 2014 Richard Fussenegger
-// @license http://unlicense.org/ Unlicense.
+// @copyright Copyright (c) 2014-15 Richard Fussenegger
+// @license http://unlicense.org/ PD
 // ---------------------------------------------------------------------------------------------------------------------
 
 @import "variables";
-@import "mixins/transition";
+@import "../mixins/transition";
 
+//@media (hover: none)
 .no-hover {
 
     .project-overlay {

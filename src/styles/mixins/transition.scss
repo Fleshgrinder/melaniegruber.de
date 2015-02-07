@@ -21,11 +21,11 @@
 // Mixin to generate transition rules.
 //
 // @author Richard Fussenegger <richard@fussenegger.info>
-// @copyright 2014 Richard Fussenegger
-// @license http://unlicense.org/ Unlicense.
+// @copyright Copyright (c) 2014-15 Richard Fussenegger
+// @license http://unlicense.org/ PD
 // ---------------------------------------------------------------------------------------------------------------------
 
-@import "../variables";
+@import "../components/variables";
 
 @mixin transition($property, $duration: $animation-duration, $function: $animation-function, $delay: "") {
     transition: $property $duration $function unquote($delay);

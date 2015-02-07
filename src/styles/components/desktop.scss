@@ -18,68 +18,87 @@
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------------------------------------------------
-// Styles which only apply to devices which support hover.
+// Desktop styles for big devices.
 //
 // @author Richard Fussenegger <richard@fussenegger.info>
-// @copyright 2014 Richard Fussenegger
-// @license http://unlicense.org/ Unlicense.
+// @copyright Copyright (c) 2014-15 Richard Fussenegger
+// @license http://unlicense.org/ PD
 // ---------------------------------------------------------------------------------------------------------------------
 
 @import "variables";
-@import "mixins/transition";
 
-.hover {
+@media (min-width: (960em / 16)) {
 
-    .project:active,
-    .project:focus,
-    .project:hover {
-        z-index: 1;
-
-        .project-overlay {
-            opacity: 1;
-        }
-
-        .project-title,
-        .project-subtitle {
-            opacity: 1;
-            top: 0;
-        }
-
-        .project-subtitle:before {
-            transform: scaleX(1);
-        }
+    body {
+        padding-top: $header-height;
     }
 
-    .project-overlay {
-        @include transition(opacity);
-        height: 100%;
-        opacity: 0;
+    .header {
+        box-shadow: 0 0 1rem #000;
+        left: 0;
+        margin-left: -20%;
+        padding-left: 20%;
+        position: fixed;
+        right: 0;
         top: 0;
+        width: 120%;
+        z-index: 99;
     }
 
-    .project-title,
-    .project-subtitle {
-        opacity: 0;
-        top: -.5em;
-        transition: top $animation-duration * 2 $animation-function, opacity $animation-duration * 1.5 linear $animation-duration * .5;
-    }
+    .menu {
+        padding-right: $header-height / 3;
 
-    .project-subtitle:before {
-        @include transition(transform, $animation-duration * 2);
-        transform: scaleX(0);
-    }
-
-    .additional-links {
-        .img-anchor {
-            @include transition(opacity);
-            opacity: .5;
+        li {
+            display: inline-block;
         }
+    }
 
-        a:active,
-        a:focus,
-        a:hover {
-            opacity: 1;
-        }
+    .menu-item {
+        display: block;
+        height: 100%;
+        padding: 0 $header-height / 3;
+    }
+
+    .desktop-hidden {
+        display: none !important;
+    }
+
+    .media-element {
+        margin: 20px 20px 0 0;
+    }
+
+}
+
+@media (min-width: (1280em / 16)) {
+
+    .container {
+        display: flex;
+        min-height: 100%;
+    }
+
+    .text {
+        min-width: 640px;
+    }
+
+    .media-content {
+        width: calc(100% + 20px);
+    }
+
+    .media-element {
+        float: left;
+    }
+
+    .pager-wrapper {
+        bottom: 0;
+        height: 64px;
+        left: 0;
+        padding: 0 20px;
+        position: fixed;
+        width: 640px;
+    }
+
+    .pager-bottom {
+        display: none !important;
     }
 
 }
