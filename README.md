@@ -52,24 +52,24 @@ The following meta information is **required** in every Markdown file:
 
 ```yaml
 title: The title of the web page.
+description: Short description of the page's content.
 ```
 
 The following meta information may be included in any Markdown file (note that many have default values and some have no
 effect on the index page):
 
 ```yaml
-description: Short description of the page's content.
 gallery:
     - A YAML list of gallery image names that should be displayed on the page.
 layout: The name of the layout that should be used for rendering (defaults to "default").
 route: The route to the page that will be used in the URL (auto-generated based on filename).
-subtitle: The subtitle of the page (defaults to "Melanie Gruber").
 titleSeparator: The character that should be used to separate the title from the subtitle (defaults to " | ").
 ```
 
 The following meta information is only supported by projects and may be included:
 
 ```yaml
+type: Text explaining the project type (e.g. "Personal Project").
 programs:
    - A YAML list that contains all programs which where used to create the project.
 screenshots:
