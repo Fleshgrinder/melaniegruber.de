@@ -21,32 +21,32 @@ technologies. I am also very passionate about being an artist in the games indus
 It is my curiosity that always leaves me wanting to learn and experience more. And I am very curious about the new paths
 it will lead me down in the future. If you are curious too, contact me to learn more about my personality and passions:
 
-[contact@melaniegruber.de](mailto:contact@melaniegruber.de)  
+[contact@melaniegruber.de](mailto:contact@melaniegruber.de)
 
 <section class="additional-links">
     <h2 class="sr-only">Weblinks</h2>
     <p>
         <a class="img-anchor" href="callto:melaniegruber.de" target="_blank" title="Call me via Skype.">
-            <img alt="Skype icon" height="24" src="<%= page.asset('/images/icons/skype.svg') %>" width="24">
+            <img alt="Skype icon" height="24" src="<%= url.asset('/images/icons/skype.svg') %>" width="24">
         </a>
         <a class="img-anchor" href="https://www.linkedin.com/in/melaniegruber" target="_blank" title="Visit my LinkedIn profile.">
-            <img alt="LinkedIn icon" height="24" src="<%= page.asset('/images/icons/linkedin.svg') %>" width="24">
+            <img alt="LinkedIn icon" height="24" src="<%= url.asset('/images/icons/linkedin.svg') %>" width="24">
         </a>
-        <a class="img-anchor" href="http://www.melaniegruber.gameartisans.org" target="_blank" title="Visit my Game Artisans profile.">
+        <a class="img-anchor" href="http://www.gameartisans.org/forums/members/175975-MelanieGruber" target="_blank" title="Visit my Game Artisans profile.">
             <picture>
-                <source srcset="<%= page.asset('/images/icons/game-artisans-24.webp') %>, <%= page.asset('/images/icons/game-artisans-32.webp') %> 1.5x, <%= page.asset('/images/icons/game-artisans-48.webp') %> 2x, <%= page.asset('/images/icons/game-artisans-72.webp') %> 3x" type="image/webp">
-                <img alt="Game Artisans" height="24" src="<%= page.asset('/images/icons/game-artisans-24.png') %>" srcset="<%= page.asset('/images/icons/game-artisans-32.png') %> 1.5x, <%= page.asset('/images/icons/game-artisans-48.png') %> 2x, <%= page.asset('/images/icons/game-artisans-72.png') %> 3x" width="24">
+                <source srcset="<%= url.asset('/images/icons/game-artisans-24.webp') %>, <%= url.asset('/images/icons/game-artisans-32.webp') %> 1.5x, <%= url.asset('/images/icons/game-artisans-48.webp') %> 2x, <%= url.asset('/images/icons/game-artisans-72.webp') %> 3x" type="image/webp">
+                <img alt="Game Artisans" height="24" src="<%= url.asset('/images/icons/game-artisans-24.png') %>" srcset="<%= url.asset('/images/icons/game-artisans-32.png') %> 1.5x, <%= url.asset('/images/icons/game-artisans-48.png') %> 2x, <%= url.asset('/images/icons/game-artisans-72.png') %> 3x" width="24">
             </picture>
         </a>
         <!-- <a class="img-anchor" href="http://melaniegruber.cgsociety.org/" target="_blank">CG Society</a>-->
         <a class="img-anchor" href="http://melaniegruber.deviantart.com/" target="_blank" title="Visit my DeviantArt profile.">
-            <img alt="DeviantArt icon" height="24" src="<%= page.asset('/images/icons/deviantart.svg') %>" width="24">
+            <img alt="DeviantArt icon" height="24" src="<%= url.asset('/images/icons/deviantart.svg') %>" width="24">
         </a>
         <a class="img-anchor" href="https://vimeo.com/melaniegruber" target="_blank" title="Visit my Vimeo profile.">
-            <img alt="Vimeo icon" height="24" src="<%= page.asset('/images/icons/vimeo.svg') %>" width="24">
+            <img alt="Vimeo icon" height="24" src="<%= url.asset('/images/icons/vimeo.svg') %>" width="24">
         </a>
         <a class="img-anchor" href="http://www.pinterest.com/GruberMelanie/inspiration/" target="_blank" title="Visit my Pinterest board.">
-            <img alt="Pinterest icon" height="24" src="<%= page.asset('/images/icons/pinterest.svg') %>" width="24">
+            <img alt="Pinterest icon" height="24" src="<%= url.asset('/images/icons/pinterest.svg') %>" width="24">
         </a>
     </p>
 </section>
