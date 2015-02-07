@@ -27,9 +27,9 @@ gallery:
     - Mouse Animation
     - Wizard Animation
 screenshots:
-    - Post Office
-    - Safari
-    - UFO
+    - Screenshot Post Office
+    - Screenshot Safari
+    - Screenshot UFO
 
 ---
 
