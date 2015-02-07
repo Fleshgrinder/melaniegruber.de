@@ -1,52 +1,227 @@
-/* jshint node:true */
 'use strict';
 
-/*!
- * This is free and unencumbered software released into the public domain.
- *
- * Anyone is free to copy, modify, publish, use, compile, sell, or distribute this software, either in source code form
- * or as a compiled binary, for any purpose, commercial or non-commercial, and by any means.
- *
- * In jurisdictions that recognize copyright laws, the author or authors of this software dedicate any and all copyright
- * interest in the software to the public domain. We make this dedication for the benefit of the public at large and to
- * the detriment of our heirs and successors. We intend this dedication to be an overt act of relinquishment in
- * perpetuity of all present and future rights to this software under copyright law.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE
- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
- * For more information, please refer to <http://unlicense.org/>
- */
+
+// --------------------------------------------------------------------------------------------------------------------- Globals
+
 
 /**
- * Default gulp task and task loading file.
+ * Gulp plugin loader.
  *
- * @author Richard Fussenegger <richard@fussenegger.info>
- * @copyright Copyright (c) 2014-15 Richard Fussenegger
- * @license http://unlicense.org/ PD
+ * The type definition is a mirror of all available `gulp-*` modules from the `package.json` file and the ones I add
+ * manually below. The type definition can be generated via the `bin/load-plugins-type.js` file.
+ *
+ * @type {{
+ *   concurrentTransform: Function
+ *   del: Function
+ *   glob: Function
+ *   addSrc: Function
+ *   autoprefixer: Function
+ *   browserSync: {
+ *     reload: Function
+ *   }
+ *   cached: Function
+ *   changed: Function
+ *   compress: Function
+ *   connectModrewrite: Function
+ *   crypto: {
+ *     createHash: Function
+ *   }
+ *   csso: Function
+ *   frontMatter: Function
+ *   gzip: Function
+ *   htmlMinifier: Function
+ *   ignore: {
+ *     exclude: Function
+ *     include: Function
+ *   }
+ *   imageResize: Function
+ *   imageSize: Function
+ *   imagemin: Function
+ *   imageminMozjpeg: Function
+ *   imageminPngquant: Function
+ *   lazypipe: Function
+ *   markdown: Function
+ *   merge: Function
+ *   mergeStream: Function
+ *   multiRenderer: Function
+ *   os: {
+ *     tmpdir: Function
+ *     endianness: Function
+ *     hostname: Function
+ *     type: Function
+ *     platform: Function
+ *     arch: Function
+ *     release: Function
+ *     uptime: Function
+ *     loadavg: Function
+ *     totalmem: Function
+ *     freemem: Function
+ *     cpus: Function
+ *     networkInterfaces: Function
+ *     EOL: string
+ *   }
+ *   plumber: Function
+ *   remember: Function
+ *   rename: Function
+ *   replace: Function
+ *   requireDir: Function
+ *   runSequence: Function
+ *   sass: Function
+ *   sourcemaps: {
+ *     init: Function
+ *     write: Function
+ *   }
+ *   tap: Function
+ *   through2: {
+ *     obj: Function
+ *   }
+ *   uglify: Function
+ *   util: {
+ *     log: Function
+ *     colors: {
+ *       reset
+ *       bold
+ *       dim
+ *       italic
+ *       underline
+ *       inverse
+ *       hidden
+ *       strikethrough
+ *       black
+ *       red
+ *       green
+ *       yellow
+ *       blue
+ *       magenta
+ *       cyan
+ *       white
+ *       gray
+ *       bgBlack
+ *       bgRed
+ *       bgGreen
+ *       bgYellow
+ *       bgBlue
+ *       bgMagenta
+ *       bgCyan
+ *       bgWhite
+ *     }
+ *     replaceExtension: Function
+ *     isStream: Function
+ *     isBuffer: Function
+ *     template: Function
+ *     File: File
+ *     noop: Function
+ *     buffer: Function
+ *     PluginError: Error
+ *   }
+ *   webp: Function
+ *   zopfli: Function
+ * }}
  */
+global.$ = require('gulp-load-plugins')();
 
 /**
- * Whether to generate cache buster strings in templates or not.
- * @see gulp/task/html-markdown.js
+ * Global configuration.
+ *
+ * @type {{}}
+ */
+global.config = require('./config.json');
+
+/**
+ * Node gulp module.
+ *
+ * @see http://gulpjs.com/
+ * @type {gulp.Gulp}
+ */
+global.gulp = require('gulp');
+
+
+// --------------------------------------------------------------------------------------------------------------------- Config
+
+
+/**
+ * Flag indicating if this is a distribution or development (default) build.
+ *
+ * `--dist` needs to be passed to gulp in order to create a distribution (production) build.
+ *
  * @type {boolean}
  */
-global.cacheBuster = false;
+config.dist = $.util.env.dist || false;
 
-require('gulp').task('default', ['clean'], function (done) {
-    global.cacheBuster = true;
-    require('run-sequence')(
-        ['fonts', 'scripts', 'styles'],
-        'images',
-        'html',
-        'copy',
-        'clean:dist',
-        ['clean:tmp', 'compress:zopfli'],
+/**
+ * Default destination directory.
+ *
+ * @type {string}
+ */
+config.dest = config.dist ? 'dist' : 'dev';
+
+
+// --------------------------------------------------------------------------------------------------------------------- Plugins
+
+
+// Add more node modules to the plugin loader; I do not like calling require() all over the place.
+(function () {
+    [
+        'browser-sync', // dev!
+        'concurrent-transform',
+        'connect-modrewrite', // dev!
+        'crypto',
+        'del',
+        'fs',
+        'glob',
+        'image-size',
+        'imagemin-mozjpeg',
+        'imagemin-pngquant',
+        'lazypipe',
+        'merge',
+        'merge-stream',
+        'os',
+        'path',
+        'require-dir',
+        'run-sequence',
+        'through2'
+    ].forEach(function (module) {
+            var property = module.replace(/-(\w)/g, function (match, $1) {
+                return $1.toUpperCase();
+            });
+
+            Object.defineProperty($, property, {
+                get: function plugin() {
+                    return plugin.__cache || (plugin.__cache = require(module));
+                }
+            });
+        });
+})();
+
+/**
+ * Lazy pipe for compressing the stream.
+ *
+ * @type {Function}
+ */
+if (config.distributionBuild) {
+    $.compress = $.lazyPipe().pipe($.zopfli);
+    //($.gzip, { gzipOptions: { level: 9 } })
+} else {
+    $.compress = $.util.noop;
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------- Tasks
+
+
+/**
+ * Default gulp task.
+ *
+ * @param {Function} done - Gulp provided done callback.
+ * @return {undefined}
+ */
+gulp.task('default', function gulpTaskDefault(done) {
+    $.runSequence(
+        ['copy', 'images', 'scripts', 'styles'],
+        'pages',
         done
     );
 });
 
 // Include all other tasks (including this after the default task ensures that the default task has highest priority).
-require('require-dir')('./gulp/task');
+$.requireDir('gulp', { recurse: true });
