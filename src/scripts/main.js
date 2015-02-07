@@ -23,8 +23,8 @@
  * Main JavaScript file.
  *
  * @author Richard Fussenegger <richard@fussenegger.info>
- * @copyright 2014 Richard Fussenegger
- * @license http://unlicense.org/ Unlicense.
+ * @copyright Copyright (c) 2014-15 Richard Fussenegger
+ * @license http://unlicense.org/ PD
  */
 (function (window, document, undefined) {
     'use strict';
@@ -35,63 +35,61 @@
         document.documentElement.classList.add('no-hover');
     }
 
-    // The first header is always the page's header.
-    var header = document.getElementsByClassName('header').item(0);
+    (function () {
+        // The first header is always the page's header.
+        var header = document.getElementsByClassName('header').item(0);
 
-    // Capture focus events on all elements for compensation of the fixed header in case of keyboard focus.
-    document.body.addEventListener('focus', function (event) {
-        var headerStyles = window.getComputedStyle(header);
+        // Capture focus events on all elements for compensation of the fixed header in case of keyboard focus.
+        document.body.addEventListener('focus', function (event) {
+            var headerStyles = window.getComputedStyle(header);
 
-        // Only react if the element is not part of the header itself and the header needs to be fixed (of course).
-        if (!header.contains(event.target) && headerStyles.position === 'fixed') {
-            var targetStyles = window.getComputedStyle(event.target);
+            // Only react if the element is not part of the header itself and the header needs to be fixed (of course).
+            if (!header.contains(event.target) && headerStyles.position === 'fixed') {
+                var targetStyles = window.getComputedStyle(event.target);
 
-            // No need to do anything if the element itself is absolute or fixed.
-            if (!targetStyles.position.match(/(absolute|fixed)/) && document.documentElement.scrollTop === event.target.offsetTop) {
-                // We add another twenty pixel for some white space between the focused element and the header itself.
-                document.documentElement.scrollTop -= parseInt(headerStyles.height) + 20;
+                // No need to do anything if the element itself is absolute or fixed.
+                if (!targetStyles.position.match(/(absolute|fixed)/) && document.documentElement.scrollTop === event.target.offsetTop) {
+                    // We add another twenty pixel for some white space between the focused element and the header itself.
+                    document.documentElement.scrollTop -= parseInt(headerStyles.height) + 20;
+                }
+            }
+        }, true);
+
+        /**
+         * The page's navigation menu.
+         * @type {Node}
+         */
+        var menu = document.getElementsByClassName('menu').item(0);
+
+        /**
+         * Click event callback for the page's navigation menu toggles.
+         * @param {Event} event - The click event.
+         * @return {undefined}
+         */
+        function toggleMenu(event) {
+            event.preventDefault();
+            menu.classList.toggle('open');
+        }
+
+        // Apply click event listener to the menu open and close toggle elements.
+        [].forEach.call(document.getElementsByClassName('menu-toggle'), function (element) {
+            element.addEventListener('click', toggleMenu, false);
+        });
+
+        /**
+         * All iframes in the DOM.
+         * @type {NodeList}
+         */
+        var iframes = document.getElementsByTagName('iframe');
+
+        // Only continue if we have at least one iframe. We are not setting the src attribute of the iframes to avoid
+        // blocking of the main render thread of the page.
+        if (iframes) {
+            for (var i = iframes.length - 1; i >= 0; --i) {
+                iframes[i].src = iframes[i].dataset.src;
             }
         }
-    }, true);
-
-    /**
-     * The page's navigation menu.
-     * @type {Element}
-     */
-    var menu;
-
-    /**
-     * Click event callback for the page's navigation menu toggles.
-     * @param {Event} event - The click event.
-     */
-    function toggleMenu(event) {
-        event.preventDefault();
-
-        // Use the cached menu or select the menu from the DOM.
-        menu = menu || document.querySelector('.menu');
-
-        // Actual animation is handled via CSS.
-        menu.classList.toggle('open');
-    }
-
-    // Apply click event listener to the menu open and close toggle elements.
-    [].forEach.call(document.getElementsByClassName('menu-toggle'), function (element) {
-        element.addEventListener('click', toggleMenu, false);
-    });
-
-    /**
-     * All iframes in the DOM.
-     * @type {NodeList}
-     */
-    var iframes = document.getElementsByTagName('iframe');
-
-    // Only continue if we have at least one iframe. We are not setting the src attribute of the iframes to avoid
-    // blocking of the main render thread of the page.
-    if (iframes) {
-        [].forEach.call(iframes, function (element) {
-            element.src = element.dataset.src;
-        });
-    }
+    })();
 
     /**
      * The gallery wrapper element.
@@ -105,34 +103,36 @@
         // -------------------------------------------------------------------------------------------------------------
         // Normalize request full-screen methods and properties if non-standard.
         if (!document.fullscreenEnabled) {
-            var normalizeMap = [
-                ['mozRequestFullScreen', 'mozCancelFullScreen', 'mozFullScreenElement'],
-                ['msRequestFullscreen', 'msExitFullscreen', 'msFullscreenElement'],
-                ['webkitRequestFullscreen', 'webkitExitFullscreen', 'webkitFullscreenElement'],
-                ['webkitRequestFullScreen', 'webkitCancelFullScreen', 'webkitCurrentFullScreenElement']
-            ];
+            (function () {
+                var normalizeMap = [
+                    ['mozRequestFullScreen', 'mozCancelFullScreen', 'mozFullScreenElement'],
+                    ['msRequestFullscreen', 'msExitFullscreen', 'msFullscreenElement'],
+                    ['webkitRequestFullscreen', 'webkitExitFullscreen', 'webkitFullscreenElement'],
+                    ['webkitRequestFullScreen', 'webkitCancelFullScreen', 'webkitCurrentFullScreenElement']
+                ];
 
-            for (var i = 0; i < normalizeMap.length; ++i) {
-                // It is sufficient to check for the request method.
-                if (normalizeMap[i][0] in Element.prototype) {
-                    // We can simply store references to the other methods.
-                    Element.prototype.requestFullscreen = Element.prototype[normalizeMap[i][0]];
-                    Document.prototype.exitFullscreen   = Document.prototype[normalizeMap[i][1]];
+                for (var i = 0; i < normalizeMap.length; ++i) {
+                    // It is sufficient to check for the request method.
+                    if (normalizeMap[i][0] in Element.prototype) {
+                        // We can simply store references to the other methods.
+                        Element.prototype.requestFullscreen = Element.prototype[normalizeMap[i][0]];
+                        Document.prototype.exitFullscreen   = Document.prototype[normalizeMap[i][1]];
 
-                    // A property is of course quite different, but we can easily define a new one.
-                    Object.defineProperties(document, {
-                        fullscreenElement: {
-                            enumerable: true,
-                            get: function () {
-                                return document[normalizeMap[i][2]];
+                        // A property is of course quite different, but we can easily define a new one.
+                        Object.defineProperties(document, {
+                            fullscreenElement: {
+                                enumerable: true,
+                                get: function () {
+                                    return document[normalizeMap[i][2]];
+                                }
                             }
-                        }
-                    });
+                        });
 
-                    // Break out of the loop and we're done normalizing.
-                    break;
+                        // Break out of the loop and we're done normalizing.
+                        break;
+                    }
                 }
-            }
+            })();
         }
 
         // -------------------------------------------------------------------------------------------------------------
