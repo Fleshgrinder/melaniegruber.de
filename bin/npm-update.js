@@ -20,7 +20,7 @@ var childProcess = require('child_process');
  *
  * @type {{dependencies:{}}}
  */
-var packageJSON = require('./package.json');
+var packageJSON = require('./../package.json');
 
 /**
  * Array used to collect node module names.
