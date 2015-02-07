@@ -1,3 +1,4 @@
+// jshint forin:false
 'use strict';
 
 /**
@@ -7,9 +8,32 @@
 
 console.log('Installing node modules, this may take several minutes ...');
 
+/**
+ * Node child process core module.
+ *
+ * @type {exports}
+ */
 var childProcess = require('child_process');
+
+/**
+ * Package JSON file.
+ *
+ * @type {{dependencies:{}}}
+ */
 var packageJSON = require('./package.json');
+
+/**
+ * Array used to collect node module names.
+ *
+ * @type {Array}
+ */
 var dependencies = [];
+
+/**
+ * Current node module.
+ *
+ * @type {string}
+ */
 var dependency;
 
 // Install all non-gulp modules first.
