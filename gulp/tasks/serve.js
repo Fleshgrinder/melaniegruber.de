@@ -7,7 +7,11 @@
  * @return {undefined}
  */
 function gulpTaskServeWatchLogger(event) {
-    $.util.log('File ' + $.util.colors.cyan(event.path) + ' was ' + $.util.colors.green(event.type) + ', running tasks ...');
+    $.util.log(util.format(
+        'File %s was %s, running tasks ...',
+        $.util.colors.cyan(event.path),
+        $.util.colors.green(event.type)
+    ));
 }
 
 /**
