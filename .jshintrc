@@ -7,7 +7,7 @@
     "forin": true,
     "freeze": true,
     "funscope": true,
-    "globals": ["$", "config", "gulp"],
+    "globals": ["$", "config", "gulp", "util"],
     "immed": true,
     "indent": 4,
     "newcap": true,

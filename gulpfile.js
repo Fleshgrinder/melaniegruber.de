@@ -135,6 +135,13 @@ global.config = require('./config.json');
  */
 global.gulp = require('gulp');
 
+/**
+ * Node util core module.
+ *
+ * @see http://nodejs.org/api/util.html
+ */
+global.util = require('util');
+
 
 // --------------------------------------------------------------------------------------------------------------------- Config
 
