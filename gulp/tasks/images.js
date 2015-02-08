@@ -1,10 +1,11 @@
 'use strict';
 
 gulp.task('images', function gulpTaskImages() {
-    var gallery = new ImagesTaskRunner('src/images/**/{gallery,screenshots}/*.{jpg,png}');
+    var ProjectPage = require('../components/ProjectPage');
+    var gallery = new ImagesTaskRunner('src/{images,projects}/**/{gallery,screenshots}/*.{jpg,png}');
     var icons = new ImagesTaskRunner('src/images/icons/*.png');
     var logo = new ImagesTaskRunner('src/images/logo/icon.png');
-    var tiles = new ImagesTaskRunner('src/images/**/tiles.jpg');
+    var indexTiles = new ImagesTaskRunner('src/projects/*/tile.jpg');
 
     gallery
         .setComparator(function (width, stream, callback, source, destination) {
@@ -22,14 +23,23 @@ gulp.task('images', function gulpTaskImages() {
         .setHeightCallback(function (width) {
             return width / 16 * 9;
         })
-        .setRenameCallback(function (width, filePath) {
-            if (!filePath.basename.match(/-tile$/)) {
-                filePath.basename += '-tile';
+        .setRenameCallback(function (width, path) {
+            if (path.dirname.match('projects')) {
+                path.dirname = ProjectPage.normalizeImagePath(path.dirname);
             }
 
-            filePath.basename += '-' + width;
+            if (!path.basename.match(/-tile$/)) {
+                path.basename += '-tile';
+            }
+
+            path.basename += '-' + width;
         })
     ;
+
+    indexTiles.setRenameCallback(function (width, path) {
+        path.dirname = ProjectPage.normalizeImagePath(path.dirname);
+        path.basename += '-' + width;
+    });
 
     var streams = $.mergeStream(
         gallery.resizeWebp(1800),
@@ -47,16 +57,21 @@ gulp.task('images', function gulpTaskImages() {
         logo.resize(196),
         logo.resize(128),
         logo.resize(32),
-        tiles.resizeWebp(1920),
-        tiles.resizeWebp(1280),
-        tiles.resizeWebp(960),
-        tiles.resizeWebp(640),
-        tiles.resizeWebp(480),
-        tiles.resizeWebp(320)
+        indexTiles.resizeWebp(1920),
+        indexTiles.resizeWebp(1280),
+        indexTiles.resizeWebp(960),
+        indexTiles.resizeWebp(640),
+        indexTiles.resizeWebp(480),
+        indexTiles.resizeWebp(320)
     );
 
     if (config.dist) {
-        streams.add(new ImagesTaskRunner('src/images/**/{gallery,screenshots}/*.{gif,jpg,png,svg}').copyOptimized());
+        streams.add(new ImagesTaskRunner('src/{images,projects}/**/{gallery,screenshots}/*.{gif,jpg,png,svg}')
+            .setRenameCallback(function (path) {
+                path.dirname = ProjectPage.normalizeImagePath(path.dirname);
+            })
+            .copyOptimized()
+        );
     }
 
     return streams;
@@ -69,16 +84,24 @@ gulp.task('images', function gulpTaskImages() {
  * @param {string} source - The image(s) source pattern which will be passed to gulp's src method.
  */
 function ImagesTaskRunner(source) {
-    this.destination = config.dest + '/images';
-    this.imageminOptions = {
-        interlaced: true,
-        optimizationLevel: 7,
-        progressive: true,
-        quality: '65-80',
-        svgoPlugins: [{ removeViewBox: false }],
-        use: [$.imageminMozjpeg(), $.imageminPngquant()]
-    };
-    this.source = source;
+    Object.defineProperties(this, {
+        destination: {
+            value: config.dest + '/images'
+        },
+        imageminOptions: {
+            value: {
+                interlaced: true,
+                optimizationLevel: 7,
+                progressive: true,
+                quality: '65-80',
+                svgoPlugins: [{ removeViewBox: false }],
+                use: [$.imageminMozjpeg(), $.imageminPngquant()]
+            }
+        },
+        source: {
+            value: source
+        }
+    });
 }
 
 ImagesTaskRunner.prototype = {
@@ -91,6 +114,8 @@ ImagesTaskRunner.prototype = {
     copyOptimized: function () {
         return gulp.src(this.source, { base: 'src/images/' })
             .pipe($.plumber())
+            .pipe(this.renameCallback ? $.rename(this.renameCallback) : $.util.noop())
+            .pipe($.changed(this.destination))
             .pipe($.imagemin(this.imageminOptions))
             .pipe(gulp.dest(this.destination))
             .pipe($.ignore.include(function (vinyl) {
@@ -155,12 +180,22 @@ ImagesTaskRunner.prototype = {
      * @return {ImagesTaskRunner}
      */
     setComparator: function (comparator) {
-        this.comparator = comparator;
+        if (typeof comparator !== 'function') {
+            throw new InvalidArgumentError('Comparator must be a function.');
+        }
+        Object.defineProperty(this, 'comparator', {
+            value: comparator
+        });
         return this;
     },
 
     setHeightCallback: function (callback) {
-        this.heightCallback = callback;
+        if (typeof callback !== 'function') {
+            throw new InvalidArgumentError('Height callback must be a function.');
+        }
+        Object.defineProperty(this, 'heightCallback', {
+            value: callback
+        });
         return this;
     },
 
@@ -171,7 +206,12 @@ ImagesTaskRunner.prototype = {
      * @return {ImagesTaskRunner}
      */
     setRenameCallback: function (callback) {
-        this.renameCallback = callback;
+        if (typeof callback !== 'function') {
+            throw new InvalidArgumentError('Rename callback must be a function.');
+        }
+        Object.defineProperty(this, 'renameCallback', {
+            value: callback
+        });
         return this;
     }
 
