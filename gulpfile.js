@@ -213,6 +213,21 @@ if (config.distributionBuild) {
 }
 
 
+// --------------------------------------------------------------------------------------------------------------------- Console
+
+
+/**
+ * Log complete object with color output to console.
+ *
+ * @param {Object} obj - Any kind of object, and remember, everything is an object.
+ * @return {console}
+ */
+console.obj = function consoleObj(obj) {
+    console.log(obj.constructor.name, util.inspect(obj, { colors: true, showHidden: true }));
+    return console;
+};
+
+
 // --------------------------------------------------------------------------------------------------------------------- Tasks
 
 
