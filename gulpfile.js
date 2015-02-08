@@ -206,7 +206,7 @@ config.dest = config.dist ? 'dist' : 'dev';
  * @type {Function}
  */
 if (config.dist) {
-    $.compress = $.lazyPipe().pipe($.zopfli);
+    $.compress = $.lazypipe().pipe($.zopfli);
     //($.gzip, { gzipOptions: { level: 9 } })
 } else {
     $.compress = $.util.noop;
