@@ -25,14 +25,14 @@ URL.prototype = {
     __validatePath: function urlValidatePath(path) {
         if (path == null) {
             // Both, null and undefined, are printed as is in JavaScript; make sure this will not happen.
-            throw new Error('Path argument cannot be null nor undefined.');
+            throw new InvalidArgumentError('Path argument cannot be null nor undefined.');
         }
 
         if (path !== '' && path.substring(0, 1) !== '/') {
             // An empty path is no problem, since it links to the homepage, but anything else has to start with a slash.
             // Note that it is not added automatically, since the missing slash is an indicator for other problems in
             // the code (which should be fixed).
-            throw new Error('Paths must start with a slash.');
+            throw new InvalidArgumentError(util.format('Paths must start with a slash: %s', path));
         }
 
         return path;
