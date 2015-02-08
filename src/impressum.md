@@ -1,6 +1,7 @@
 ---
 
 title: Impressum
+description: Contact and copyright information.
 
 ---
 

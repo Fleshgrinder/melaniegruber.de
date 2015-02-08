@@ -1,6 +1,7 @@
 ---
 
 title: About
+description: Learn more about the personality and passions of 3D artist Melanie Gruber.
 gallery:
     - Melanie Gruber
 
