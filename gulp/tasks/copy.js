@@ -1,15 +1,20 @@
 'use strict';
 
-gulp.task('copy', function gulpTaskCopy() {
+var compress = require('../components/compress');
+var gulpChanged = require('gulp-changed');
+var gulpIgnore = require('gulp-ignore');
+var gulpPlumber = require('gulp-plumber');
+
+module.exports = function (done) {
     if (config.dist) {
         return gulp.src(['src/*.{ico,txt,xml}', 'src/downloads/**/*', 'src/fonts/**/*.{woff,woff2}'], { base: 'src/' })
-            .pipe($.plumber())
-            .pipe($.changed(config.dest))
+            .pipe(gulpPlumber())
+            .pipe(gulpChanged(config.dest))
             .pipe(gulp.dest(config.dest))
-            .pipe($.ignore.include(function (vinyl) {
-                return $.path.extname(vinyl.path).match(/(?:ico|txt|xml)/);
+            .pipe(gulpIgnore.include(function (file) {
+                return file.path.match(/\.(?:ico|txt|xml)$/);
             }))
-            .pipe($.compress())
-            .pipe(gulp.dest(config.dest));
+            .pipe(compress());
     }
-});
+    done();
+};

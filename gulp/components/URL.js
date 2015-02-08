@@ -88,5 +88,5 @@ URL.prototype = {
 
 };
 
-// Export instance to global scope.
+// Export instance to global scope for EJS views.
 global.url = new URL();

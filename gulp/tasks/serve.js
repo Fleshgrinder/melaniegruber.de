@@ -1,16 +1,21 @@
 'use strict';
 
+var browserSync = require('browser-sync');
+var connectModrewrite = require('connect-modrewrite');
+var gulpUtil = require('gulp-util');
+var util = require('util');
+
 /**
  * Log a notification message.
  *
  * @param {{path:string,type:string}} event - The event to log.
  * @return {undefined}
  */
-function gulpTaskServeWatchLogger(event) {
-    $.util.log(util.format(
+function logger(event) {
+    gulpUtil.log(util.format(
         'File %s was %s, running tasks ...',
-        $.util.colors.cyan(event.path),
-        $.util.colors.green(event.type)
+        gulpUtil.colors.cyan(event.path),
+        gulpUtil.colors.green(event.type)
     ));
 }
 
@@ -19,9 +24,9 @@ function gulpTaskServeWatchLogger(event) {
  *
  * @param {Array|string} watch - The pattern to watch.
  * @param {Array|string} tasks - The tasks to execute, browser-sync's reload is always pushed to the end..
- * @return {gulpTaskServeWatch}
+ * @return {watch}
  */
-function gulpTaskServeWatch(watch, tasks) {
+function watch(watch, tasks) {
     if (!tasks || tasks.length === 0) {
         throw new Error('Tasks cannot be empty');
     }
@@ -29,27 +34,27 @@ function gulpTaskServeWatch(watch, tasks) {
     if (!util.isArray(tasks)) {
         tasks = [tasks];
     }
-    tasks.push($.browserSync.reload)
+    tasks.push(browserSync.reload);
 
-    gulp.watch(watch, tasks).on('change', gulpTaskServeWatchLogger);
+    gulp.watch(watch, tasks).on('change', logger);
 
-    return gulpTaskServeWatch;
+    return watch;
 }
 
 // Only available if npm dev dependencies were installed.
-gulp.task('serve', ['default'], function gulpTaskServe() {
-    $.browserSync({
+module.exports = function () {
+    browserSync({
         notify: false,
         server: {
             baseDir: config.dist ? 'dist' : ['dev', 'src'],
-            middleware: $.connectModrewrite(['^/([^\\.]+)$ /$1.html [NC,L]'])
+            middleware: connectModrewrite(['^/([^\\.]+)$ /$1.html [NC,L]'])
         }
     });
 
-    gulpTaskServeWatch
+    watch
         ('src/**/*.{gif,jpg,png,svg}', 'images')
         ('src/**/*.{ejs,md}', 'pages')
         ('src/**/*.scss', 'styles')
         ('src/**/*.js', 'scripts')
     ;
-});
+};

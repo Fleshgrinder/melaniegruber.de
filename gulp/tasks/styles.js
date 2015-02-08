@@ -1,19 +1,28 @@
 'use strict';
 
-gulp.task('styles', function gulpTaskStyles() {
+var compress = require('../components/compress');
+var gulpAutoprefixer = require('gulp-autoprefixer');
+var gulpChanged = require('gulp-changed');
+var gulpCsso = require('gulp-csso');
+var gulpPlumber = require('gulp-plumber');
+var gulpReplace = require('gulp-replace');
+var gulpSass = require('gulp-sass');
+var gulpSourcemaps = require('gulp-sourcemaps');
+var gulpUtil = require('gulp-util');
+
+module.exports = function () {
     return gulp.src('src/styles/*.scss', { base: 'src/' })
-        .pipe($.plumber())
-        .pipe($.changed(config.dest, {
+        .pipe(gulpPlumber())
+        .pipe(gulpChanged(config.dest, {
             extension: '.css',
             pattern: 'src/styles/**/*.scss'
         }))
-        .pipe(config.dist ? $.util.noop() : $.sourcemaps.init())
-        .pipe($.sass({
+        .pipe(config.dist ? gulpUtil.noop() : gulpSourcemaps.init())
+        .pipe(gulpSass({
             imagePath: '/images/',
             precision: 3
         }))
-        .pipe($.changed(config.dest))
-        .pipe($.autoprefixer({
+        .pipe(gulpAutoprefixer({
             browsers: [
                 '> 5%',
                 'last 2 version',
@@ -22,10 +31,9 @@ gulp.task('styles', function gulpTaskStyles() {
             ],
             cascade: false
         }))
-        .pipe(config.dist ? $.csso() : $.util.noop())
-        .pipe($.replace('@charset "UTF-8";', ''))
-        .pipe(config.dist ? $.util.noop() : $.sourcemaps.write('.'))
+        .pipe(config.dist ? gulpCsso() : gulpUtil.noop())
+        .pipe(gulpReplace('@charset "UTF-8";', ''))
+        .pipe(config.dist ? gulpUtil.noop() : gulpSourcemaps.write('.'))
         .pipe(gulp.dest(config.dest))
-        .pipe($.compress())
-        .pipe(config.dist ? gulp.dest(config.dest) : $.util.noop());
-});
+        .pipe(compress());
+};
