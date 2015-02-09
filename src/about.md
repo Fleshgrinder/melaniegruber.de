@@ -33,13 +33,18 @@ it will lead me down in the future. If you are curious too, contact me to learn 
         <a class="img-anchor" href="https://www.linkedin.com/in/melaniegruber" target="_blank" title="Visit my LinkedIn profile.">
             <img alt="LinkedIn icon" height="24" src="<%= url.asset('/images/icons/linkedin.svg') %>" width="24">
         </a>
+        <a class="img-anchor" href="http://melaniegruber.cgsociety.org/" target="_blank" title="Visit my CG Society profile.">
+            <img alt="CG Society icon" height="24" src="<%= url.asset('/images/icons/cg-society.svg') %>" width="24">
+        </a>
+        <a class="img-anchor" href="https://www.behance.net/MelanieGruber" target="_blank" title="Visit my Behance profile.">
+            <img alt="Behance icon" height="24" src="<%= url.asset('/images/icons/behance.svg') %>" width="24">
+        </a>
         <a class="img-anchor" href="http://www.gameartisans.org/forums/members/175975-MelanieGruber" target="_blank" title="Visit my Game Artisans profile.">
             <picture>
                 <source srcset="<%= url.asset('/images/icons/game-artisans-24.webp') %>, <%= url.asset('/images/icons/game-artisans-32.webp') %> 1.5x, <%= url.asset('/images/icons/game-artisans-48.webp') %> 2x, <%= url.asset('/images/icons/game-artisans-72.webp') %> 3x" type="image/webp">
                 <img alt="Game Artisans" height="24" src="<%= url.asset('/images/icons/game-artisans-24.png') %>" srcset="<%= url.asset('/images/icons/game-artisans-32.png') %> 1.5x, <%= url.asset('/images/icons/game-artisans-48.png') %> 2x, <%= url.asset('/images/icons/game-artisans-72.png') %> 3x" width="24">
             </picture>
         </a>
-        <!-- <a class="img-anchor" href="http://melaniegruber.cgsociety.org/" target="_blank">CG Society</a>-->
         <a class="img-anchor" href="http://melaniegruber.deviantart.com/" target="_blank" title="Visit my DeviantArt profile.">
             <img alt="DeviantArt icon" height="24" src="<%= url.asset('/images/icons/deviantart.svg') %>" width="24">
         </a>
