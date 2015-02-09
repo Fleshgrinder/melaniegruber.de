@@ -15,7 +15,7 @@ module.exports = function () {
         .pipe(gulpPlumber())
         .pipe(gulpChanged(config.dest, {
             extension: '.css',
-            pattern: 'src/styles/**/*.scss'
+            pattern: ['src/styles/**/*.scss', 'gulp/tasks/styles.js']
         }))
         .pipe(config.dist ? gulpUtil.noop() : gulpSourcemaps.init())
         .pipe(gulpSass({
