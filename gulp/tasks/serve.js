@@ -22,11 +22,11 @@ function logger(event) {
 /**
  * Wraps gulp's watch function and attaches a change event listener for logging.
  *
- * @param {Array|string} watch - The pattern to watch.
+ * @param {Array|string} watchPattern - The pattern to watch.
  * @param {Array|string} tasks - The tasks to execute, browser-sync's reload is always pushed to the end..
  * @return {watch}
  */
-function watch(watch, tasks) {
+function watch(watchPattern, tasks) {
     if (!tasks || tasks.length === 0) {
         throw new Error('Tasks cannot be empty');
     }
@@ -36,7 +36,7 @@ function watch(watch, tasks) {
     }
     tasks.push(browserSync.reload);
 
-    gulp.watch(watch, tasks).on('change', logger);
+    gulp.watch(watchPattern, tasks).on('change', logger);
 
     return watch;
 }
