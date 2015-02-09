@@ -13,14 +13,12 @@ work:
     - Shading
     - Cloth Simulation
 gallery:
+    - Sailing Ship Three-quarter View
     - Sailing Ship Front and Back Wireframe
     - Sailing Ship Front and Back Textured
     - Sailing Ship Side Wireframe
     - Sailing Ship Side Textured
-    - Sailing Ship Three-quarter View
     - Sailing Ship Close-up
-vimeo:
-    - 44836342#t=38m0s
 
 ---
 
@@ -28,7 +26,7 @@ vimeo:
 I modeled an old sailing ship for this fulldome show in Autodesk 3ds Max at 
 <a href="http://www.northdocks.com" href-lang="de" target="_blank">Northdocks</a>. 
 This was my first big modeling project. I researched a lot of references for the look of the ship, and the cordage of 
-the masts and sails. Further, I also textured and shaded the model using Vray. Finally, I made a cloth simulation for 
+the masts and sails. Further, I also textured and shaded the model using V-Ray. Finally, I made a cloth simulation for 
 the sails blowing in the wind.
 
 ## Project Summary
