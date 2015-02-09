@@ -1,92 +1,79 @@
 'use strict';
 
+var crypto = require('crypto');
+var fs = require('fs');
+var glob = require('glob');
+var util = require('util');
+
+var cacheBusters = {};
+
 /**
- * Construct new URL instance.
+ * Validate passed path.
  *
- * @constructor
+ * @function
+ * @param {*} path - The path to validate.
+ * @return {URL} Itself for chaining.
+ * @throws {string} The validated path.
  */
-function URL() {
-    if (config.dist) {
-        this.__cacheBusters = {};
+function validatePath(path) {
+    if (path == null) {
+        // Both, null and undefined, are printed as is in JavaScript; make sure this will not happen.
+        throw new TypeError('Path argument cannot be null nor undefined.');
     }
+
+    if (path !== '' && path.substring(0, 1) !== '/') {
+        // An empty path is no problem, since it links to the homepage, but anything else has to start with a slash.
+        // Note that it is not added automatically, since the missing slash is an indicator for other problems in
+        // the code (which should be fixed).
+        throw new TypeError(util.format('Paths must start with a slash: %s', path));
+    }
+
+    return path;
 }
 
-URL.prototype = {
+/**
+ * Generate absolute URL.
+ *
+ * @function
+ * @param {string} path - Web accessible path to generate absolute URL for.
+ * @return {string} The absolute URL for the given path.
+ */
+module.exports.absolute = function (path) {
+    return config.uri.scheme + '://' + config.uri.authority + validatePath(path);
+};
 
-    /**
-     * Validate passed path.
-     *
-     * @private
-     * @method
-     * @param {*} path - The path to validate.
-     * @return {URL} Itself for chaining.
-     * @throws {string} The validated path.
-     */
-    __validatePath: function urlValidatePath(path) {
-        if (path == null) {
-            // Both, null and undefined, are printed as is in JavaScript; make sure this will not happen.
-            throw new InvalidArgumentError('Path argument cannot be null nor undefined.');
-        }
+/**
+ * Get asset path with cache buster appended.
+ *
+ * @function
+ * @param {string} path - Web accessible path to the asset.
+ * @param {string} [pattern] - Pattern to generate the cache buster from, defaults to path.
+ * @return {string} The asset's path with the cache buster appended.
+ */
+module.exports.asset = function (path, pattern) {
+    path = validatePath(path);
 
-        if (path !== '' && path.substring(0, 1) !== '/') {
-            // An empty path is no problem, since it links to the homepage, but anything else has to start with a slash.
-            // Note that it is not added automatically, since the missing slash is an indicator for other problems in
-            // the code (which should be fixed).
-            throw new InvalidArgumentError(util.format('Paths must start with a slash: %s', path));
-        }
+    if (config.dist) {
+        pattern = 'src' + pattern || path;
 
-        return path;
-    },
+        if (!(pattern in cacheBusters)) {
+            cacheBusters[pattern] = '';
 
-    /**
-     * Generate absolute URL.
-     *
-     * @method
-     * @param {string} path - Web accessible path to generate absolute URL for.
-     * @return {string} The absolute URL for the given path.
-     */
-    absolute: function urlAbsolute(path) {
-        return config.uri.scheme + '://' + config.uri.authority + this.__validatePath(path);
-    },
+            // This function is called in EJS which cannot deal with asynchronous stuff.
+            glob.sync(pattern).forEach(function (filePath) {
+                cacheBusters[pattern] += fs.readFileSync(filePath, { encoding: 'utf8' });
+            });
 
-    /**
-     * Get asset path with cache buster appended.
-     *
-     * @param {string} path - Web accessible path to the asset.
-     * @param {string} [pattern] - Pattern to generate the cache buster from, defaults to path.
-     * @return {string} The asset's path with the cache buster appended.
-     */
-    asset: function urlAsset(path, pattern) {
-        path = this.__validatePath(path);
-
-        if (config.dist) {
-            var self = this;
-
-            pattern = 'src' + pattern || path;
-
-            if (!(pattern in this.__cacheBusters)) {
-                this.__cacheBusters[pattern] = '';
-
-                // This method is called in EJS which cannot deal with asynchronous methods.
-                $.glob.sync(pattern).forEach(function (filePath) {
-                    self.__cacheBusters[pattern] += $.fs.readFileSync(filePath, { encoding: 'utf8' });
-                });
-
-                this.__cacheBusters[pattern] = encodeURIComponent($.crypto.createHash('md5')
-                    .update(this.__cacheBusters[pattern])
+            cacheBusters[pattern] = encodeURIComponent(crypto.createHash('md5')
+                    .update(cacheBusters[pattern])
                     .digest('base64')
                     // Remove trailing equal signs, we do not need them for proper cache busting.
                     .replace(/=*$/, '')
-                );
-            }
-
-            return path + '?' + this.__cacheBusters[pattern];
+            );
         }
 
-        return path;
+        return path + '?' + cacheBusters[pattern];
     }
 
+    return path;
 };
-
-// Export instance to global scope for EJS views.
-global.url = new URL();
