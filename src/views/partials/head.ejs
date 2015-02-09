@@ -10,7 +10,7 @@
     </script>
 
     <!-- Stylesheets first, we want the browser to download it asap. -->
-    <link rel="stylesheet" href="<%= page.asset('/styles/main.css', '/styles/**/*.scss') %>">
+    <link rel="stylesheet" href="<%= url.asset('/styles/main.css', '/styles/**/*.scss') %>">
 
     <!--
     We want browsers to use the SVG, sadly that will not work for almost all of them. Next we provide the touch icon
@@ -24,9 +24,9 @@
     https://mathiasbynens.be/notes/touch-icons
     http://css-tricks.com/favicon-quiz/
     -->
-    <link rel="icon" href="<%= page.asset('/images/logo/vector.svg') %>" sizes="any" type="image/svg+xml">
-    <link rel="apple-touch-icon-precomposed" href="<%= page.asset('/images/logo/icon-196.png') %>">
-    <link rel="icon" href="<%= page.asset('/images/logo/icon-32.png') %>">
+    <link rel="icon" href="<%= url.asset('/images/logo/vector.svg') %>" sizes="any" type="image/svg+xml">
+    <link rel="apple-touch-icon-precomposed" href="<%= url.asset('/images/logo/icon-196.png') %>">
+    <link rel="icon" href="<%= url.asset('/images/logo/icon-32.png') %>">
 
     <!-- Force latest rendering engine in IE. -->
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
@@ -36,30 +36,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Browser and search engine information. -->
-    <title><%= page.index ? page.siteName : page.title %><%= page.titleSeparator %><%= page.subtitle %></title>
-    <meta content="<%= (page.description || page.siteName) %>" name="description" property="og:description">
-    <link href="<%= page.url(page.route) %>" rel="canonical">
+    <title><%= page.index ? config.siteName : page.title %><%= page.titleSeparator %><%= page.subtitle %></title>
+    <meta content="<%= page.description %>" name="description" property="og:description">
+    <link href="<%= url.absolute(page.route) %>" rel="canonical">
     <% if (page.next) { %><link href="<%= page.next.route %>" rel="next"><% } %>
     <% if (page.previous) { %><link href="<%= page.previous.route %>" rel="prev"><% } %>
 
-    <meta content="<%= page.url(page.facebookImage || page.asset('/images/logo/icon-270.png')) %>" property="og:image">
-    <meta content="<%= page.siteName %>" property="og:site_name">
-    <meta content="<%= page.index ? page.siteName : page.title %>" property="og:title">
+    <meta content="<%= url.absolute(page.image) %>" property="og:image">
+    <meta content="<%= config.siteName %>" property="og:site_name">
+    <meta content="<%= page.index ? config.siteName : page.title %>" property="og:title">
     <meta content="<% if (page.index) { %>website<% } else { %>article<% } %>" property="og:type">
-    <meta content="<%= page.url(page.route) %>" property="og:url">
+    <meta content="<%= url.absolute(page.route) %>" property="og:url">
 </head>
 <body class="<%= page.layout %>">
     <header class="header">
         <%- page.index ? '<h1 class="logo">' : '<a class="logo" href="/">' %>
-            <img alt="<%= page.siteName %> logo" height="48" src="<%= page.asset('/images/logo/vector.svg') %>" width="32"><%= page.siteName %>
+            <img alt="<%= config.siteName %> logo" height="48" src="<%= url.asset('/images/logo/vector.svg') %>" width="32"><%= config.siteName %>
         <%- page.index ? '</h1>' : '</a>' %>
         <nav class="nav">
             <h2 class="sr-only">Main Navigation</h2>
             <span class="abs abs-before-after desktop-hidden menu-open menu-toggle"></span>
             <ul class="menu">
                 <li class="abs abs-before-after desktop-hidden menu-close menu-toggle"></li>
-                <% [ "Projects", "About", "Impressum"].forEach(function (title, index) { %>
-                <% var route = "/" + (index === 0 ? "" : title.toLowerCase()); %>
+                <% ['Projects', 'About', 'Impressum'].forEach(function (title, index) { %>
+                <% var route = '/' + (index === 0 ? '' : title.toLowerCase()); %>
                 <li>
                     <% if (route === page.route) { %>
                         <em class="menu-item"><%= title %></em>
