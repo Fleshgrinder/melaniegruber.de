@@ -1,42 +1,9 @@
-// ---------------------------------------------------------------------------------------------------------------------
-// This is free and unencumbered software released into the public domain.
-//
-// Anyone is free to copy, modify, publish, use, compile, sell, or distribute this software, either in source code form
-// or as a compiled binary, for any purpose, commercial or non-commercial, and by any means.
-//
-// In jurisdictions that recognize copyright laws, the author or authors of this software dedicate any and all copyright
-// interest in the software to the public domain. We make this dedication for the benefit of the public at large and to
-// the detriment of our heirs and successors. We intend this dedication to be an overt act of relinquishment in
-// perpetuity of all present and future rights to this software under copyright law.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-// WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE
-// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-// For more information, please refer to <http://unlicense.org/>
-// ---------------------------------------------------------------------------------------------------------------------
-
-// ---------------------------------------------------------------------------------------------------------------------
-// Main style file containing all rules.
-//
-// @author Richard Fussenegger <richard@fussenegger.info>
-// @copyright Copyright (c) 2014-15 Richard Fussenegger
-// @license http://unlicense.org/ PD
-// ---------------------------------------------------------------------------------------------------------------------
-
+@import "components/mixins";
 @import "components/variables";
-@import "mixins/font-face";
-@import "mixins/transition";
 
-// TODO: Remove the fonts which are not used anywhere in the design and try limiting to very few!
 @include font-face($font-family, extralight, 200);
-//@include font-face($font-family, light, 300);
 @include font-face($font-family, regular, 400);
-//@include font-face($font-family, medium, 500);
-//@include font-face($font-family, semibold, 600);
 @include font-face($font-family, bold, 700);
-//@include font-face($font-family, extrabold, 800);
 
 *,
 *::before,
@@ -53,6 +20,7 @@ html {
 
 html,
 body {
+    font: normal $font-size#{"/"}$line-height $font-family, sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased;
@@ -66,14 +34,17 @@ main {
 }
 
 body {
-    background-color: nth($color-palette, 5);
     color: nth($color-palette, 5);
-    font: normal $font-size#{"/"}$line-height $font-family, sans-serif;
     height: 100%;
     margin: 0;
 }
 
+main {
+    background-color: nth($color-palette, 5);
+}
+
 ::selection {
+    color: #fff;
     background: nth($color-palette, 1);
     text-shadow: none;
 }
@@ -272,59 +243,8 @@ main p {
 
 }
 
-.pager-wrapper {
-    background-color: #fff;
-    font-size: $font-size;
-    height: 64px;
-    line-height: 64px;
-    width: 100%;
-}
-
-.pager-top {
-    height: 44px; // Compensate bottom padding of div.text which wraps everything.
-}
-
-.pager-bottom {
-    padding: 0 20px;
-}
-
-.pager {
-    max-width: 600px;
-
-    a {
-        display: block;
-        width: 50%;
-
-        &:before,
-        &:after {
-            display: inline-block;
-            font-size: 32px;
-            vertical-align: -3px;
-        }
-    }
-}
-
-.pager-next {
-    float: right;
-    margin-right: -20px;
-    padding-right: 20px;
-    text-align: right;
-
-    &:after {
-        content: "›";
-        padding-left: 10px;
-    }
-}
-
-.pager-previous {
-    float: left;
-    margin-left: -20px;
-    padding-left: 20px;
-
-    &:before {
-        content: "‹";
-        padding-right: 10px;
-    }
+.program-icon {
+    margin: 0 (24px / 4) (24px / 2);
 }
 
 @import "components/index";
@@ -333,6 +253,7 @@ main p {
 @import "components/desktop";
 @import "components/no-hover";
 @import "components/hover";
+@import "components/pager";
 @import "components/full-screen";
 
 .abs {

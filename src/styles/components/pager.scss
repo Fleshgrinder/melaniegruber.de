@@ -1,0 +1,56 @@
+@import "variables";
+
+.pager-wrapper {
+    background-color: #fff;
+    font-size: $font-size;
+    height: 64px;
+    line-height: 64px;
+    width: 100%;
+}
+
+.pager-top {
+    height: 44px; // Compensate bottom padding of div.text which wraps everything.
+}
+
+.pager-bottom {
+    padding: 0 20px;
+}
+
+.pager {
+    max-width: 600px;
+
+    a {
+        display: block;
+        width: 50%;
+
+        &:before,
+        &:after {
+            display: inline-block;
+            font-size: 32px;
+            vertical-align: -3px;
+        }
+    }
+}
+
+.pager-next {
+    float: right;
+    margin-right: -20px;
+    padding-right: 20px;
+    text-align: right;
+
+    &:after {
+        content: "›";
+        padding-left: 10px;
+    }
+}
+
+.pager-previous {
+    float: left;
+    margin-left: -20px;
+    padding-left: 20px;
+
+    &:before {
+        content: "‹";
+        padding-right: 10px;
+    }
+}
