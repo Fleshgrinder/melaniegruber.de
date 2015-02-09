@@ -51,9 +51,10 @@ imageTaskGallery.comparator = function imageTaskGalleryComparator(width, stream,
             }
         });
     } else {
-        // Only consider using this non-tile suffixed file if no file with the suffix exists.
-        fs.exists(source.path.replace(/(\.[a-z]+)$/, '-tile$1'), function (exists) {
-            if (exists) {
+        // Only consider using this non-tile suffixed file if no file with the suffix exists. Note that fs.exists will
+        // be deprecated in the future!
+        fs.stat(source.path.replace(/(\.[a-z]+)$/, '-tile$1'), function (error) {
+            if (error) {
                 push(false);
             } else {
                 imageTaskGalleryComparator(width, stream, callback, source, destination, pattern, true);
