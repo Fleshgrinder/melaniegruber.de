@@ -20,7 +20,7 @@ html {
 
 html,
 body {
-    font: normal $font-size#{"/"}$line-height $font-family, sans-serif;
+    font: normal #{$font-size}px/$line-height $font-family, sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased;
@@ -222,7 +222,7 @@ main p {
     &:before {
         color: #fff;
         content: "WiP";
-        font-size: $font-size; // Keep font-size equal among all devices.
+        font-size: #{$font-size}px; // Keep font-size equal among all devices.
         font-weight: bold;
         left: 4px;
         top: 8px;
