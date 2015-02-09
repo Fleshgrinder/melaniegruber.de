@@ -1,58 +1,86 @@
 'use strict';
 
+var compress = require('../components/compress');
 var fs = require('fs');
 var gulpChanged = require('gulp-changed');
+var gulpImagemin = require('gulp-imagemin');
+var gulpPlumber = require('gulp-plumber');
 var imageSize = require('image-size');
 var ImageTaskRunner = require('../components/ImageTaskRunner');
 var mergeStream = require('merge-stream');
-var path = require('path');
 var ProjectPage = require('../components/ProjectPage');
+var through = require('through2');
 
-var imageTaskCopy = new ImageTaskRunner('src/{images,projects}/**/{gallery,screenshots}/*.{gif,jpg,png,svg}');
-var imageTaskGallery = new ImageTaskRunner('src/{images,projects}/**/{gallery,screenshots}/*.{jpg,png}');
+//var imageTaskGallery = new ImageTaskRunner('src/{images,projects}/**/{gallery,screenshots}/*.{jpg,png}');
+var imageTaskGallery = new ImageTaskRunner('src/projects/2014-11--animal-morphology/gallery/*.jpg');
 var imageTaskIcons = new ImageTaskRunner('src/images/icons/*.png');
 var imageTaskIndexTiles = new ImageTaskRunner('src/projects/*/tile.jpg');
 var imageTaskLogos = new ImageTaskRunner('src/images/logo/icon.png');
 
-imageTaskCopy.renameCallback = function (path) {
-    path.dirname = ProjectPage.normalizeImagePath(path.dirname);
-};
+var cache = {};
 
-imageTaskGallery.comparator = function (width, stream, callback, source, destination) {
-    var extension = path.extname(source.path);
+imageTaskGallery.comparator = function imageTaskGalleryComparator(width, stream, callback, source, destination, pattern, noTile) {
+    function push(really) {
+        cache[source.path] = really;
 
-    fs.exists(source.path.replace(extension, '-tile' + extension), function (exists) {
-        if (exists || imageSize(source.path).width > width) {
+        if (really) {
             stream.push(source);
-            callback();
-        } else {
-            gulpChanged.compareLastModifiedTime(stream, callback, source, destination);
         }
-    });
+
+        callback();
+    }
+
+    if (source.path in cache) {
+        return push(cache[source.path]);
+    }
+
+    if (noTile || source.path.match('-tile')) {
+        imageSize(source.path, function (error, dimensions) {
+            if (error) {
+                throw error;
+            }
+
+            if (dimensions.width > width) {
+                destination = ProjectPage.normalizeImagePath(destination);
+
+                fs.stat(destination, function (error, stat) {
+                    push(!!error || source.stat.mtime > stat.mtime);
+                });
+            } else {
+                push(false);
+            }
+        });
+    } else {
+        // Only consider using this non-tile suffixed file if no file with the suffix exists.
+        fs.exists(source.path.replace(/(\.[a-z]+)$/, '-tile$1'), function (exists) {
+            if (exists) {
+                push(false);
+            } else {
+                imageTaskGalleryComparator(width, stream, callback, source, destination, pattern, true);
+            }
+        });
+    }
 };
 
 imageTaskGallery.heightCallback = function (width) {
     return width / 16 * 9;
 };
 
-imageTaskGallery.renameCallback = function (width, path) {
-    if (path.dirname.match('projects')) {
-        path.dirname = ProjectPage.normalizeImagePath(path.dirname);
+imageTaskGallery.renameCallback = function (path, width) {
+    path = ProjectPage.normalizeImagePath(path);
+
+    if (!path.match('-tile')) {
+        path.replace(new RegExp('(-' + width + '.[a-z]+)$'), '-tile$1');
     }
 
-    if (!path.basename.match(/-tile$/)) {
-        path.basename += '-tile';
-    }
-
-    path.basename += '-' + width;
+    return path;
 };
 
-imageTaskIndexTiles.renameCallback = function (width, path) {
-    path.dirname = ProjectPage.normalizeImagePath(path.dirname);
-    path.basename += '-' + width;
-};
+imageTaskIndexTiles.renameCallback = ProjectPage.normalizeImagePath;
 
 module.exports = function () {
+    cache = {};
+
     var streams = mergeStream(
         imageTaskGallery.resizeWebp(1800),
         imageTaskGallery.resizeWebp(1200),
@@ -78,7 +106,25 @@ module.exports = function () {
     );
 
     if (config.dist) {
-        streams.add(imageTaskCopy.copyOptimized());
+        streams.add(gulp.src('src/{images,projects}/**/{gallery,screenshots}/*.{gif,jpg,png}')
+                .pipe(gulpPlumber())
+                .pipe(gulpChanged(config.dest))
+                .pipe(through.obj(function (file, enc, cb) {
+                    file.path = ProjectPage.normalizeImagePath(file.path);
+                    this.push(file);
+                    cb();
+                }))
+                .pipe(gulpImagemin(ImageTaskRunner.imageminOptions))
+                .pipe(gulp.dest(config.dest))
+        );
+
+        streams.add(gulp.src('src/**/*.svg')
+                .pipe(gulpPlumber())
+                .pipe(gulpChanged(config.dest))
+                .pipe(gulpImagemin(ImageTaskRunner.imageminOptions))
+                .pipe(gulp.dest(config.dest))
+                .pipe(compress())
+        );
     }
 
     return streams;
