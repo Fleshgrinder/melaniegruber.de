@@ -9,10 +9,11 @@ var gulpReplace = require('gulp-replace');
 var gulpSass = require('gulp-sass');
 var gulpSourcemaps = require('gulp-sourcemaps');
 var gulpUtil = require('gulp-util');
+var plumberErrorHandler = require('../components/plumber-error-handler');
 
 module.exports = function () {
     return gulp.src('src/styles/*.scss', { base: 'src/' })
-        .pipe(gulpPlumber())
+        .pipe(gulpPlumber(plumberErrorHandler('Styles')))
         //.pipe(gulpChanged(config.dest, {
         //    extension: '.css',
         //    pattern: ['src/styles/**/*.scss', 'gulp/tasks/styles.js']

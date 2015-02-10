@@ -1,7 +1,6 @@
 'use strict';
 
 var compress = require('../components/compress');
-var errorHandler = require('../components/plumber-error-handler');
 //var gulpChanged = require('gulp-changed');
 var gulpFrontMatter = require('gulp-front-matter');
 var gulpHtmlMinifier = require('gulp-html-minifier');
@@ -9,12 +8,12 @@ var gulpMarkdown = require('gulp-markdown');
 var gulpMultiRenderer = require('gulp-multi-renderer');
 var gulpPlumber = require('gulp-plumber');
 var gulpUtil = require('gulp-util');
-var IndexPage = require('../components/IndexPage');
+var IndexPage = require('../components/Page/IndexPage');
 var lazypipe = require('lazypipe');
 var merge = require('merge');
-var Page = require('../components/Page');
-var path = require('path');
-var ProjectPage = require('../components/ProjectPage');
+var Page = require('../components/Page/Page');
+var plumberErrorHandler = require('../components/plumber-error-handler');
+var ProjectPage = require('../components/Page/ProjectPage');
 var through = require('through2');
 
 var pageOptions = {
@@ -86,9 +85,7 @@ module.exports = function (allDone) {
     // This stream will build all markdown files without any special dependencies.
     gulp.src(['src/**/*.md', '!src/index.md', '!src/projects/**', '!src/fonts/**'], { base: 'src/' })
         .on('end', done)
-        .pipe(gulpPlumber({
-            errorHandler: errorHandler.bind(null, 'Pages Default')
-        }))
+        .pipe(gulpPlumber(plumberErrorHandler('Pages Default')))
         //.pipe(gulpChanged(config.dest, {
         //    extension: '.html',
         //    pattern: ['src/views/**/*.ejs', 'gulp/components/*.js', 'gulp/tasks/pages.js', '!src/views/index.ejs']
@@ -136,9 +133,7 @@ module.exports = function (allDone) {
                     this.end();
                     done();
                 })
-                .pipe(gulpPlumber({
-                    errorHandler: errorHandler.bind(null, 'Pages Index')
-                }))
+                .pipe(gulpPlumber(plumberErrorHandler('Pages Index')))
                 .pipe(frontMatter())
                 .pipe(through.obj(function (file, enc, cb) {
                     // Push the previously collected projects back into this stream.
@@ -152,9 +147,7 @@ module.exports = function (allDone) {
                 .pipe(render())
                 .pipe(compress());
         })
-        .pipe(gulpPlumber({
-            errorHandler: errorHandler.bind(null, 'Pages Projects')
-        }))
+        .pipe(gulpPlumber(plumberErrorHandler('Pages Projects')))
         //.pipe(gulpChanged(projectDestination, {
         //    extension: '.html',
         //    pattern: ['src/index.md', 'src/projects/**/*.md', 'src/views/**/*.ejs', 'gulp/tasks/pages.js', 'gulp/components/*.js']

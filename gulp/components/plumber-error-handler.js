@@ -13,11 +13,24 @@ var util = require('util');
  * @param {Error} error
  * @return {undefined}
  */
-module.exports = function (name, error) {
+function errorHandler(name, error) {
     gulpUtil.log(util.format(
         '%s: %s\n %s',
         gulpUtil.colors.cyan(name),
         gulpUtil.colors.red('found unhandled error:'),
         error.toString()
     ));
+}
+
+/**
+ * Get plumber error handler options hash.
+ *
+ * @function
+ * @param {string} name
+ * @return {{}}
+ */
+module.exports = function (name) {
+    return {
+        errorHandler: errorHandler.bind(null, name)
+    };
 };

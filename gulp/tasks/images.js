@@ -8,7 +8,8 @@ var gulpUtil = require('gulp-util');
 var imageSize = require('image-size');
 var ImageTaskRunner = require('../components/ImageTaskRunner');
 var mergeStream = require('merge-stream');
-var ProjectPage = require('../components/ProjectPage');
+var plumberErrorHandler = require('../components/plumber-error-handler');
+var ProjectPage = require('../components/Page/ProjectPage');
 var through = require('through2');
 
 var imageTaskGallery = new ImageTaskRunner('src/{images,projects}/**/{gallery,screenshots}/*.{jpg,png}');
@@ -85,7 +86,7 @@ module.exports = function () {
         imageTaskIndexTiles.resizeWebp(480),
         imageTaskIndexTiles.resizeWebp(320),
         gulp.src('src/{images,projects}/**/{gallery,screenshots}/*.{gif,jpg,png}')
-            .pipe(gulpPlumber())
+            .pipe(gulpPlumber(plumberErrorHandler('Images Copy Gallery')))
             .pipe(gulpChanged(config.dest))
             .pipe(through.obj(function (file, enc, cb) {
                 file.path = ProjectPage.normalizeImagePath(file.path);
@@ -99,7 +100,7 @@ module.exports = function () {
     if (config.dist) {
         streams.add(
             gulp.src('src/**/*.svg')
-                .pipe(gulpPlumber())
+                .pipe(gulpPlumber(plumberErrorHandler('Images Copy SVG')))
                 .pipe(gulpChanged(config.dest))
                 .pipe(gulpImagemin(ImageTaskRunner.imageminOptions))
                 .pipe(gulp.dest(config.dest))
