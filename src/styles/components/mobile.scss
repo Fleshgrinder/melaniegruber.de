@@ -1,7 +1,7 @@
 @import "mixins";
 @import "variables";
 
-@media (max-width: (960em / $font-size)) {
+@media (max-width: ceil(960em / $font-size)) {
 
     .no-js .nav {
         height: $header-height;
@@ -23,7 +23,7 @@
     }
 
     $menu-toggle-height: 20px;
-    $menu-toggle-top: ($header-height - $menu-toggle-height) / 2;
+    $menu-toggle-top: round(($header-height - $menu-toggle-height) / 2);
     $menu-open-line: $menu-toggle-height / 5;
     $menu-open-width: $menu-toggle-height + ($menu-open-line * 2);
 
@@ -58,7 +58,7 @@
         box-shadow: 0 0 1rem #000;
         color: nth($color-palette, 6);
         left: 100%;
-        padding-top: ($header-height - ($font-size * $line-height)) / 4;
+        padding-top: round(($header-height - ($font-size * $line-height)) / 4);
         position: fixed;
         top: 0;
         z-index: 99;
@@ -108,7 +108,7 @@
 
 }
 
-@media (max-width: (360em / $font-size)) {
+@media (max-width: ceil(360em / $font-size)) {
 
     html,
     body {
@@ -130,7 +130,7 @@
 
 }
 
-@media (min-width: (360em / $font-size)) {
+@media (min-width: ceil(360em / $font-size)) {
 
     .no-js .nav:hover .menu,
     .menu.open {
@@ -139,7 +139,7 @@
 
 }
 
-@media (max-width: (640em / $font-size)) {
+@media (max-width: ceil(640em / $font-size)) {
 
     .media-element img {
         display: block;

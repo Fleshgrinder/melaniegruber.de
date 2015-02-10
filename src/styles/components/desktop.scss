@@ -1,6 +1,6 @@
 @import "variables";
 
-@media (min-width: (960em / $font-size)) {
+@media (min-width: ceil(960em / $font-size)) {
 
     body {
         padding-top: $header-height;
@@ -42,7 +42,7 @@
 
 }
 
-@media (min-width: (1280em / $font-size)) {
+@media (min-width: ceil(1280em / $font-size)) {
 
     .container {
         display: flex;
