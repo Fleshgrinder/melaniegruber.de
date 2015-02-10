@@ -45,3 +45,14 @@ module.exports.encodeHTML = function (string) {
     // TODO: http://phpjs.org/functions/htmlentities/
     return string;
 };
+
+/**
+ * Validate that variable is a non-empty string.
+ *
+ * @function
+ * @param {*} param
+ * @return {boolean}
+ */
+module.exports.validNonEmptyString = function (param) {
+    return !(!param || param.length <= 0 || typeof param !== 'string');
+};
