@@ -12,50 +12,51 @@ var mergeStream = require('merge-stream');
 var ProjectPage = require('../components/ProjectPage');
 var through = require('through2');
 
-var cache = {};
-var imageTaskGalleryGlobPattern = 'src/{images,projects}/**/{gallery,screenshots}/*.{jpg,png}';
-
-var imageTaskGallery = new ImageTaskRunner(imageTaskGalleryGlobPattern);
+var imageTaskGallery = new ImageTaskRunner('src/{images,projects}/**/{gallery,screenshots}/*.{jpg,png}');
 var imageTaskIcons = new ImageTaskRunner('src/images/icons/*.png');
 var imageTaskIndexTiles = new ImageTaskRunner('src/projects/*/tile.jpg');
 var imageTaskLogos = new ImageTaskRunner('src/images/logo/icon.png');
 
-imageTaskGallery.comparator = function imageTaskGalleryComparator(width, stream, callback, source, destination, pattern, noTile) {
-    function push(really) {
-        cache[source.path] = really;
-        if (really) {
-            stream.push(source);
-        }
-        callback();
-    }
-
-    if (source.path in cache) {
-        return push(cache[source.path]);
-    }
-
-    if (noTile || source.path.match('-tile')) {
+/**
+ * Gulp changed comparator for gallery images.
+ *
+ * Source rejected if:
+ * - File with `-tile` suffix exist.
+ * - Source width is smaller than requested width.
+ * - Destination exists and is up to date (mtime).
+ *
+ * @param {number} width
+ * @param {Stream} stream
+ * @param {Function} callback
+ * @param {File} source
+ * @param {string} destination
+ * @param {Array|string} pattern
+ * @param {boolean|undefined} noTileSourceExists
+ * @return {undefined}
+ */
+imageTaskGallery.comparator = function imageTaskGalleryComparator(width, stream, callback, source, destination, pattern, noTileSourceExists) {
+    if (noTileSourceExists === true || source.path.match(/-tile\.[a-z]+$/)) {
         imageSize(source.path, function (error, dimensions) {
             if (error) {
-                throw error;
+                throw new gulpUtil.PluginError(__filename, error, { file: source.path });
             }
 
             if (dimensions.width > width) {
-                destination = ProjectPage.normalizeImagePath(destination);
-                fs.stat(destination, function (error, stat) {
-                    push(!!error || source.stat.mtime > stat.mtime);
-                });
+                gulpChanged.compareLastModifiedTime(stream, callback, source, destination, pattern);
             } else {
-                push(false);
+                callback();
             }
         });
     } else {
-        // Only consider using this non-tile suffixed file if no file with the suffix exists. Note that fs.exists will
-        // be deprecated in the future!
         fs.stat(source.path.replace(/(\.[a-z]+)$/, '-tile$1'), function (error) {
             if (error) {
-                push(false);
+                if (error.code === 'ENOENT') {
+                    imageTaskGalleryComparator(width, stream, callback, source, destination, pattern, true);
+                } else {
+                    throw new gulpUtil.PluginError(__filename, error, { file: source.path });
+                }
             } else {
-                imageTaskGalleryComparator(width, stream, callback, source, destination, pattern, true);
+                callback();
             }
         });
     }
@@ -77,8 +78,6 @@ imageTaskGallery.renameCallback = function (path, width) {
 imageTaskIndexTiles.renameCallback = ProjectPage.normalizeImagePath;
 
 module.exports = function () {
-    cache = {};
-
     var streams = mergeStream(
         imageTaskGallery.resizeWebp(1800),
         imageTaskGallery.resizeWebp(1200),
@@ -101,7 +100,7 @@ module.exports = function () {
         imageTaskIndexTiles.resizeWebp(640),
         imageTaskIndexTiles.resizeWebp(480),
         imageTaskIndexTiles.resizeWebp(320),
-        gulp.src(imageTaskGalleryGlobPattern)
+        gulp.src('src/{images,projects}/**/{gallery,screenshots}/*.{gif,jpg,png}')
             .pipe(gulpPlumber())
             .pipe(gulpChanged(config.dest))
             .pipe(through.obj(function (file, enc, cb) {

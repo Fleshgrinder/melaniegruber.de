@@ -2,7 +2,7 @@
 
 var compress = require('../components/compress');
 var errorHandler = require('../components/plumber-error-handler');
-var gulpChanged = require('gulp-changed');
+//var gulpChanged = require('gulp-changed');
 var gulpFrontMatter = require('gulp-front-matter');
 var gulpHtmlMinifier = require('gulp-html-minifier');
 var gulpMarkdown = require('gulp-markdown');
@@ -89,10 +89,10 @@ module.exports = function (allDone) {
         .pipe(gulpPlumber({
             errorHandler: errorHandler.bind(null, 'Pages Default')
         }))
-        .pipe(gulpChanged(config.dest, {
-            extension: '.html',
-            pattern: ['src/views/**/*.ejs', 'gulp/components/*.js', 'gulp/tasks/pages.js', '!src/views/index.ejs']
-        }))
+        //.pipe(gulpChanged(config.dest, {
+        //    extension: '.html',
+        //    pattern: ['src/views/**/*.ejs', 'gulp/components/*.js', 'gulp/tasks/pages.js', '!src/views/index.ejs']
+        //}))
         .pipe(frontMatter())
         .pipe(through.obj(function (file, enc, cb) {
             file[pageOptions.property] = new Page(file, file[pageOptions.property]);

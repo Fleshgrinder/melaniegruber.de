@@ -2,7 +2,7 @@
 
 var compress = require('../components/compress');
 var gulpAutoprefixer = require('gulp-autoprefixer');
-var gulpChanged = require('gulp-changed');
+//var gulpChanged = require('gulp-changed');
 var gulpCsso = require('gulp-csso');
 var gulpPlumber = require('gulp-plumber');
 var gulpReplace = require('gulp-replace');
@@ -13,10 +13,10 @@ var gulpUtil = require('gulp-util');
 module.exports = function () {
     return gulp.src('src/styles/*.scss', { base: 'src/' })
         .pipe(gulpPlumber())
-        .pipe(gulpChanged(config.dest, {
-            extension: '.css',
-            pattern: ['src/styles/**/*.scss', 'gulp/tasks/styles.js']
-        }))
+        //.pipe(gulpChanged(config.dest, {
+        //    extension: '.css',
+        //    pattern: ['src/styles/**/*.scss', 'gulp/tasks/styles.js']
+        //}))
         .pipe(config.dist ? gulpUtil.noop() : gulpSourcemaps.init())
         .pipe(gulpSass({
             imagePath: '/images/',
