@@ -5,28 +5,27 @@ var fs = require('fs');
 var gulpChanged = require('gulp-changed');
 var gulpImagemin = require('gulp-imagemin');
 var gulpPlumber = require('gulp-plumber');
+var gulpUtil = require('gulp-util');
 var imageSize = require('image-size');
 var ImageTaskRunner = require('../components/ImageTaskRunner');
 var mergeStream = require('merge-stream');
 var ProjectPage = require('../components/ProjectPage');
 var through = require('through2');
 
-//var imageTaskGallery = new ImageTaskRunner('src/{images,projects}/**/{gallery,screenshots}/*.{jpg,png}');
-var imageTaskGallery = new ImageTaskRunner('src/projects/2014-11--animal-morphology/gallery/*.jpg');
+var cache = {};
+var imageTaskGalleryGlobPattern = 'src/{images,projects}/**/{gallery,screenshots}/*.{jpg,png}';
+
+var imageTaskGallery = new ImageTaskRunner(imageTaskGalleryGlobPattern);
 var imageTaskIcons = new ImageTaskRunner('src/images/icons/*.png');
 var imageTaskIndexTiles = new ImageTaskRunner('src/projects/*/tile.jpg');
 var imageTaskLogos = new ImageTaskRunner('src/images/logo/icon.png');
 
-var cache = {};
-
 imageTaskGallery.comparator = function imageTaskGalleryComparator(width, stream, callback, source, destination, pattern, noTile) {
     function push(really) {
         cache[source.path] = really;
-
         if (really) {
             stream.push(source);
         }
-
         callback();
     }
 
@@ -42,7 +41,6 @@ imageTaskGallery.comparator = function imageTaskGalleryComparator(width, stream,
 
             if (dimensions.width > width) {
                 destination = ProjectPage.normalizeImagePath(destination);
-
                 fs.stat(destination, function (error, stat) {
                     push(!!error || source.stat.mtime > stat.mtime);
                 });
@@ -69,7 +67,6 @@ imageTaskGallery.heightCallback = function (width) {
 
 imageTaskGallery.renameCallback = function (path, width) {
     path = ProjectPage.normalizeImagePath(path);
-
     if (!path.match('-tile')) {
         path.replace(new RegExp('(-' + width + '.[a-z]+)$'), '-tile$1');
     }
@@ -103,23 +100,22 @@ module.exports = function () {
         imageTaskIndexTiles.resizeWebp(960),
         imageTaskIndexTiles.resizeWebp(640),
         imageTaskIndexTiles.resizeWebp(480),
-        imageTaskIndexTiles.resizeWebp(320)
+        imageTaskIndexTiles.resizeWebp(320),
+        gulp.src(imageTaskGalleryGlobPattern)
+            .pipe(gulpPlumber())
+            .pipe(gulpChanged(config.dest))
+            .pipe(through.obj(function (file, enc, cb) {
+                file.path = ProjectPage.normalizeImagePath(file.path);
+                this.push(file);
+                cb();
+            }))
+            .pipe(config.dist ? gulpImagemin(ImageTaskRunner.imageminOptions) : gulpUtil.noop())
+            .pipe(gulp.dest(config.dest))
     );
 
     if (config.dist) {
-        streams.add(gulp.src('src/{images,projects}/**/{gallery,screenshots}/*.{gif,jpg,png}')
-                .pipe(gulpPlumber())
-                .pipe(gulpChanged(config.dest))
-                .pipe(through.obj(function (file, enc, cb) {
-                    file.path = ProjectPage.normalizeImagePath(file.path);
-                    this.push(file);
-                    cb();
-                }))
-                .pipe(gulpImagemin(ImageTaskRunner.imageminOptions))
-                .pipe(gulp.dest(config.dest))
-        );
-
-        streams.add(gulp.src('src/**/*.svg')
+        streams.add(
+            gulp.src('src/**/*.svg')
                 .pipe(gulpPlumber())
                 .pipe(gulpChanged(config.dest))
                 .pipe(gulpImagemin(ImageTaskRunner.imageminOptions))
