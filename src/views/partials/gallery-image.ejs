@@ -1,16 +1,16 @@
 <%
 
-this.galleryIndex = this.galleryIndex || 0;
+page.__galleryIndex = page.__galleryIndex || 0;
 var width = 600;
 var height = Math.round(600 / 16 * 9);
 
 %>
 <% if (image.isVector) { %>
-    <a class="img-anchor media-element" data-index="<%= this.galleryIndex %>" href="<%= image.src() %>" id="media-element-<%= this.galleryIndex %>" target="_blank">
+    <a class="img-anchor media-element" data-index="<%= page.__galleryIndex %>" href="<%= image.src() %>" id="media-element-<%= page.__galleryIndex %>" target="_blank">
         <img alt="" height="<%= height %>" src="<%= image.src() %>" width="<%= width %>">
     </a>
 <% } else { %>
-    <a class="img-anchor media-element" data-height="<%= image.height %>" data-index="<%= this.galleryIndex %>" data-width="<%= image.width %>" href="<%= image.src() %>" id="media-element-<%= this.galleryIndex %>" target="_blank">
+    <a class="img-anchor media-element" data-height="<%= image.height %>" data-index="<%= page.__galleryIndex %>" data-width="<%= image.width %>" href="<%= image.src() %>" id="media-element-<%= page.__galleryIndex %>" target="_blank">
         <picture title="<%= image.title %>">
             <% if (image.extension !== 'gif') { %>
                 <source sizes="(min-width: <%= Math.round(320 / page.fontSize) %>em) <%= width %>px, 100vw" srcset="<%= image.srcSet('webp') %>" type="image/webp">
@@ -21,4 +21,4 @@ var height = Math.round(600 / 16 * 9);
         </picture>
     </a>
 <% } %>
-<% ++this.galleryIndex; %>
+<% ++page.__galleryIndex; %>
