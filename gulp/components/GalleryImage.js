@@ -26,7 +26,7 @@ function GalleryImage(title, page) {
     ['gif', 'jpg', 'png', 'svg'].some(function (ext) {
         try {
             imagePath = page.imagePath + self.__type + '/' + self.__image.basename;
-            dimensions = imageSize(path.resolve('src' + imagePath + '.' + ext));
+            dimensions = imageSize(path.resolve(config.dest + imagePath + '.' + ext));
             extension = ext;
             return true;
         } catch (error) {
@@ -35,7 +35,7 @@ function GalleryImage(title, page) {
     });
 
     if (!dimensions) {
-        throw new Error(util.format('Could not determine dimensions for "%s".', imagePath));
+        throw new Error(util.format('Could not determine dimensions for "%s.?".', imagePath));
     }
     delete this.__image;
 
