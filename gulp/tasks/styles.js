@@ -20,11 +20,11 @@ module.exports = function () {
         .pipe(config.dist ? gulpUtil.noop() : gulpSourcemaps.init())
         .pipe(gulpSass({
             imagePath: '/images/',
-            precision: 3
+            precision: 10
         }))
         .pipe(gulpAutoprefixer({
             browsers: [
-                '> 5%',
+                '> 1%',
                 'last 2 version',
                 'Firefox ESR',
                 'Opera 12.1'
