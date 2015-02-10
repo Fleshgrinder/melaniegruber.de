@@ -36,6 +36,13 @@ var dependencies = [];
  */
 var dependency;
 
+if (process.argv.pop().match('--dev')) {
+    console.log('Installing development dependencies as well ...');
+    for (var dependency in packageJSON.devDependencies) {
+        packageJSON.dependencies[dependency] = packageJSON.devDependencies[dependency];
+    }
+}
+
 // Install all non-gulp modules first.
 for (dependency in packageJSON.dependencies) {
     if (!dependency.match(/^gulp/)) {
