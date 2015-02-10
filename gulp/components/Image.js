@@ -1,5 +1,8 @@
 'use strict';
 
+var fs = require('fs');
+var imageSize = require('image-size');
+var path = require('path');
 var text = require('./text');
 
 /**
@@ -7,35 +10,62 @@ var text = require('./text');
  *
  * @constructor
  * @param {string} title
- * @param {string} extension
+ * @param {string} imagePath
+ * @param {string} [extension]
  * @param {number} [width]
  * @param {number} [height]
  * @throws {TypeError} if title is empty or contains HTML.
  */
-function Image(title, extension, width, height) {
+function Image(title, imagePath, extension, width, height) {
     if (!title || title === '') {
         throw new TypeError('Program icon title cannot be empty.');
     }
     if (text.containsHTML(title)) {
         throw new TypeError('Program icon title cannot contain HTML.');
     }
+    imagePath += text.toFilename(title);
+
+    if (!extension) {
+        ['gif', 'jpg', 'png', 'svg'].some(function (ext) {
+            var fsPath = path.resolve(config.dest + imagePath + '.' + ext);
+            try {
+                if (!width) {
+                    var dimensions = imageSize(fsPath);
+                    width = dimensions.width;
+                    height = dimensions.height;
+                } else {
+                    fs.statSync(fsPath);
+                }
+                extension = ext;
+                return true;
+            } catch (error) {
+                return false;
+            }
+        });
+
+        if (!extension) {
+            throw new Error('Could not determine extension for: ' + imagePath);
+        }
+    }
 
     Object.defineProperties(this, {
-        basename: {
-            enumerable: true,
-            value: text.toFilename(title)
-        },
         extension: {
             enumerable: true,
             value: extension
         },
         height: {
             enumerable: true,
-            value: parseInt(height || width, 10)
+            // jshint bitwise:false
+            value: (height || width) >>> 0
+            // jshint bitwise:true
         },
         isVector: {
             enumerable: true,
             value: extension === 'svg'
+        },
+        path: {
+            enumerable: true,
+            value: imagePath
         },
         title: {
             enumerable: true,
@@ -43,7 +73,9 @@ function Image(title, extension, width, height) {
         },
         width: {
             enumerable: true,
-            value: parseInt(width, 10)
+            // jshint bitwise:false
+            value: width >>> 0
+            // jshint bitwise:true
         }
     });
 }
@@ -53,6 +85,7 @@ Image.prototype = {
     /**
      * Get the image's source URL.
      *
+     * @method
      * @param {number} [width]
      * @param {string} [type]
      * @return {string}
@@ -64,6 +97,7 @@ Image.prototype = {
     /**
      * Get the image's source set URLs.
      *
+     * @method
      * @param {string} [type]
      * @return {string}
      */

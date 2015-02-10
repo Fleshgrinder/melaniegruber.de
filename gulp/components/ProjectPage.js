@@ -113,7 +113,7 @@ function ProjectPage(file, data) {
         if (!screenshots && self.screenshots) {
             screenshots = [];
             for (var i = 0, l = data.screenshots.length; i < l; ++i) {
-                screenshots.push(new ScreenshotImage(data.screenshots[i], self));
+                screenshots.push(new ScreenshotImage(data.screenshots[i], self.route));
             }
         }
 
@@ -122,10 +122,6 @@ function ProjectPage(file, data) {
 }
 
 util.inherits(ProjectPage, Page);
-
-ProjectPage.prototype.getImagePath = function () {
-    return 'src/projects/' + this.date + '--' + this.route.substring(1) + '/';
-};
 
 /**
  * Normalize project image path.

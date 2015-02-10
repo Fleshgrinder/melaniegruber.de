@@ -39,10 +39,6 @@ function Page(file, data) {
             enumerable: true,
             value: data.description
         },
-        filePath: {
-            enumerable: true,
-            value: file.path
-        },
         fontSize: {
             enumerable: true,
             value: 18
@@ -53,13 +49,7 @@ function Page(file, data) {
         },
         image: {
             enumerable: true,
-            get: function () {
-                return self.__getImage();
-            }
-        },
-        imagePath: {
-            enumerable: true,
-            value: data.imagePath || '/images/' + path.basename(file.path, '.md') + '/'
+            get: this.__getImage
         },
         index: {
             enumerable: true,
@@ -100,7 +90,7 @@ function Page(file, data) {
         if (!gallery && self.gallery) {
             gallery = [];
             for (var i = 0, l = data.gallery.length; i < l; ++i) {
-                gallery.push(new GalleryImage(data.gallery[i], self));
+                gallery.push(new GalleryImage(data.gallery[i], self.route));
             }
         }
 

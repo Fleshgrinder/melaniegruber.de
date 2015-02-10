@@ -2,7 +2,6 @@
 
 var fs = require('fs');
 var Image = require('./Image');
-var imageSize = require('image-size');
 var path = require('path');
 var util = require('util');
 var url = require('./url');
@@ -11,42 +10,24 @@ var url = require('./url');
  * Construct new gallery image.
  *
  * @constructor
- * @param {string} title
- * @param {Page} page
+ * @param {string} imageTitle
+ * @param {string} pageRoute
  */
-function GalleryImage(title, page) {
-    var dimensions;
-    var extension;
-    var imagePath;
-    var self = this;
-
-    this.__image = new Image(title);
-    this.__type = this.__type || 'gallery';
-
-    ['gif', 'jpg', 'png', 'svg'].some(function (ext) {
-        try {
-            imagePath = page.imagePath + self.__type + '/' + self.__image.basename;
-            dimensions = imageSize(path.resolve(config.dest + imagePath + '.' + ext));
-            extension = ext;
-            return true;
-        } catch (error) {
-            return false;
-        }
-    });
-
-    if (!dimensions) {
-        throw new Error(util.format('Could not determine dimensions for "%s.?".', imagePath));
-    }
-    delete this.__image;
-
-    GalleryImage.super_.call(this, title, extension, dimensions.width, dimensions.height);
-    Object.defineProperty(this, 'path', {
-        enumerable: true,
-        value: imagePath
-    });
+function GalleryImage(imageTitle, pageRoute) {
+    GalleryImage.super_.call(this, imageTitle, '/images' + pageRoute + '/' + this.getType() + '/');
 }
 
 util.inherits(GalleryImage, Image);
+
+/**
+ * Get the gallery image's type.
+ *
+ * @method
+ * @return {string}
+ */
+GalleryImage.prototype.getType = function () {
+    return 'gallery';
+};
 
 /**
  * @inheritDoc

@@ -12,15 +12,11 @@ var util = require('util');
  * @param {boolean} index
  */
 function ProgramIcon(title, index) {
-    ProgramIcon.super_.call(this, title, title.split(' ')[0] === 'Autodesk' ? 'png' : 'svg', 24);
+    ProgramIcon.super_.call(this, title, '/images/icons/', title.split(' ')[0] === 'Autodesk' ? 'png' : 'svg', 24);
 
-    Object.defineProperties(this, {
-        index: {
-            value: index || false
-        },
-        path: {
-            value: '/images/icons/' + this.basename
-        }
+    Object.defineProperty(this, 'index', {
+        enumerable: true,
+        value: index || false
     });
 }
 
