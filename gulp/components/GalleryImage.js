@@ -59,7 +59,7 @@ GalleryImage.prototype.src = function (width, type) {
     type = type || this.extension;
 
     if (width) {
-        var widths = ['-tile-' + width, '-tile'];
+        var widths = ['-tile-' + width, '-tile', '-' + width];
         width = '';
 
         for (var i = 0, l = widths.length; i < l; ++i) {

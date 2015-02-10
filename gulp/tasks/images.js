@@ -1,7 +1,6 @@
 'use strict';
 
 var compress = require('../components/compress');
-var fs = require('fs');
 var gulpChanged = require('gulp-changed');
 var gulpImagemin = require('gulp-imagemin');
 var gulpPlumber = require('gulp-plumber');
@@ -21,7 +20,6 @@ var imageTaskLogos = new ImageTaskRunner('src/images/logo/icon.png');
  * Gulp changed comparator for gallery images.
  *
  * Source rejected if:
- * - File with `-tile` suffix exist.
  * - Source width is smaller than requested width.
  * - Destination exists and is up to date (mtime).
  *
@@ -34,32 +32,18 @@ var imageTaskLogos = new ImageTaskRunner('src/images/logo/icon.png');
  * @param {boolean|undefined} noTileSourceExists
  * @return {undefined}
  */
-imageTaskGallery.comparator = function imageTaskGalleryComparator(width, stream, callback, source, destination, pattern, noTileSourceExists) {
-    if (noTileSourceExists === true || source.path.match(/-tile\.[a-z]+$/)) {
-        imageSize(source.path, function (error, dimensions) {
-            if (error) {
-                throw new gulpUtil.PluginError(__filename, error, { file: source.path });
-            }
+imageTaskGallery.comparator = function imageTaskGalleryComparator(width, stream, callback, source, destination, pattern) {
+    imageSize(source.path, function (error, dimensions) {
+        if (error) {
+            throw new gulpUtil.PluginError(__filename, error, { file: source.path });
+        }
 
-            if (dimensions.width > width) {
-                gulpChanged.compareLastModifiedTime(stream, callback, source, destination, pattern);
-            } else {
-                callback();
-            }
-        });
-    } else {
-        fs.stat(source.path.replace(/(\.[a-z]+)$/, '-tile$1'), function (error) {
-            if (error) {
-                if (error.code === 'ENOENT') {
-                    imageTaskGalleryComparator(width, stream, callback, source, destination, pattern, true);
-                } else {
-                    throw new gulpUtil.PluginError(__filename, error, { file: source.path });
-                }
-            } else {
-                callback();
-            }
-        });
-    }
+        if (dimensions.width > width) {
+            gulpChanged.compareLastModifiedTime(stream, callback, source, destination, pattern);
+        } else {
+            callback();
+        }
+    });
 };
 
 imageTaskGallery.heightCallback = function (width) {
