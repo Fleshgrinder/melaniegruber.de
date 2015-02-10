@@ -1,91 +1,130 @@
-/* globals text */
 'use strict';
+
+var GalleryImage = require('./GalleryImage');
+var path = require('path');
+var text = require('./text');
+var url = require('./url');
+var util = require('util');
 
 /**
  * Construct new page instance.
  *
  * @constructor
- * @param {string} filePath - The file path to the markdown file.
- * @param {{}} metaInformation - The meta information extracted from the markdown files.
+ * @param {File} file
+ * @param {{}} data
  */
-function Page(filePath, metaInformation) {
-    var next;
-    var previous;
+function Page(file, data) {
+    var gallery;
+    var self = this;
 
-    if (!metaInformation.title || metaInformation.title.length === 0) {
-        throw new InvalidArgumentError('Title is mandatory.');
+    if (!data.title || data.title.length === 0) {
+        throw new TypeError(util.format('Title is mandatory: %s', file.relative));
     }
-    if (text.containsHTML(metaInformation.title)) {
-        throw new InvalidArgumentError('Title cannot contain HTML.');
-    }
-
-    if (!metaInformation.description || metaInformation.description.length === 0) {
-        throw new InvalidArgumentError('Description is mandatory.');
-    }
-    if (metaInformation.description.length > 155) {
-        throw new InvalidArgumentError('Description cannot be longer than 155 characters.');
-    }
-    if (text.containsHTML(metaInformation.description)) {
-        throw new InvalidArgumentError('Description cannot contain HTML.');
+    if (text.containsHTML(data.title)) {
+        throw new TypeError(util.format('Title cannot contain HTML: %s', file.relative));
     }
 
-    this.__setRoute(filePath);
+    if (!data.description || data.description.length === 0) {
+        throw new TypeError(util.format('Description is mandatory: %s', file.relative));
+    }
+    if (data.description.length > 155) {
+        throw new TypeError(util.format('Description cannot be longer than 155 characters: %s', file.relative));
+    }
+    if (text.containsHTML(data.description)) {
+        throw new TypeError(util.format('Description cannot contain HTML: %s', file.relative));
+    }
 
     Object.defineProperties(this, {
-        filePath: {
-            value: filePath
-        },
         description: {
-            value: metaInformation.description
+            enumerable: true,
+            value: data.description
+        },
+        filePath: {
+            enumerable: true,
+            value: file.path
+        },
+        fontSize: {
+            enumerable: true,
+            value: 18
+        },
+        gallery: {
+            enumerable: true,
+            value: !!data.gallery
+        },
+        image: {
+            enumerable: true,
+            get: function () {
+                return self.__getImage();
+            }
+        },
+        imagePath: {
+            enumerable: true,
+            value: data.imagePath || '/images/' + path.basename(file.path, '.md') + '/'
+        },
+        index: {
+            enumerable: true,
+            value: data.index || false
         },
         layout: {
-            value: metaInformation.layout || 'default'
-        },
-        next: {
-            get: function () {
-                return next;
-            },
-            set: function (value) {
-                if (!(value instanceof Page)) {
-                    throw new Error('Next page must be an instance of Page.');
-                }
-                next = value;
-            }
-        },
-        previous: {
-            get: function () {
-                return previous;
-            },
-            set: function (value) {
-                if (!(value instanceof Page)) {
-                    throw new Error('Previous page must be an instance of Page.');
-                }
-                previous = value;
-            }
+            enumerable: true,
+            value: data.layout || 'default'
         },
         route: {
-            value: filePath
+            enumerable: true,
+            value: data.route || '/' + path.basename(file.path, '.md')
+        },
+        subtitle: {
+            enumerable: true,
+            value: data.subtitle || config.siteName
         },
         title: {
-            value: metaInformation.title
+            enumerable: true,
+            value: data.title
         },
         titleSeparator: {
-            value: metaInformation.titleSeparator || config.titleSeparator
+            enumerable: true,
+            value: data.titleSeparator || config.titleSeparator
         }
     });
+
+    // Export URL to file for direct access in EJS.
+    file.url = url;
+
+    /**
+     * Get the page's gallery images.
+     *
+     * @method
+     * @return {GalleryImage[]}
+     */
+    this.getGalleryImages = function () {
+        if (!gallery && self.gallery) {
+            gallery = [];
+            for (var i = 0, l = data.gallery.length; i < l; ++i) {
+                gallery.push(new GalleryImage(data.gallery[i], self));
+            }
+        }
+
+        return gallery || [];
+    };
 }
 
 /**
- * Set the page's route.
+ * Get the page's representative image (e.g. for Facebook).
  *
  * @private
- * @param {string} route - The route to set.
- * @return {Page}
+ * @return {string}
  */
-Page.prototype.__setRoute = function pageSetRoute(route) {
-    this.route = '/' + $.util.replaceExtension(route, '');
-    return this;
+Page.prototype.__getImage = function () {
+    if (this.gallery) {
+        var gallery = this.getGalleryImages();
+        for (var i = 0, l = gallery.length; i < l; ++i) {
+            if (!gallery[i].isVector) {
+                return gallery[i].src(320);
+            }
+        }
+    }
+
+    return url.asset('/images/logo/icon-270.png');
 };
 
-// Export to global scope, keep a non-frozen reference for inheritance.
-global.Page = Page;
+module.exports = Page;

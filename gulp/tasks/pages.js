@@ -1,6 +1,7 @@
 'use strict';
 
 var compress = require('../components/compress');
+var errorHandler = require('../components/plumber-error-handler');
 var gulpChanged = require('gulp-changed');
 var gulpFrontMatter = require('gulp-front-matter');
 var gulpHtmlMinifier = require('gulp-html-minifier');
@@ -59,6 +60,17 @@ var render = lazypipe()
     .pipe(gulp.dest, config.dest)
 ;
 
+/**
+ * Normalize project destination from source filename to target filename for gulp-changed.
+ *
+ * @param {File} file - The vinyl file object representing the project.
+ * @return {string} The normalized project path.
+ */
+function projectDestination(file) {
+    file.path = ProjectPage.normalizePagePath(file.path);
+    return config.dest;
+}
+
 module.exports = function (allDone) {
     /**
      * Call the gulp provided allDone callback after both source streams called this function once. Note that the
@@ -70,25 +82,16 @@ module.exports = function (allDone) {
         done.allDone = done.allDone ? allDone() : true;
     }
 
-    /**
-     * Normalize project destination from source filename to target filename for gulp-changed.
-     *
-     * @param {File} file - The vinyl file object representing the project.
-     * @return {string} The normalized project path.
-     */
-    function projectDestination(file) {
-        file.path = ProjectPage.normalizePagePath(file.path);
-        return config.dest;
-    }
-
     // -----------------------------------------------------------------------------------------------------------------
     // This stream will build all markdown files without any special dependencies.
     gulp.src(['src/**/*.md', '!src/index.md', '!src/projects/**', '!src/fonts/**'], { base: 'src/' })
         .on('end', done)
-        .pipe(gulpPlumber())
+        .pipe(gulpPlumber({
+            errorHandler: errorHandler.bind(null, 'Pages Default')
+        }))
         .pipe(gulpChanged(config.dest, {
             extension: '.html',
-            pattern: ['src/views/**/*.ejs', '!src/views/index.ejs', 'gulp/components/*.js', 'gulp/tasks/pages.js']
+            pattern: ['src/views/**/*.ejs', 'gulp/components/*.js', 'gulp/tasks/pages.js', '!src/views/index.ejs']
         }))
         .pipe(frontMatter())
         .pipe(through.obj(function (file, enc, cb) {
@@ -103,6 +106,9 @@ module.exports = function (allDone) {
     // This stream will collect the projects for the index page and next/previous linking.
     gulp.src('src/projects/**/*.md', { base: 'src/' })
         .on('end', function () {
+            var indexProjects = [];
+            this.end();
+
             if (projects.length === 0) {
                 done();
                 return;
@@ -115,6 +121,7 @@ module.exports = function (allDone) {
             });
 
             for (var i = 0, n = 1, p = -1, l = projects.length; i < l; ++i) {
+                indexProjects[i] = projects[i][pageOptions.property];
                 if (n in projects) {
                     projects[i][pageOptions.property].next = projects[n][pageOptions.property];
                 }
@@ -125,37 +132,40 @@ module.exports = function (allDone) {
 
             // This stream finally builds the index and the previously collected projects.
             gulp.src('src/index.md', { base: 'src/' })
-                .on('end', done)
-                .pipe(gulpPlumber())
+                .on('end', function () {
+                    this.end();
+                    done();
+                })
+                .pipe(gulpPlumber({
+                    errorHandler: errorHandler.bind(null, 'Pages Index')
+                }))
                 .pipe(frontMatter())
                 .pipe(through.obj(function (file, enc, cb) {
-                    var indexProjects = [];
-
                     // Push the previously collected projects back into this stream.
-                    for (var i = 0, l = projects.length; i < l; ++i) {
-                        indexProjects[i] = projects[i][pageOptions.property];
-                        this.push(projects[i]);
-                    }
+                    projects.forEach(this.push.bind(this));
 
                     file[pageOptions.property] = new IndexPage(file, file[pageOptions.property], indexProjects);
+
                     this.push(file);
                     cb();
                 }))
                 .pipe(render())
                 .pipe(compress());
         })
-        .pipe(gulpPlumber())
-        .pipe(gulpChanged(projectDestination, {
-            extension: '.html',
-            pattern: ['src/index.md', 'src/projects/**/*.md', 'src/views/**/*.ejs', 'gulp/**/*.js']
+        .pipe(gulpPlumber({
+            errorHandler: errorHandler.bind(null, 'Pages Projects')
         }))
+        //.pipe(gulpChanged(projectDestination, {
+        //    extension: '.html',
+        //    pattern: ['src/index.md', 'src/projects/**/*.md', 'src/views/**/*.ejs', 'gulp/tasks/pages.js', 'gulp/components/*.js']
+        //}))
         .pipe(frontMatter())
         .pipe(through.obj(function (file, enc, cb) {
             file[pageOptions.property] = new ProjectPage(file, file[pageOptions.property]);
 
             // Project might already be part of the projects array if executing during serve task execution.
             var found = projects.some(function (project, index) {
-                if (project.filePath === file.path) {
+                if (project[pageOptions.property].route === file[pageOptions.property].route) {
                     projects[index] = file;
                     return true;
                 }

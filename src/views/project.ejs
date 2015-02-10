@@ -1,0 +1,59 @@
+<% include partials/head.ejs %>
+<div class="container">
+    <div class="text<% if (page.isWorkInProgress) { %> abs-before-after project-wip<% } %>">
+        <h1 class="text-title">
+            <%= page.title %>
+        </h1>
+        <% if (page.description || page.programs || page.work) { %>
+            <% if (page.type) { %>
+            <p class="text-type">
+                <%= page.type %>
+            </p>
+            <% } %>
+            <div class="text-meta">
+                <% if (page.programs) { %>
+                <p class="text-programs">
+                    <% page.getProgramIcons.forEach(function (programIcon) { %>
+                        <% include partials/program-icon.ejs %>
+                    <% }); %>
+                </p>
+                <% } %>
+                <% if (page.work) { %>
+                <ul class="text-work">
+                    <li><%- page.work.join("</li><li>") %></li>
+                </ul>
+                <% } %>
+            </div>
+        <% } %>
+        <div class="text-content">
+            <%- contents %>
+        </div>
+        <% if (page.next || page.previous) { %>
+            <div class="pager-top pager-wrapper">
+                <% include partials/pager.ejs %>
+            </div>
+        <% } %>
+    </div>
+    <% if (page.gallery || page.screenshots || page.videos) { %>
+        <div id="gallery">
+            <% if (page.gallery) { %>
+                <% include partials/gallery.ejs %>
+            <% } %>
+            <% if (page.screenshots) { %>
+                <% include partials/screenshot-gallery.ejs %>
+            <% } %>
+            <% if (page.vimeo) { %>
+                <% include partials/videos.ejs %>
+            <% } %>
+        </div>
+        <% if (page.next || page.previous) { %>
+            <div class="pager-bottom pager-wrapper">
+                <% include partials/pager.ejs %>
+            </div>
+        <% } %>
+    <% } %>
+</div>
+<% if (page.gallery || page.screenshots) { %>
+    <% include partials/full-screen.ejs %>
+<% } %>
+<% include partials/foot.ejs %>

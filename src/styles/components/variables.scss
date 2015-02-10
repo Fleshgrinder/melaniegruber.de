@@ -15,7 +15,7 @@ $color-palette: (
 // Name of the font in use.
 $font-family: dosis;
 
-// Default font size.
+// Default font size, also defined in `gulp/components/Page` for EJS templates.
 $font-size: 18;
 
 // Default line height.

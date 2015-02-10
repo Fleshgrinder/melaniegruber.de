@@ -1,4 +1,5 @@
 # TODO
+* Share SCSS configuration with EJS.
 * Optimize full-screen images for various resolutions.
 * Optimize critical rendering path by only showing the header and loading the missing CSSs via JavaScript.
 * Ajaxify everything with nice animations between page loads and request simple JSON files instead of full HTML.

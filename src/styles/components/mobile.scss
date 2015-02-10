@@ -120,6 +120,14 @@
         left: 68px; // Keep the logo visible.
     }
 
+    .gallery-image-small {
+        display: block !important;
+    }
+
+    .gallery-image-big {
+        display: none !important;
+    }
+
 }
 
 @media (min-width: (360em / $font-size)) {

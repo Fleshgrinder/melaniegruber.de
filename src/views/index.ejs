@@ -1,21 +1,42 @@
-<% include partials/head %>
-<h1 class="sr-only"><%= page.title %></h1>
+<%
+
+var sizes = '';
+for (var i = 2; i < 13; ++i) {
+    var width = 320 * i;
+    sizes += '(min-width: ' + width + ' px) and (max-width: ' + (width + 20) + 'px) 320px, ';
+}
+
+%>
+<% include partials/head.ejs %>
+<h1 class="sr-only">
+    <%= page.title %>
+</h1>
 <div class="gallery">
     <div class="intro">
-        <div class="intro-content"><%- contents %></div>
+        <div class="intro-content">
+            <%- contents %>
+        </div>
     </div>
     <% page.projects.forEach(function (project) { %>
-        <a class="project rel<% if (project.year > new Date().getFullYear()) { %> abs-before-after project-wip<% } %>" href="<%= project.route %>">
+        <a class="project rel<% if (project.isWorkInProgress) { %> abs-before-after project-wip<% } %>" href="<%= project.route %>">
             <article class="project-wrapper">
                 <div class="abs project-overlay">
                     <h2 class="project-title rel"><%= project.title %></h2>
-                    <% if (project.programs.length > 0 ) { %>
-                        <p class="abs-before project-subtitle"><%- page.renderProgramIcons(project.programs) %></p>
+                    <% if (project.programs) { %>
+                        <p class="abs-before project-subtitle">
+                            <% project.getProgramIcons(true).forEach(function (programIcon) { %>
+                                <% include partials/program-icon.ejs %>
+                            <% }); %>
+                        </p>
                     <% } %>
                 </div>
-                <picture><%- page.renderIndexTile(project) %></picture>
+                <picture>
+                    <source sizes="(max-width: 339px) 320px, <%= sizes %> 640px" srcset="" type="image/webp">
+                    <img alt="<%= project.title %>" class="img-responsive project-tile project-tile-small" height="320" src="" srcset="" width="320">
+                    <img alt="<%= project.title %>" class="img-responsive project-tile project-tile-big" height="640" src="" srcset="" width="640">
+                </picture>
             </article>
         </a>
     <% }); %>
 </div>
-<% include partials/foot %>
+<% include partials/foot.ejs %>

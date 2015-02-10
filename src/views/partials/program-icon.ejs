@@ -1,0 +1,8 @@
+<% if (programIcon.isVector) { %>
+    <img alt="<%= programIcon.title %> icon" class="program-icon" height="<%= programIcon.height %>" src="<%= programIcon.src() %>" title="<%= programIcon.title %>" width="<%= programIcon.width %>">
+<% } else { %>
+    <picture title="<%= programIcon.title %>">
+        <source srcset="<%= programIcon.srcSet('webp') %>" type="image/webp">
+        <img alt="" class="program-icon" height="<%= programIcon.height %>" src="<%= programIcon.src() %>" srcset="<%= programIcon.srcSet() %>" width="<%= programIcon.width %>">
+    </picture>
+<% } %>

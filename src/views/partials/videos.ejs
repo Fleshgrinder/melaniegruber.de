@@ -1,0 +1,8 @@
+<section class="media">
+    <h2 class="media-title">Videos</h2>
+    <div class="clearfix media-content">
+        <% page.vimeo.forEach(function (id) { %>
+            <% include video-vimeo.ejs %>
+        <% }); %>
+    </div>
+</section>
