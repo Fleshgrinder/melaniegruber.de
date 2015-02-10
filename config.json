@@ -1,5 +1,5 @@
 {
-    "imageMagick": false,
+    "imageMagick": true,
     "siteName": "Melanie Gruber",
     "titleSeparator": " | ",
     "uri": {
