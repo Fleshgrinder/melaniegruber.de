@@ -1,0 +1,34 @@
+<%
+
+function socialLink(name, href, title) {
+    title = title || 'Visit my ' + name + ' profile.';
+    %>
+<a class="img-anchor" href="<%= href %>" target="_blank" title="<%= title %>">
+    <img alt="<%= name %> icon" height="24" src="<%= url.asset('/images/icons/' + name.toLowerCase().replace(/ /g, '-') + '.svg') %>" widht="24">
+</a>
+    <%
+}
+
+function gameArtisansURL(width, type) {
+    return url.asset('/images/icons/game-artisans-' + width + '.' + type || 'png', 'src/images/icons/game-artisans.png');
+}
+
+%>
+<section class="additional-links">
+    <h2 class="sr-only">Weblinks</h2>
+    <p>
+        <%- socialLink('Skype', 'callto://melaniegruber.de', 'Call me via Skype') %>
+        <%- socialLink('LinkedIn', 'https://www.linkedin.com/in/melaniegruber')%>
+        <%- socialLink('CG Society', 'http://melaniegruber.cgsociety.org/') %>
+        <%- socialLink('Behance', 'https://www.behance.net/MelanieGruber') %>
+        <a class="img-anchor" href="http://www.gameartisans.org/forums/members/175975-MelanieGruber" target="_blank" title="Visit my Game Artisans profile.">
+            <picture>
+                <source srcset="<%= gameArtisansURL(24, 'webp') %>, <%= gameArtisansURL(36, 'webp') %> 1.5x, <%= gameArtisansURL(48, 'webp') %> 2x, <%= gameArtisansURL(72, 'webp') %> 3x" type="image/webp">
+                <img alt="Game Artisans" height="24" src="<%= gameArtisansURL(24) %>" srcset="<%= gameArtisansURL(36) %> 1.5x, <%= gameArtisansURL(48) %> 2x, <%= gameArtisansURL(72) %> 3x" width="24">
+            </picture>
+        </a>
+        <%- socialLink('DeviantArt', 'http://melaniegruber.deviantart.com/') %>
+        <%- socialLink('Vimeo', 'https://vimeo.com/melaniegruber') %>
+        <%- socialLink('Pinterest', 'http://www.pinterest.com/GruberMelanie/inspiration/', 'Visit my Pinterest board.') %>
+    </p>
+</section>
