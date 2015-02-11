@@ -28,7 +28,7 @@ util.inherits(ProgramIcon, Image);
 ProgramIcon.prototype.src = function (width, type) {
     if (this.isVector) {
         if (this.index && this.path.match(/unity$/)) {
-            return url.asset(this.path + '-white.' + this.extension);
+            return url.asset(this.path + '-white.' + this.extension, this.sourcePath.replace(/(\.[a-z]+)$/, '-white$1'));
         }
 
         return url.asset(this.path + '.' + this.extension, this.sourcePath);
