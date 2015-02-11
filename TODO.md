@@ -1,5 +1,9 @@
 # TODO
+* Split SCSS into more components (CSSO merges all rules, keep things that belong together together while not worrying
+  about duplicated rules or something).
 * Share SCSS configuration with EJS.
+* Recreate the ImageTaskRunner to resize from big to small, better quality, and optimize all images after it is finished
+  with the resizing of them.
 * Optimize full-screen images for various resolutions.
 * Optimize critical rendering path by only showing the header and loading the missing CSSs via JavaScript.
 * Ajaxify everything with nice animations between page loads and request simple JSON files instead of full HTML.
