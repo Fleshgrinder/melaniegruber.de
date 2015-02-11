@@ -13,7 +13,7 @@ var height = Math.round(600 / 16 * 9);
     <a class="img-anchor media-element" data-height="<%= image.height %>" data-index="<%= page.__galleryIndex %>" data-width="<%= image.width %>" href="<%= image.src() %>" id="media-element-<%= page.__galleryIndex %>" target="_blank">
         <picture title="<%= image.title %>">
             <% if (image.extension !== 'gif') { %>
-                <source sizes="(min-width: <%= Math.round(320 / page.fontSize) %>em) <%= width %>px, 100vw" srcset="<%= image.srcSet('webp') %>" type="image/webp">
+                <source sizes="(min-width: 20em) <%= width %>px, 100vw" srcset="<%= image.srcSet('webp') %>" type="image/webp">
             <% } %>
             <% var srcSet = image.srcSet(); %>
             <img alt="" class="gallery-image-small" height="<%= Math.round(height / 2) %>" src="<%= image.src(300) %>" srcset="<%= srcSet[0] %>" width="<%= Math.round(width / 2) %>">

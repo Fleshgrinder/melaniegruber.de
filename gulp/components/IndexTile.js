@@ -1,53 +1,66 @@
 'use strict';
 
-var ProjectPage = require('./ProjectPage');
+var Image = require('./Image');
+var path = require('path');
 var url = require('./url');
+var util = require('util');
 
-var sizes = '';
-
-(function () {
-    for (var i = 2; i < 13; ++i) {
-        var width = 320 * i;
-        sizes += '(min-width: ' + width + 'px) and (max-width: ' + width + 20 + 'px) 320px, ';
-    }
-})();
-
-function IndexTile(project) {
-    if (!project instanceof ProjectPage) {
-        throw new TypeError('Argument must be an instance of Project.');
-    }
-
-    Object.defineProperties(this, {
-        __defaultExtension: { value: 'jpg' },
-        project: { value: project }
-    });
+/**
+ * Construct new index tile instance.
+ *
+ * @constructor
+ * @param {Page} page
+ */
+function IndexTile(page) {
+    this.__page = page;
+    IndexTile.super_.call(this, 'tile', page.route, 'jpg', 640);
 }
 
-IndexTile.prototype.__url = function indexTileURL(suffix, extension) {
-    extension = extension || this.__defaultExtension;
-    return url.asset(this.project.tilePrefix + suffix + '.' + extension, this.project.tilePattern);
+util.inherits(IndexTile, Image);
+
+/**
+ * @inheritDoc
+ */
+IndexTile.prototype.__sourcePath = function () {
+    return path.normalize(util.format('%s/tile.jpg', path.dirname(this.__page.sourcePath)));
 };
 
-IndexTile.prototype.toString = function indexTileToString() {
-    return '' +
-        '<picture>' +
-            '<source sizes="(max-width: 339px) 320px, ' + sizes + ' 640px" srcset="' +
-                this.__url(320, 'webp') + ' 320w, ' +
-                this.__url(480, 'webp') + ' 480w, ' +
-                this.__url(640, 'webp') + ' 640w, ' +
-                this.__url(960, 'webp') + ' 960w, ' +
-                this.__url(1280, 'webp') + ' 1280w, ' +
-                this.__url(1920, 'webp') + ' 1920w" type="image/webp">' +
-            '<img alt="' + this.project.title + '" class="img-responsive project-tile project-tile-small" height="320" src="' + this.__url(320) + '" srcset="' +
-                this.__url(480) + ' 1.5x, ' +
-                this.__url(640) + ' 2x, ' +
-                this.__url(960) + ' 3x" width="320">' +
-            '<img alt="' + this.project.title + '" class="img-responsive project-tile project-tile-big" height="640" src="' + this.__url(640) + '" srcset="' +
-                this.__url(960) + ' 1.5x, ' +
-                this.__url(1280) + ' 2x, ' +
-                this.__url(1920) + ' 3x" width="640">' +
-        '</picture>'
-    ;
+/**
+ * @inheritDoc
+ */
+IndexTile.prototype.src = function (width, type) {
+    return url.asset(this.path + '-' + (width || this.width) + '.' + (type || this.extension), this.sourcePath);
+};
+
+/**
+ * @inheritDoc
+ */
+IndexTile.prototype.srcSet = function (type) {
+    var self = this;
+    var srcSet;
+
+    if (type === 'webp') {
+        srcSet = [];
+        [this.width / 2, this.width].forEach(function (width) {
+            srcSet.push(self.src(width, type) + ' ' + width + 'w');
+            self.highDpiFactors.forEach(function (factor) {
+                var factoredWidth = width * factor;
+                srcSet.push(self.src(factoredWidth, type) + ' ' + factoredWidth + 'w');
+            });
+        });
+
+        return srcSet.join(', ');
+    }
+
+    srcSet = [[], []];
+    [this.width / 2, this.width].forEach(function (width, i) {
+        self.highDpiFactors.forEach(function (factor) {
+            srcSet[i].push(self.src(width * factor) + ' ' + factor + 'x');
+        });
+        srcSet[i] = srcSet[i].join(', ');
+    });
+
+    return srcSet;
 };
 
 module.exports = IndexTile;
