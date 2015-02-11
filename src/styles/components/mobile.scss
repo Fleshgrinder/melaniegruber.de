@@ -1,7 +1,8 @@
 @import "mixins";
 @import "variables";
 
-@media (max-width: 60em) { // 960px
+@media (max-width: 60em) {
+    // 960px
 
     .no-js .nav {
         height: $header-height;
@@ -108,7 +109,8 @@
 
 }
 
-@media (max-width: 22.5em) { // 360px
+@media (max-width: 22.5em) {
+    // 360px
 
     html,
     body {
@@ -120,47 +122,14 @@
         left: 68px; // Keep the logo visible.
     }
 
-    .gallery-image-small {
-        display: block !important;
-    }
-
-    .gallery-image-big {
-        display: none !important;
-    }
-
 }
 
-@media (min-width: 22.5em) { // 360px
+@media (min-width: 22.5em) {
+    // 360px
 
     .no-js .nav:hover .menu,
     .menu.open {
         left: 50%;
-    }
-
-}
-
-@media (max-width: 40em) { // 640px
-
-    .media-element img {
-        display: block;
-        height: auto;
-        max-width: 100%;
-        width: 100%;
-    }
-
-    .media-video {
-        padding-bottom: 56.25%;
-        position: relative;
-
-        iframe {
-            bottom: 0;
-            height: 100%;
-            left: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 100%;
-        }
     }
 
 }

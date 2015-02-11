@@ -94,3 +94,74 @@
 .media-video {
     background: url("/images/icons/vimeo-wordmark.svg") center no-repeat #000;
 }
+
+@media (max-width: 22.5em) {
+    // 360px
+
+    .gallery-image-small {
+        display: block !important;
+    }
+
+    .gallery-image-big {
+        display: none !important;
+    }
+
+}
+
+@media (max-width: 40em) {
+    // 640px
+
+    .media-element img {
+        display: block;
+        height: auto;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .media-video {
+        padding-bottom: 56.25%;
+        position: relative;
+
+        iframe {
+            bottom: 0;
+            height: 100%;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100%;
+        }
+    }
+
+}
+
+@media (max-width: 80em) {
+    // 1280px
+
+    .media {
+        max-width: 600px;
+    }
+
+}
+
+@media (min-width: 60em) {
+    // 960px
+
+    .media-element {
+        margin: 20px 20px 0 0;
+    }
+
+}
+
+@media (min-width: 80em) {
+    // 1280px
+
+    .media-content {
+        width: calc(100% + 20px);
+    }
+
+    .media-element {
+        float: left;
+    }
+
+}
