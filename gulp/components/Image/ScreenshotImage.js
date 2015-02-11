@@ -7,11 +7,11 @@ var util = require('util');
  * Construct new screenshot image instance.
  *
  * @constructor
- * @param {string} imageTitle
- * @param {string} pageRoute
+ * @param {string} title
+ * @param {Page} page
  */
-function ScreenshotImage(imageTitle, pageRoute) {
-    ScreenshotImage.super_.call(this, imageTitle, pageRoute);
+function ScreenshotImage(title, page) {
+    ScreenshotImage.super_.call(this, title, page);
 }
 
 util.inherits(ScreenshotImage, GalleryImage);

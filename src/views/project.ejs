@@ -13,7 +13,7 @@
             <div class="text-meta">
                 <% if (page.programs) { %>
                 <p class="text-programs">
-                    <% page.getProgramIcons.forEach(function (programIcon) { %>
+                    <% page.getProgramIcons().forEach(function (programIcon) { %>
                         <% include partials/program-icon.ejs %>
                     <% }); %>
                 </p>

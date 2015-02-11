@@ -1,8 +1,9 @@
 'use strict';
 
+var IndexTile = require('./../Image/IndexTile');
 var Page = require('./Page');
-var ProgramIcon = require('./ProgramIcon');
-var ScreenshotImage = require('./ScreenshotImage');
+var ProgramIcon = require('./../Image/ProgramIcon');
+var ScreenshotImage = require('./../Image/ScreenshotImage');
 var util = require('util');
 
 /**
@@ -19,7 +20,9 @@ function ProjectPage(file, data) {
     var programIcons;
     var screenshots;
     var self = this;
+    var year = parseInt(dateParts[2], 10);
 
+    data.layout = 'project';
     ProjectPage.super_.call(this, file, data);
 
     Object.defineProperties(this, {
@@ -27,11 +30,13 @@ function ProjectPage(file, data) {
             enumerable: true,
             value: dateParts[1]
         },
+        indexTile: {
+            enumerable: true,
+            value: new IndexTile(this)
+        },
         isWorkInProgress: {
             enumerable: true,
-            get: function () {
-                return self.year > new Date().getFullYear();
-            }
+            value: year > new Date().getFullYear()
         },
         next: {
             enumerable: true,
@@ -79,7 +84,7 @@ function ProjectPage(file, data) {
         },
         year: {
             enumerable: true,
-            value: parseInt(dateParts[2], 10)
+            value: year
         }
     });
 
@@ -113,7 +118,7 @@ function ProjectPage(file, data) {
         if (!screenshots && self.screenshots) {
             screenshots = [];
             for (var i = 0, l = data.screenshots.length; i < l; ++i) {
-                screenshots.push(new ScreenshotImage(data.screenshots[i], self.route));
+                screenshots.push(new ScreenshotImage(data.screenshots[i], self));
             }
         }
 
@@ -122,6 +127,13 @@ function ProjectPage(file, data) {
 }
 
 util.inherits(ProjectPage, Page);
+
+/**
+ * @inheritDoc
+ */
+ProjectPage.prototype.__getImage = function () {
+    return this.indexTile.src(this.indexTile.width / 2);
+};
 
 /**
  * Normalize project image path.

@@ -3,6 +3,7 @@
 var crypto = require('crypto');
 var fs = require('fs');
 var glob = require('glob');
+var path = require('path');
 var util = require('util');
 
 var cacheBusters = {};
@@ -46,23 +47,26 @@ module.exports.absolute = function (path) {
  * Get asset path with cache buster appended.
  *
  * @function
- * @param {string} path - Web accessible path to the asset.
+ * @param {string} webPath - Web accessible path to the asset.
  * @param {string} [pattern] - Pattern to generate the cache buster from, defaults to path.
  * @return {string} The asset's path with the cache buster appended.
  */
-module.exports.asset = function (path, pattern) {
-    path = validatePath(path);
+module.exports.asset = function (webPath, pattern) {
+    webPath = validatePath(webPath);
 
     if (config.dist) {
-        pattern = 'src' + pattern || path;
+        pattern = pattern || path.resolve('src' + webPath);
 
         if (!(pattern in cacheBusters)) {
-            cacheBusters[pattern] = '';
-
-            // This function is called in EJS which cannot deal with asynchronous stuff.
-            glob.sync(pattern).forEach(function (filePath) {
-                cacheBusters[pattern] += fs.readFileSync(filePath, { encoding: 'utf8' });
-            });
+            // There must be at least a single character which needs expansion, otherwise directly access the file.
+            if (pattern.match(/\*/)) {
+                cacheBusters[pattern] = '';
+                glob.sync(pattern).forEach(function (path) {
+                    cacheBusters[pattern] += fs.readFileSync(path, { encoding: 'utf8' });
+                });
+            } else {
+                cacheBusters[pattern] = fs.readFileSync(pattern, { encoding: 'utf8' });
+            }
 
             cacheBusters[pattern] = encodeURIComponent(crypto.createHash('md5')
                     .update(cacheBusters[pattern])
@@ -72,8 +76,8 @@ module.exports.asset = function (path, pattern) {
             );
         }
 
-        return path + '?' + cacheBusters[pattern];
+        return webPath + '?' + cacheBusters[pattern];
     }
 
-    return path;
+    return webPath;
 };

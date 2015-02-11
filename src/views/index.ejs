@@ -31,9 +31,13 @@ for (var i = 2; i < 13; ++i) {
                     <% } %>
                 </div>
                 <picture>
-                    <source sizes="(max-width: 339px) 320px, <%= sizes %> 640px" srcset="" type="image/webp">
-                    <img alt="<%= project.title %>" class="img-responsive project-tile project-tile-small" height="320" src="" srcset="" width="320">
-                    <img alt="<%= project.title %>" class="img-responsive project-tile project-tile-big" height="640" src="" srcset="" width="640">
+                    <%
+                        var widthHalf = project.indexTile.width / 2;
+                        var srcSets = project.indexTile.srcSet();
+                    %>
+                    <source sizes="(max-width: <%= widthHalf + 19 %>px) <%= widthHalf %>px, <%= sizes %> <%= project.indexTile.width %>px" srcset="<%= project.indexTile.srcSet('webp') %>" type="image/webp">
+                    <img alt="" class="img-responsive project-tile project-tile-small" height="<%= widthHalf %>" src="<%= project.indexTile.src(widthHalf) %>" srcset="<%= srcSets[0] %>" width="<%= widthHalf %>">
+                    <img alt="" class="img-responsive project-tile project-tile-big" height="<%= project.indexTile.width %>" src="<%= project.indexTile.src() %>" srcset="<%= srcSets[1] %>" width="<%= project.indexTile.width %>">
                 </picture>
             </article>
         </a>

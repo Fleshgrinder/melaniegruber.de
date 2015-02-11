@@ -10,7 +10,7 @@
     </script>
 
     <!-- Stylesheets first, we want the browser to download it asap. -->
-    <link rel="stylesheet" href="<%= url.asset('/styles/main.css', '/styles/**/*.scss') %>">
+    <link rel="stylesheet" href="<%= url.asset('/styles/main.css', 'src/styles/**/*.scss') %>">
 
     <!--
     We want browsers to use the SVG, sadly that will not work for almost all of them. Next we provide the touch icon
@@ -25,8 +25,8 @@
     http://css-tricks.com/favicon-quiz/
     -->
     <link rel="icon" href="<%= url.asset('/images/logo/vector.svg') %>" sizes="any" type="image/svg+xml">
-    <link rel="apple-touch-icon-precomposed" href="<%= url.asset('/images/logo/icon-196.png') %>">
-    <link rel="icon" href="<%= url.asset('/images/logo/icon-32.png') %>">
+    <link rel="apple-touch-icon-precomposed" href="<%= url.asset('/images/logo/icon-196.png', 'src/images/logo/icon.png') %>">
+    <link rel="icon" href="<%= url.asset('/images/logo/icon-32.png', 'src/images/logo/icon.png') %>">
 
     <!-- Force latest rendering engine in IE. -->
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
@@ -48,7 +48,7 @@
     <meta content="<% if (page.index) { %>website<% } else { %>article<% } %>" property="og:type">
     <meta content="<%= url.absolute(page.route) %>" property="og:url">
 </head>
-<body class="<%= page.layout %>">
+<body class="<%= page.layout %>-page">
     <header class="header">
         <%- page.index ? '<h1 class="logo">' : '<a class="logo" href="/">' %>
             <img alt="<%= config.siteName %> logo" height="48" src="<%= url.asset('/images/logo/vector.svg') %>" width="32"><%= config.siteName %>

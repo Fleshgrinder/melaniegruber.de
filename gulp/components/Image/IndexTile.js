@@ -2,7 +2,7 @@
 
 var Image = require('./Image');
 var path = require('path');
-var url = require('./url');
+var url = require('./../url');
 var util = require('util');
 
 /**

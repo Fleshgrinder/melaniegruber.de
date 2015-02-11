@@ -48,7 +48,7 @@ imageTaskGallery.comparator = function imageTaskGalleryComparator(width, stream,
 };
 
 imageTaskGallery.heightCallback = function (width) {
-    return width / 16 * 9;
+    return (width / 16) * 9;
 };
 
 imageTaskGallery.renameCallback = function (path, width) {

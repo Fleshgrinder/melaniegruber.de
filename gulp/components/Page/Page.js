@@ -1,9 +1,9 @@
 'use strict';
 
-var GalleryImage = require('./GalleryImage');
+var GalleryImage = require('./../Image/GalleryImage');
 var path = require('path');
-var text = require('./text');
-var url = require('./url');
+var text = require('./../text');
+var url = require('./../url');
 var util = require('util');
 
 /**
@@ -17,14 +17,14 @@ function Page(file, data) {
     var gallery;
     var self = this;
 
-    if (!data.title || data.title.length === 0) {
+    if (!text.validNonEmptyString(data.title)) {
         throw new TypeError(util.format('Title is mandatory: %s', file.relative));
     }
     if (text.containsHTML(data.title)) {
         throw new TypeError(util.format('Title cannot contain HTML: %s', file.relative));
     }
 
-    if (!data.description || data.description.length === 0) {
+    if (!text.validNonEmptyString(data.description)) {
         throw new TypeError(util.format('Description is mandatory: %s', file.relative));
     }
     if (data.description.length > 155) {
@@ -38,10 +38,6 @@ function Page(file, data) {
         description: {
             enumerable: true,
             value: data.description
-        },
-        fontSize: {
-            enumerable: true,
-            value: 18
         },
         gallery: {
             enumerable: true,
@@ -62,6 +58,10 @@ function Page(file, data) {
         route: {
             enumerable: true,
             value: data.route || '/' + path.basename(file.path, '.md')
+        },
+        sourcePath: {
+            enumerable: true,
+            value: file.path
         },
         subtitle: {
             enumerable: true,
@@ -90,7 +90,7 @@ function Page(file, data) {
         if (!gallery && self.gallery) {
             gallery = [];
             for (var i = 0, l = data.gallery.length; i < l; ++i) {
-                gallery.push(new GalleryImage(data.gallery[i], self.route));
+                gallery.push(new GalleryImage(data.gallery[i], self));
             }
         }
 
@@ -114,7 +114,7 @@ Page.prototype.__getImage = function () {
         }
     }
 
-    return url.asset('/images/logo/icon-270.png');
+    return url.asset('/images/logo/icon-270.png', 'src/images/logo/icon.png');
 };
 
 module.exports = Page;

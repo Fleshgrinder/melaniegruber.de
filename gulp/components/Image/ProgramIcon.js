@@ -1,7 +1,7 @@
 'use strict';
 
 var Image = require('./Image');
-var url = require('./url');
+var url = require('./../url');
 var util = require('util');
 
 /**
@@ -12,7 +12,7 @@ var util = require('util');
  * @param {boolean} index
  */
 function ProgramIcon(title, index) {
-    ProgramIcon.super_.call(this, title, '/images/icons/', title.split(' ')[0] === 'Autodesk' ? 'png' : 'svg', 24);
+    ProgramIcon.super_.call(this, title, '/icons', title.split(' ')[0] === 'Autodesk' ? 'png' : 'svg', 24);
 
     Object.defineProperty(this, 'index', {
         enumerable: true,
@@ -31,23 +31,20 @@ ProgramIcon.prototype.src = function (width, type) {
             return url.asset(this.path + '-white.' + this.extension);
         }
 
-        return url.asset(this.path + '.' + this.extension);
+        return url.asset(this.path + '.' + this.extension, this.sourcePath);
     }
 
     width = width || this.width;
     type = type || this.extension;
 
-    return url.asset(
-        this.path + '-' + width + '.' + type,
-        this.path + '.' + this.extension
-    );
+    return url.asset(this.path + '-' + width + '.' + type, this.sourcePath);
 };
 
 /**
  * @inheritDoc
  */
 ProgramIcon.prototype.srcSet = function (type) {
-    var factors = [1.5, 2, 3];
+    var factors = this.highDpiFactors.slice();
     var self = this;
 
     if (this.isVector) {
