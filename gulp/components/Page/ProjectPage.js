@@ -17,7 +17,7 @@ function ProjectPage(file, data) {
     var dateParts = file.path.match(/projects(?:\/|\\)((\d{4})(?:-\d{1,2}){0,2})--/);
     var next;
     var previous;
-    var programIcons = {};
+    var programIcons;
     var screenshots;
     var self = this;
     var year = parseInt(dateParts[2], 10);
