@@ -24,4 +24,4 @@ it will lead me down in the future. If you are curious too, contact me to learn 
 
 [contact@melaniegruber.de](mailto:contact@melaniegruber.de)
 
-<% include partials/about-weblinks.ejs %>
+<% include views/partials/about-weblinks.ejs %>
