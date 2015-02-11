@@ -24,7 +24,7 @@ for (var i = 2; i < 13; ++i) {
                     <h2 class="project-title rel"><%= project.title %></h2>
                     <% if (project.programs) { %>
                         <p class="abs-before project-subtitle">
-                            <% project.getProgramIcons(true).forEach(function (programIcon) { %>
+                            <% project.getProgramIcons().forEach(function (programIcon) { %>
                                 <% include partials/program-icon.ejs %>
                             <% }); %>
                         </p>

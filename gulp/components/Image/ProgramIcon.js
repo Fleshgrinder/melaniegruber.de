@@ -11,23 +11,24 @@ var util = require('util');
  * @param {string} title
  * @param {boolean} index
  */
-function ProgramIcon(title, index) {
+function ProgramIcon(title) {
     ProgramIcon.super_.call(this, title, '/icons', title.split(' ')[0] === 'Autodesk' ? 'png' : 'svg', 24);
-
-    Object.defineProperty(this, 'index', {
-        enumerable: true,
-        value: index || false
-    });
 }
 
 util.inherits(ProgramIcon, Image);
 
 /**
- * @inheritDoc
+ * Get the program icon's source URL.
+ *
+ * @method
+ * @param {boolean} index
+ * @param {number} [width]
+ * @param {string} [type]
+ * @return {string}
  */
-ProgramIcon.prototype.src = function (width, type) {
+ProgramIcon.prototype.src = function (index, width, type) {
     if (this.isVector) {
-        if (this.index && this.path.match(/unity$/)) {
+        if (index && this.path.match(/unity$/)) {
             return url.asset(this.path + '-white.' + this.extension, this.sourcePath.replace(/(\.[a-z]+)$/, '-white$1'));
         }
 
@@ -41,11 +42,17 @@ ProgramIcon.prototype.src = function (width, type) {
 };
 
 /**
- * @inheritDoc
+ * Get the image's source set URLs.
+ *
+ * @method
+ * @param {boolean} index
+ * @param {string} [type]
+ * @return {string}
  */
-ProgramIcon.prototype.srcSet = function (type) {
+ProgramIcon.prototype.srcSet = function (index, type) {
     var factors = this.highDpiFactors.slice();
     var self = this;
+    index = index || false;
 
     if (this.isVector) {
         throw new Error('This is a vector image and therefore has no source set.');
@@ -60,7 +67,7 @@ ProgramIcon.prototype.srcSet = function (type) {
     factors.forEach(function (factor, i) {
         var width = self.width * factor;
 
-        factors[i] = self.src(width, type) + ' ';
+        factors[i] = self.src(index, width, type) + ' ';
 
         if (type === 'webp') {
             factors[i] += width + 'w';

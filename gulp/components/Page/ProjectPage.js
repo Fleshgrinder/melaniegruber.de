@@ -17,7 +17,7 @@ function ProjectPage(file, data) {
     var dateParts = file.path.match(/projects(?:\/|\\)((\d{4})(?:-\d{1,2}){0,2})--/);
     var next;
     var previous;
-    var programIcons;
+    var programIcons = {};
     var screenshots;
     var self = this;
     var year = parseInt(dateParts[2], 10);
@@ -94,14 +94,13 @@ function ProjectPage(file, data) {
      * Get the project's program icons.
      *
      * @method
-     * @param {boolean} index - Whether the currently rendered page is the index page or not, defaults to `false`.
      * @return {ProgramIcon[]}
      */
-    this.getProgramIcons = function (index) {
+    this.getProgramIcons = function () {
         if (!programIcons && self.programs) {
             programIcons = [];
             for (var i = 0, l = data.programs.length; i < l; ++i) {
-                programIcons.push(new ProgramIcon(data.programs[i], index));
+                programIcons.push(new ProgramIcon(data.programs[i]));
             }
         }
 
