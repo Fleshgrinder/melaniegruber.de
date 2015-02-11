@@ -101,7 +101,7 @@ function ProjectPage(file, data) {
         if (!programIcons && self.programs) {
             programIcons = [];
             for (var i = 0, l = data.programs.length; i < l; ++i) {
-                programIcons.push(new ProgramIcon(data.programs[i], self.index));
+                programIcons.push(new ProgramIcon(data.programs[i], index));
             }
         }
 
