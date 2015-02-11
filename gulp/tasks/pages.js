@@ -123,7 +123,7 @@ module.exports = function (allDone) {
                     projects[i][pageOptions.property].next = projects[n][pageOptions.property];
                 }
                 if (p in projects) {
-                    projects[i][pageOptions.property].previous = projects[i][pageOptions.property];
+                    projects[i][pageOptions.property].previous = projects[p][pageOptions.property];
                 }
             }
 
