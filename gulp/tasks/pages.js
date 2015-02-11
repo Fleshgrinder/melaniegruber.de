@@ -117,7 +117,7 @@ module.exports = function (allDone) {
                 return (b.date + b.route).localeCompare(a.date + a.route);
             });
 
-            for (var i = 0, n = 1, p = -1, l = projects.length; i < l; ++i) {
+            for (var i = 0, n = 1, p = -1, l = projects.length; i < l; ++i, ++n, ++p) {
                 indexProjects[i] = projects[i][pageOptions.property];
                 if (n in projects) {
                     projects[i][pageOptions.property].next = projects[n][pageOptions.property];
