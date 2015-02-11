@@ -23,7 +23,6 @@
     "gulp-csso": "1.0.x",
     "gulp-front-matter": "1.2.x",
     "gulp-html-minifier": "0.1.x",
-    "gulp-ignore": "1.2.x",
     "gulp-image-resize": "0.6.x",
     "gulp-imagemin": "2.1.x",
     "gulp-markdown": "1.0.x",

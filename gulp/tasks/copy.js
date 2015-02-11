@@ -2,9 +2,9 @@
 
 var compress = require('../components/compress');
 var gulpChanged = require('gulp-changed');
-var gulpIgnore = require('gulp-ignore');
 var gulpPlumber = require('gulp-plumber');
 var plumberErrorHandler = require('../components/plumber-error-handler');
+var through = require('through2');
 
 module.exports = function (done) {
     if (config.dist) {
@@ -12,8 +12,11 @@ module.exports = function (done) {
             .pipe(gulpPlumber(plumberErrorHandler('Copy')))
             .pipe(gulpChanged(config.dest))
             .pipe(gulp.dest(config.dest))
-            .pipe(gulpIgnore.include(function (file) {
-                return file.path.match(/\.(?:ico|txt|xml)$/);
+            .pipe(through.obj(function (file, enc, cb) {
+                if (file.path.match(/\.(?:ico|txt|xml)$/)) {
+                    this.push(file);
+                }
+                cb();
             }))
             .pipe(compress());
     }
