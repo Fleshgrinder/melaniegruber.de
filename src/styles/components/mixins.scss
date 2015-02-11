@@ -1,6 +1,6 @@
 @import "variables";
 
-@mixin font-face($family, $file-name, $weight: normal, $style: normal, $otf: false) {
+@mixin font-face($family, $file-name, $weight: normal, $style: normal) {
     @font-face {
         font-family: $family;
         src: url("/fonts/#{$family}/#{$family}-#{$file-name}.woff2") format("woff2"),

@@ -1,7 +1,7 @@
 @import "mixins";
 @import "variables";
 
-@media (max-width: ceil(960em / $font-size)) {
+@media (max-width: 60em) { // 960px
 
     .no-js .nav {
         height: $header-height;
@@ -108,7 +108,7 @@
 
 }
 
-@media (max-width: ceil(360em / $font-size)) {
+@media (max-width: 22.5em) { // 360px
 
     html,
     body {
@@ -130,7 +130,7 @@
 
 }
 
-@media (min-width: ceil(360em / $font-size)) {
+@media (min-width: 22.5em) { // 360px
 
     .no-js .nav:hover .menu,
     .menu.open {
@@ -139,7 +139,7 @@
 
 }
 
-@media (max-width: ceil(640em / $font-size)) {
+@media (max-width: 40em) { // 640px
 
     .media-element img {
         display: block;

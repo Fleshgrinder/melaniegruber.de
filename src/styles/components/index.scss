@@ -16,7 +16,7 @@
 }
 
 @for $i from 2 through 16 {
-    @media (min-width: 320px * $i) {
+    @media (min-width: (320px * $i)) {
         .intro,
         .project {
             flex-basis: (100% / $i);
@@ -58,7 +58,7 @@
 }
 
 // And hide the bigger ones if applicable.
-// TODO: How could this be done in SASS/SCSS? The loop is easy (see gulp/task/html-markdown.js#renderIndexTile body).
+// TODO: How could this be done in SASS/SCSS? The loop is easy (see `src/views/index.ejs`).
 @media (max-width: 339px), (min-width: 640px) and (max-width: 660px), (min-width: 960px) and (max-width: 980px), (min-width: 1280px) and (max-width: 1300px), (min-width: 1600px) and (max-width: 1620px), (min-width: 1920px) and (max-width: 1940px), (min-width: 2240px) and (max-width: 2260px), (min-width: 2560px) and (max-width: 2580px), (min-width: 2880px) and (max-width: 2900px), (min-width: 3200px) and (max-width: 3220px), (min-width: 3520px) and (max-width: 3540px), (min-width: 3840px) and (max-width: 3860px) {
     .project-tile-small {
         display: block !important;

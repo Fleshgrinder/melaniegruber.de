@@ -1,6 +1,6 @@
 @import "variables";
 
-@media (min-width: ceil(960em / $font-size)) {
+@media (min-width: 60em) { // 960px
 
     body {
         padding-top: $header-height;
@@ -42,7 +42,7 @@
 
 }
 
-@media (min-width: ceil(1280em / $font-size)) {
+@media (min-width: 80em) { // 1280px
 
     .container {
         display: flex;
@@ -59,19 +59,6 @@
 
     .media-element {
         float: left;
-    }
-
-    .pager-wrapper {
-        bottom: 0;
-        height: 64px;
-        left: 0;
-        padding: 0 20px;
-        position: fixed;
-        width: 640px;
-    }
-
-    .pager-bottom {
-        display: none !important;
     }
 
 }
