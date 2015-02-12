@@ -2,7 +2,6 @@
 
 .pager-wrapper {
     background-color: #fff;
-    font-size: $font-size;
     height: 64px;
     line-height: 64px;
     width: 100%;
@@ -21,6 +20,7 @@
 
     a {
         display: block;
+        white-space: nowrap;
         width: 50%;
 
         &:before,
