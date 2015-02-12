@@ -4,7 +4,7 @@ function socialLink(name, href, title) {
     title = title || 'Visit my ' + name + ' profile.';
     %>
 <a class="img-anchor" href="<%= href %>" target="_blank" title="<%= title %>">
-    <img alt="<%= name %> icon" height="24" src="<%= url.asset('/images/icons/' + name.toLowerCase().replace(/ /g, '-') + '.svg') %>" widht="24">
+    <img alt="<%= name %> icon" height="24" src="<%= url.asset('/images/icons/' + name.toLowerCase().replace(/ /g, '-') + '.svg') %>" width="24">
 </a>
     <%
 }
