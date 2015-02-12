@@ -49,7 +49,11 @@ IndexTile.prototype.srcSet = function (type) {
             });
         });
 
-        return srcSet.join(', ');
+        return srcSet.sort(function (a, b) {
+            // jshint bitwise:false
+            return ~~a.match(/(\d+)w$/)[1] > ~~b.match(/(\d+)w$/)[1];
+            // jshint bitwise:true
+        }).join(', ');
     }
 
     srcSet = [[], []];
