@@ -50,8 +50,9 @@ ProgramIcon.prototype.src = function (index, width, type) {
  * @return {string}
  */
 ProgramIcon.prototype.srcSet = function (index, type) {
-    var factors = this.highDpiFactors.slice();
     var self = this;
+    var srcSet = [];
+
     index = index || false;
 
     if (this.isVector) {
@@ -60,15 +61,15 @@ ProgramIcon.prototype.srcSet = function (index, type) {
 
     type = type || this.extension;
 
-    if (type === 'webp') {
-        factors.unshift(self.src(index, self.width, type));
-    }
-
-    factors.forEach(function (factor, i) {
-        factors[i] = self.src(index, self.width * factor, type) + ' ' + factor + 'x';
+    this.highDpiFactors.forEach(function (factor) {
+        srcSet.push(self.src(index, self.width * factor, type) + ' ' + factor + 'x');
     });
 
-    return factors.join(', ');
+    if (type === 'webp') {
+        srcSet.unshift(self.src(index, self.width, type));
+    }
+
+    return srcSet.join(', ');
 };
 
 module.exports = ProgramIcon;
