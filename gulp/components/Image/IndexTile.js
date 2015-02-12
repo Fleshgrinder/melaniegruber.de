@@ -49,11 +49,16 @@ IndexTile.prototype.srcSet = function (type) {
             });
         });
 
-        return srcSet.sort(function (a, b) {
-            // jshint bitwise:false
-            return ~~a.match(/(\d+)w$/)[1] > ~~b.match(/(\d+)w$/)[1];
-            // jshint bitwise:true
-        }).join(', ');
+        return srcSet
+            .sort(function (a, b) {
+                // jshint bitwise:false
+                return ~~a.match(/(\d+)w$/)[1] > ~~b.match(/(\d+)w$/)[1];
+                // jshint bitwise:true
+            })
+            .filter(function (v) {
+                return v != null;
+            })
+            .join(', ');
     }
 
     srcSet = [[], []];
