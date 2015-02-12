@@ -61,11 +61,11 @@ ProgramIcon.prototype.srcSet = function (index, type) {
     type = type || this.extension;
 
     if (type === 'webp') {
-        factors.push(self.src(index, self.width, type));
+        factors.unshift(self.src(index, self.width, type));
     }
 
-    factors.forEach(function (factor) {
-        factors.push(self.src(index, self.width * factor, type) + ' ' + factor + 'x');
+    factors.forEach(function (factor, i) {
+        factors[i] = self.src(index, self.width * factor, type) + ' ' + factor + 'x';
     });
 
     return factors.join(', ');
