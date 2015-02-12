@@ -1,4 +1,5 @@
 # TODO
+* Keyboard `:focus` does not seem to work correctly anymore, investigate.
 * Split SCSS into more components (CSSO merges all rules, keep things that belong together together while not worrying
   about duplicated rules or something).
 * Share SCSS configuration with EJS.
