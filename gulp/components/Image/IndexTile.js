@@ -42,10 +42,10 @@ IndexTile.prototype.srcSet = function (type) {
     if (type === 'webp') {
         srcSet = [];
         [this.width / 2, this.width].forEach(function (width) {
-            srcSet.push(self.src(width, type) + ' ' + width + 'w');
+            srcSet[width] = self.src(width, type) + ' ' + width + 'w';
             self.highDpiFactors.forEach(function (factor) {
                 var factoredWidth = width * factor;
-                srcSet.push(self.src(factoredWidth, type) + ' ' + factoredWidth + 'w');
+                srcSet[factoredWidth] = self.src(factoredWidth, type) + ' ' + factoredWidth + 'w';
             });
         });
 
