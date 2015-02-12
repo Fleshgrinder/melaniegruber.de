@@ -22,7 +22,7 @@ html {
 html,
 body {
     background-color: nth($color-palette, 5);
-    font: normal $font-size#{"/"}$line-height $font-family, sans-serif;
+    font: normal $font-size#{"/"}$line-height $font-family, calibri, lucida grande, sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased;
