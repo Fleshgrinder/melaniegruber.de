@@ -1,6 +1,6 @@
 <% var total = (page.gallery ? page.getGalleryImages().length : 0) + (page.screenshots ? page.getScreenshots().length : 0); %>
 <div id="full-screen" class="abs-before sr-only">
-    <nav class="full-screen-nav">
+    <div class="full-screen-nav">
         <% if (total > 1) { %>
             <a id="full-screen-previous" class="full-screen-pager" href="#" title="Go to the previous image.">
                 <span aria-hidden="true" role="presentation">◀</span>
@@ -15,5 +15,5 @@
             </a>
         <% } %>
         <a id="full-screen-close" href="#" title="Exit full-screen mode."><span aria-hidden="true" role="presentation">✖</span></a>
-    </nav>
+    </div>
 </div>
