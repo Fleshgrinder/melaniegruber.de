@@ -14,6 +14,9 @@
   solve it without the inline styles. Find it!
 * Find a better solution for the slide-in menu on mobile devices. Google PageSpeed Insights thinks that there is
   visible content outside of the viewport. Which is actually true, but the effect we want.
+* Take care of accessibility by making sure that the text-only version looks good and makes sense, using proper _role_
+  and _aria-*_ attributes.
+* Extend available data with RDFa for search engines.
 
 * Remove the second image tags within the picture elements as soon as the support for the sizes attribute is widely
   available across browsers. This may take years, so this TODO item is here to stay.
