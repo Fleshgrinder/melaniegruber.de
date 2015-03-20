@@ -36,7 +36,7 @@ function ProjectPage(file, data) {
         },
         isWorkInProgress: {
             enumerable: true,
-            value: data.wip || year > new Date().getFullYear()
+            value: 'wip' in data ? data.wip : year > new Date().getFullYear()
         },
         next: {
             enumerable: true,
