@@ -46,7 +46,7 @@ screenshots:
 ## Personal Experience
 I mainly worked on the stylized textures of this game project, painting them in Adobe Photoshop with a graphics tablet. 
 During this work I learned a lot about how surface structures and tileable textures can be created. I also did some low 
-poly modeling of ingame assets in Autodesk 3ds max. This helped me to understand the special demands of game projects 
+poly modeling of ingame assets in Autodesk 3ds Max. This helped me to understand the special demands of game projects 
 and the techniques used to create objects with a low poly count.
 
 ## Project Summary

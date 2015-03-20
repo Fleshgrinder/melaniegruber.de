@@ -26,4 +26,4 @@ gallery:
 ## Personal Experience
 This project started as a character design assignment for a seminar during my bachelor studies. For this seminar I made 
 the analog drawings. I later decided to continue to work on this project as an exercise in making model sheets in Adobe 
-Photoshop and creating a 3D character from a 2D design in Autodesk 3ds max, including the shaders.
+Photoshop, and creating a 3D character from a 2D design in Autodesk 3ds Max, including the Mental Ray shaders.

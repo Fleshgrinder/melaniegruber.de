@@ -24,7 +24,7 @@ vimeo:
 
 ## Personal Experience
 I created the basic character designs for this short film, which was the first time for me to create character sheets 
-and I did not really know much about it back then. Further, I worked mainly on the lighting and shading of the  
+and I did not really know much about it back then. Further, I worked mainly on the lighting and shading of the 
 characters and the environment with Autodesk Maya and Mental Ray. During this work I learned a lot about how shaders, 
 textures, masks, and lights work together. Finally, I helped the other team members by animating a short scene.
 

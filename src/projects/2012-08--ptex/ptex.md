@@ -23,10 +23,13 @@ gallery:
     - Thesis Content 2
     - Head Modeling Low Poly
     - Head Modeling High Poly
+    - Head Modeling Shaded
     - Hand Modeling Low Poly
     - Hand Modeling High Poly
+    - Hand Modeling Shaded
     - Mermaid Modeling Low Poly
     - Mermaid Modeling High Poly
+    - Mermaid Modeling Shaded
     - Mermaid Sculpt
     - Mermaid Textured
 
@@ -35,8 +38,9 @@ gallery:
 ## Personal Experience
 I chose this topic for my bachelor’s thesis because I am always interested in new technologies, and wanted to see how 
 well Ptex (Per-Face Texture Mapping) is integrated into the Autodesk programs. During the practical part of the thesis I 
-modeled a mermaid in Autodesk 3ds Max, sculpted additional detail and created the Ptex texturing in Autodesk Mudbox. 
-During this work I learned a lot about human modeling.
+modeled a mermaid in Autodesk 3ds Max, sculpted additional detail, and created the Ptex texturing in Autodesk Mudbox. 
+During this work I learned a lot about human modeling. Finally, I exported the Ptex textures and rendered the model in 
+Autodesk Maya with Mental Ray.
 
 ## Project Summary
 My bachelor’s thesis “Ptex: Per-Face Texture Mapping in Theory and Practice” evaluated the technology behind Ptex and 
