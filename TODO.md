@@ -1,4 +1,5 @@
 # TODO
+* Title ending on a number leads to tiles not being displayed and it's also cut-off from the URL.
 * Keyboard `:focus` does not seem to work correctly anymore (correction of scroll top value), investigate.
 * Only display the logo and load CSS via JavaScript, once the whole page has loaded, fade in the content. This fixes the
   _render blocking_ warning from Google PageSpeed Insights.
