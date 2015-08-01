@@ -3,3 +3,4 @@ dev
 dist
 desktop.ini
 node_modules
+src/google*.html
