@@ -156,7 +156,8 @@ programs which are not listed here have no icon to display. Also note that the s
 ### Deployment
 [Software deployment](https://en.wikipedia.org/wiki/Software_deployment) refers to *making the software available* and 
 is the final step to get everything online. Be sure that you followed the instructions in [Install](#install) and then 
-double-click the `deploy.bat` file on Windows or execute the `deploy.sh` script on Unix systems.
+execute `gulp --dist` to compile everything. Upload to the server has to happen manually (or pull from Bitbucket and 
+compile on the server).
 
 ## License
 ### Third-Party Content

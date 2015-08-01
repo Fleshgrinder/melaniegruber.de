@@ -18,6 +18,7 @@
 * Take care of accessibility by making sure that the text-only version looks good and makes sense, using proper _role_
   and _aria-*_ attributes.
 * Extend available data with RDFa for search engines.
+* Dynamically create `sitemap.xml` for search engines.
 
 * Remove the second image tags within the picture elements as soon as the support for the sizes attribute is widely
   available across browsers. This may take years, so this TODO item is here to stay.

@@ -1,2 +1,3 @@
 User-agent: *
 Disallow:
+Sitemap: https://www.melaniegruber.de/sitemap.xml

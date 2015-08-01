@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+    <url>
+        <loc>https://www.melaniegruber.de/</loc>
+        <lastmod>2015-08-01T10:07:54+00:00</lastmod>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/logo/vector.svg</image:loc>
+            <image:title>Melanie Gruber Logo</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/about</loc>
+        <lastmod>2015-03-20T01:00:03+00:00</lastmod>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/about/gallery/melanie-gruber.jpg</image:loc>
+            <image:title>Melanie Gruber</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/impressum</loc>
+        <lastmod>2015-08-01T10:07:55+00:00</lastmod>
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/showreel</loc>
+        <lastmod>2015-03-20T01:00:04+00:00</lastmod>
+        <video:video>
+            <video:title>Showreel 2015</video:title>
+            <video:description>I created this showreel as a summary of my most recent projects. You can find more detailed information about each of the projects on my website: melaniegruber.de</video:description>
+            <video:thumbnail_loc>https://i.vimeocdn.com/video/511783470_1280.jpg</video:thumbnail_loc>
+            <video:content_loc>https://vimeo.com/moogaloop.swf?clip_id=122678046</video:content_loc>
+            <video:player_loc allow_embed="yes" autoplay="autoplay=1">https://player.vimeo.com/video/122678046</video:player_loc>
+            <video:duration>190</video:duration>
+        </video:video>
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/the-stones-of-tears</loc>
+        <lastmod>2015-03-20T01:00:04+00:00</lastmod>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/faces-sketch.jpg</image:loc>
+            <image:title>Faces Sketch</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/old-woman-sketch-1.jpg</image:loc>
+            <image:title>Old Woman Sketch (1)</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/old-woman-sketch-2.jpg</image:loc>
+            <image:title>Old Woman Sketch (2)</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/silversmith-sketch-1.jpg</image:loc>
+            <image:title>Silversmith Sketch (1)</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/silversmith-sketch-2.jpg</image:loc>
+            <image:title>Silversmith Sketch (2)</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/old-woman-naked-character-sheet.jpg</image:loc>
+            <image:title>Old Woman Naked Character Sheet</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/old-woman-clothed-character-sheet.jpg</image:loc>
+            <image:title>Old Woman Clothed Character Sheet</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/silversmith-naked-character-sheet.jpg</image:loc>
+            <image:title>Silversmith Naked Character Sheet</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/silversmith-clothed-character-sheet.jpg</image:loc>
+            <image:title>Silversmith Clothed Character Sheet</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/dog-character-sheet.jpg</image:loc>
+            <image:title>Dog Character Sheet</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/character-lineup.jpg</image:loc>
+            <image:title>Character Lineup</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/old-woman-naked-wireframe.jpg</image:loc>
+            <image:title>Old Woman Naked Wireframe</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/old-woman-naked-shaded.jpg</image:loc>
+            <image:title>Old Woman Naked Shaded</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/old-woman-clothed-wireframe.jpg</image:loc>
+            <image:title>Old Woman Clothed Wireframe</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/old-woman-clothed-shaded.jpg</image:loc>
+            <image:title>Old Woman Clothed Shaded</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/silversmith-naked-wireframe.jpg</image:loc>
+            <image:title>Silversmith Naked Wireframe</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/silversmith-naked-shaded.jpg</image:loc>
+            <image:title>Silversmith Naked Shaded</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/silversmith-clothed-wireframe.jpg</image:loc>
+            <image:title>Silversmith Clothed Wireframe</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/the-stones-of-tears/gallery/silversmith-clothed-shaded.jpg</image:loc>
+            <image:title>Silversmith Clothed Shaded</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/animal-morphology</loc>
+        <lastmod>2015-03-20T01:00:04+00:00</lastmod>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/animal-morphology/gallery/cover-front.jpg</image:loc>
+            <image:title>Cover Front</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/animal-morphology/gallery/cover-back.jpg</image:loc>
+            <image:title>Cover Back</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/animal-morphology/gallery/table-of-contents.jpg</image:loc>
+            <image:title>Table Of Contents</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/animal-morphology/gallery/research-question.jpg</image:loc>
+            <image:title>Research Question</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/animal-morphology/gallery/chapter-title.jpg</image:loc>
+            <image:title>Chapter Title</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/animal-morphology/gallery/content-1.jpg</image:loc>
+            <image:title>Content (1)</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/animal-morphology/gallery/content-2.jpg</image:loc>
+            <image:title>Content (2)</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/animal-morphology/gallery/content-3.jpg</image:loc>
+            <image:title>Content (3)</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/animal-morphology/gallery/content-4.jpg</image:loc>
+            <image:title>Content (4)</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/animal-morphology/gallery/content-5.jpg</image:loc>
+            <image:title>Content (5)</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/animal-morphology/gallery/content-6.jpg</image:loc>
+            <image:title>Content (6)</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/animal-morphology/gallery/conclusion.jpg</image:loc>
+            <image:title>Conclusion</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/downloads/animal-morphology.pdf</loc>
+        <lastmod>2015-02-11T16:20:34+00:00</lastmod>
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/mijo</loc>
+        <lastmod>2015-03-20T01:00:04+00:00</lastmod>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/mijo/gallery/sketches.jpg</image:loc>
+            <image:title>Sketches</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/mijo/gallery/character-sheet-analog.jpg</image:loc>
+            <image:title>Character Sheet Analog</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/mijo/gallery/character-sheet-digital.jpg</image:loc>
+            <image:title>Character Sheet Digital</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/mijo/gallery/low-poly-modeling.jpg</image:loc>
+            <image:title>Low Poly Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/mijo/gallery/high-poly-modeling.jpg</image:loc>
+            <image:title>High Poly Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/mijo/gallery/shading.jpg</image:loc>
+            <image:title>Shading</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/simetry</loc>
+        <lastmod>2015-03-20T01:00:05+00:00</lastmod>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/simetry/gallery/character-design-drawings-1.jpg</image:loc>
+            <image:title>Character Design Drawings (1)</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/simetry/gallery/character-design-drawings-2.jpg</image:loc>
+            <image:title>Character Design Drawings (2)</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/simetry/gallery/character-design-drawings-3.jpg</image:loc>
+            <image:title>Character Design Drawings (3)</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/simetry/gallery/character-design-3d-tests.jpg</image:loc>
+            <image:title>Character Design 3D Tests</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/simetry/gallery/final-character-design.jpg</image:loc>
+            <image:title>Final Character Design</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/simetry/gallery/animation-flow-chart.jpg</image:loc>
+            <image:title>Animation Flow Chart</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/simetry/screenshots/screenshot-title-screen.jpg</image:loc>
+            <image:title>Screenshot Title Screen</image:title>
+        </image:image>
+        <video:video>
+            <video:title>Simetry - Game Trailer</video:title>
+            <video:description>This game mixes jump 'n' run with puzzle elements in a classical 2.5 D setting. Everything is constructed of simple geometric forms, which creates an abstract world. The player can remove parts of the environment, and use these parts to build new forms. This core mechanic helps the player to solve the puzzles and progress through the game. The trailer is the work of Thomas Kempf.</video:description>
+            <video:thumbnail_loc>https://i.vimeocdn.com/video/501499328_1280.jpg</video:thumbnail_loc>
+            <video:content_loc>https://vimeo.com/moogaloop.swf?clip_id=115466285</video:content_loc>
+            <video:player_loc allow_embed="yes" autoplay="autoplay=1">https://player.vimeo.com/video/115466285</video:player_loc>
+            <video:duration>50</video:duration>
+        </video:video>
+        <video:video>
+            <video:title>Simetry - Animation</video:title>
+            <video:description>The character animations I made for the game "Simetry".</video:description>
+            <video:thumbnail_loc>https://i.vimeocdn.com/video/502003446_1280.jpg</video:thumbnail_loc>
+            <video:content_loc>https://vimeo.com/moogaloop.swf?clip_id=115853516</video:content_loc>
+            <video:player_loc allow_embed="yes" autoplay="autoplay=1">https://player.vimeo.com/video/115853516</video:player_loc>
+            <video:duration>16</video:duration>
+        </video:video>
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/barefoot</loc>
+        <lastmod>2015-03-20T01:00:05+00:00</lastmod>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/temple-ruin-modeling-and-texturing.jpg</image:loc>
+            <image:title>Temple Ruin Modeling And Texturing</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/ruin-modeling-and-texturing.jpg</image:loc>
+            <image:title>Ruin Modeling And Texturing</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/stone-monster-modeling-and-texturing.jpg</image:loc>
+            <image:title>Stone Monster Modeling And Texturing</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/big-leaf-modeling-and-texturing.jpg</image:loc>
+            <image:title>Big Leaf Modeling And Texturing</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/hut-modeling-and-texturing.jpg</image:loc>
+            <image:title>Hut Modeling And Texturing</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/sign-modeling-and-texturing.jpg</image:loc>
+            <image:title>Sign Modeling And Texturing</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/stone-giants-texturing.jpg</image:loc>
+            <image:title>Stone Giants Texturing</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/snake-statue-texturing.jpg</image:loc>
+            <image:title>Snake Statue Texturing</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/warrior-statue-texturing.jpg</image:loc>
+            <image:title>Warrior Statue Texturing</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/wooden-goblin-texturing.jpg</image:loc>
+            <image:title>Wooden Goblin Texturing</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/spider-legs-texturing.jpg</image:loc>
+            <image:title>Spider Legs Texturing</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/scorpion-arms-texturing.jpg</image:loc>
+            <image:title>Scorpion Arms Texturing</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/ant-tail-texturing.jpg</image:loc>
+            <image:title>Ant Tail Texturing</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/night-sky-texture.jpg</image:loc>
+            <image:title>Night Sky Texture</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/wood-planks-texture.jpg</image:loc>
+            <image:title>Wood Planks Texture</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/rock-texture.jpg</image:loc>
+            <image:title>Rock Texture</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/stone-texture.jpg</image:loc>
+            <image:title>Stone Texture</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/leaf-1-texture.jpg</image:loc>
+            <image:title>Leaf 1 Texture</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/leaf-2-texture.jpg</image:loc>
+            <image:title>Leaf 2 Texture</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/gallery/ice-texture-test.jpg</image:loc>
+            <image:title>Ice Texture Test</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/screenshots/screenshot-tiki-valley.jpg</image:loc>
+            <image:title>Screenshot Tiki Valley</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/screenshots/screenshot-mushrooms.jpg</image:loc>
+            <image:title>Screenshot Mushrooms</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/screenshots/screenshot-forest.jpg</image:loc>
+            <image:title>Screenshot Forest</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/barefoot/screenshots/screenshot-ice-isles.jpg</image:loc>
+            <image:title>Screenshot Ice Isles</image:title>
+        </image:image>
+
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/zombie-pin-up</loc>
+        <lastmod>2015-03-20T01:00:05+00:00</lastmod>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/zombie-pin-up/gallery/first-sketch.jpg</image:loc>
+            <image:title>First Sketch</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/zombie-pin-up/gallery/refined-sketch.jpg</image:loc>
+            <image:title>Refined Sketch</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/zombie-pin-up/gallery/basic-coloring.jpg</image:loc>
+            <image:title>Basic Coloring</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/zombie-pin-up/gallery/blood-coloring.jpg</image:loc>
+            <image:title>Blood Coloring</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/zombie-pin-up/gallery/final-painting.jpg</image:loc>
+            <image:title>Final Painting</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/ptex</loc>
+        <lastmod>2015-03-20T01:00:06+00:00</lastmod>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/ptex/gallery/thesis-cover.jpg</image:loc>
+            <image:title>Thesis Cover</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/ptex/gallery/thesis-table-of-contents.jpg</image:loc>
+            <image:title>Thesis Table Of Contents</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/ptex/gallery/thesis-content-1.jpg</image:loc>
+            <image:title>Thesis Content 1</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/ptex/gallery/thesis-content-2.jpg</image:loc>
+            <image:title>Thesis Content 2</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/ptex/gallery/head-modeling-low-poly.jpg</image:loc>
+            <image:title>Head Modeling Low Poly</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/ptex/gallery/head-modeling-high-poly.jpg</image:loc>
+            <image:title>Head Modeling High Poly</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/ptex/gallery/head-modeling-shaded.jpg</image:loc>
+            <image:title>Head Modeling Shaded</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/ptex/gallery/hand-modeling-low-poly.jpg</image:loc>
+            <image:title>Hand Modeling Low Poly</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/ptex/gallery/hand-modeling-high-poly.jpg</image:loc>
+            <image:title>Hand Modeling High Poly</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/ptex/gallery/hand-modeling-shaded.jpg</image:loc>
+            <image:title>Hand Modeling Shaded</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/ptex/gallery/mermaid-modeling-low-poly.jpg</image:loc>
+            <image:title>Mermaid Modeling Low Poly</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/ptex/gallery/mermaid-modeling-high-poly.jpg</image:loc>
+            <image:title>Mermaid Modeling High Poly</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/ptex/gallery/mermaid-modeling-shaded.jpg</image:loc>
+            <image:title>Mermaid Modeling Shaded</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/ptex/gallery/mermaid-sculpt.jpg</image:loc>
+            <image:title>Mermaid Sculpt</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/ptex/gallery/mermaid-textured.jpg</image:loc>
+            <image:title>Mermaid Textured</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/downloads/ptex.pdf</loc>
+        <lastmod>2015-02-11T16:20:35+00:00</lastmod>
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/what-starts-with</loc>
+        <lastmod>2015-03-20T01:00:06+00:00</lastmod>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/gallery/character-design-sketches.jpg</image:loc>
+            <image:title>Character Design Sketches</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/gallery/pino-animation.gif</image:loc>
+            <image:title>Pino Animation</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/gallery/pino-flap-trousers-animation.gif</image:loc>
+            <image:title>Pino Flap Trousers Animation</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/gallery/pino-painting-animation.gif</image:loc>
+            <image:title>Pino Painting Animation</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/gallery/pino-beach-animation.gif</image:loc>
+            <image:title>Pino Beach Animation</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/gallery/pino-post-office-animation.gif</image:loc>
+            <image:title>Pino Post Office Animation</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/gallery/pino-boat-animation.gif</image:loc>
+            <image:title>Pino Boat Animation</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/gallery/pino-ufo-animation.gif</image:loc>
+            <image:title>Pino UFO Animation</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/gallery/cat-animation.gif</image:loc>
+            <image:title>Cat Animation</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/gallery/ghost-animation.gif</image:loc>
+            <image:title>Ghost Animation</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/gallery/raven-animation.gif</image:loc>
+            <image:title>Raven Animation</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/gallery/frog-animation.gif</image:loc>
+            <image:title>Frog Animation</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/gallery/lion-animation.gif</image:loc>
+            <image:title>Lion Animation</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/gallery/mouse-animation.gif</image:loc>
+            <image:title>Mouse Animation</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/gallery/wizard-animation.gif</image:loc>
+            <image:title>Wizard Animation</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/screenshots/screenshot-post-office.jpg</image:loc>
+            <image:title>Screenshot Post Office</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/screenshots/screenshot-safari.jpg</image:loc>
+            <image:title>Screenshot Safari</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/what-starts-with/screenshots/screenshot-ufo.jpg</image:loc>
+            <image:title>Screenshot UFO</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/magic-of-the-otherworld</loc>
+        <lastmod>2015-03-20T01:00:06+00:00</lastmod>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/magic-of-the-otherworld/gallery/sailing-ship-three-quarter-view.jpg</image:loc>
+            <image:title>Sailing Ship Three Quarter View</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/magic-of-the-otherworld/gallery/sailing-ship-front-and-back-wireframe.jpg</image:loc>
+            <image:title>Sailing Ship Front And Back Wireframe</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/magic-of-the-otherworld/gallery/sailing-ship-front-and-back-textured.jpg</image:loc>
+            <image:title>Sailing Ship Front And Back Textured</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/magic-of-the-otherworld/gallery/sailing-ship-side-wireframe.jpg</image:loc>
+            <image:title>Sailing Ship Side Wireframe</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/magic-of-the-otherworld/gallery/sailing-ship-side-textured.jpg</image:loc>
+            <image:title>Sailing Ship Side Textured</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/magic-of-the-otherworld/gallery/sailing-ship-close-up.jpg</image:loc>
+            <image:title>Sailing Ship Close Up</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/distant-worlds</loc>
+        <lastmod>2015-03-20T01:00:07+00:00</lastmod>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/curled-plant-modeling.jpg</image:loc>
+            <image:title>Curled Plant Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/flowering-plant-modeling.jpg</image:loc>
+            <image:title>Flowering Plant Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/insect-eating-plant-modeling.jpg</image:loc>
+            <image:title>Insect Eating Plant Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/carnivorous-plant-modeling.jpg</image:loc>
+            <image:title>Carnivorous Plant Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/lily-flower-modeling.jpg</image:loc>
+            <image:title>Lily Flower Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/bell-mouthed-flower-modeling.jpg</image:loc>
+            <image:title>Bell Mouthed Flower Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/groundcover-modeling.jpg</image:loc>
+            <image:title>Groundcover Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/mushroom-modeling.jpg</image:loc>
+            <image:title>Mushroom Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/broadleaf-tree-1-modeling.jpg</image:loc>
+            <image:title>Broadleaf Tree 1 Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/broadleaf-tree-2-modeling.jpg</image:loc>
+            <image:title>Broadleaf Tree 2 Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/broadleaf-tree-3-modeling.jpg</image:loc>
+            <image:title>Broadleaf Tree 3 Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/blooming-tree-modeling.jpg</image:loc>
+            <image:title>Blooming Tree Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/flower-tree-modeling.jpg</image:loc>
+            <image:title>Flower Tree Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/fruit-tree-modeling.jpg</image:loc>
+            <image:title>Fruit Tree Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/walking-tree-modeling.jpg</image:loc>
+            <image:title>Walking Tree Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/willow-modeling.jpg</image:loc>
+            <image:title>Willow Modeling</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/distant-worlds/gallery/horizontal-tree-modeling.jpg</image:loc>
+            <image:title>Horizontal Tree Modeling</image:title>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://www.melaniegruber.de/lets-roll</loc>
+        <lastmod>2015-03-20T01:00:07+00:00</lastmod>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/lets-roll/gallery/ostrich-character-design.jpg</image:loc>
+            <image:title>Ostrich Character Design</image:title>
+        </image:image>
+        <image:image>
+            <image:loc>https://www.melaniegruber.de/images/lets-roll/gallery/sphere-character-design.jpg</image:loc>
+            <image:title>Sphere Character Design</image:title>
+        </image:image>
+        <video:video>
+            <video:title>Let's Roll</video:title>
+            <video:description>An ostrich walks through the steppe, when suddenly a mysterious ball falls from the sky. Curiously the ostrich approaches the ball and starts to pick on it. The ball shrinks with each pick of the ostrich and tries to escape. But as soon as the ball is small enough the ostrich swallows it - now everything happens very fast.</video:description>
+            <video:thumbnail_loc>https://i.vimeocdn.com/video/511783470_1280.jpg</video:thumbnail_loc>
+            <video:content_loc>https://vimeo.com/moogaloop.swf?clip_id=25879412</video:content_loc>
+            <video:player_loc allow_embed="yes" autoplay="autoplay=1">https://player.vimeo.com/video/25879412</video:player_loc>
+            <video:duration>147</video:duration>
+        </video:video>
+        <video:video>
+            <video:title>Let's Roll - Shading</video:title>
+            <video:description>Breakdown of my work on the shading of the short film "Let's Roll".</video:description>
+            <video:thumbnail_loc>http://i.vimeocdn.com/video/502672711_1280.jpg</video:thumbnail_loc>
+            <video:content_loc>https://vimeo.com/moogaloop.swf?clip_id=114336001</video:content_loc>
+            <video:player_loc allow_embed="yes" autoplay="autoplay=1">https://player.vimeo.com/video/114336001</video:player_loc>
+            <video:duration>14</video:duration>
+        </video:video>
+        <video:video>
+            <video:title>Let's Roll - Animation</video:title>
+            <video:description>The scene of the short film "Let's Roll" that I animated.</video:description>
+            <video:thumbnail_loc>http://i.vimeocdn.com/video/502667507_1280.jpg</video:thumbnail_loc>
+            <video:content_loc>https://vimeo.com/moogaloop.swf?clip_id=116344114</video:content_loc>
+            <video:player_loc allow_embed="yes" autoplay="autoplay=1">https://player.vimeo.com/video/116344114</video:player_loc>
+            <video:duration>13</video:duration>
+        </video:video>
+    </url>
+</urlset>
