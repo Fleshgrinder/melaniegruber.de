@@ -6,8 +6,8 @@ description: Contact and copyright information.
 ---
 
 Melanie Gruber  
-Seyfferstraße 18  
-70197 Stuttgart  
+Tückingstraße 50  
+41460 Neuss  
 Germany
 
 <span class="label">Skype:</span> [melaniegruber.de](callto:melaniegruber.de)  

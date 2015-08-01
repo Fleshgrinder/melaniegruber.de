@@ -11,5 +11,5 @@ layout: index
 Hello there!
 
 I’m **Melanie**,  
-a Stuttgart based  
+a Düsseldorf based  
 **3D artist**.
