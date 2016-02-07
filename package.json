@@ -1,59 +1,58 @@
 {
-  "name": "melaniegruber.de",
-  "author": "Richard Fussenegger <richard@fussenegger.info>",
-  "contributors": [
-    {
-      "name": "Melanie Gruber",
-      "email": "contact@melaniegruber.de"
+    "name": "melaniegruber.de",
+    "description": "Website of 3D artist Melanie Gruber.",
+    "version": "1.0.0",
+    "private": true,
+    "author": "Richard Fussenegger <richard@fussenegger.info>",
+    "contributors": [
+        "Melanie Gruber <contact@melaniegruber.de>"
+    ],
+    "engines": {
+        "node": "0.10.x"
+    },
+    "dependencies": {
+        "concurrent-transform": "1.0.x",
+        "del": "1.1.x",
+        "ejs": "2.2.x",
+        "glob": "4.3.x",
+        "gulp": "3.8.x",
+        "gulp-autoprefixer": "2.1.x",
+        "gulp-cached": "1.0.x",
+        "gulp-changed": "git+https://github.com/Fleshgrinder/gulp-changed.git",
+        "gulp-csso": "1.0.x",
+        "gulp-front-matter": "1.2.x",
+        "gulp-html-minifier": "0.1.x",
+        "gulp-image-resize": "0.6.x",
+        "gulp-imagemin": "2.1.x",
+        "gulp-markdown": "1.0.x",
+        "gulp-multi-renderer": "git+https://github.com/Fleshgrinder/gulp-multi-renderer.git",
+        "gulp-plumber": "0.6.x",
+        "gulp-remember": "0.3.x",
+        "gulp-replace": "0.5.x",
+        "gulp-sass": "1.3.x",
+        "gulp-sourcemaps": "1.3.x",
+        "gulp-tap": "^0.1.3",
+        "gulp-uglify": "1.1.x",
+        "gulp-util": "3.0.x",
+        "gulp-webp": "2.2.x",
+        "gulp-zopfli": "0.1.x",
+        "image-size": "0.3.x",
+        "imagemin-mozjpeg": "4.0.x",
+        "imagemin-pngquant": "4.0.x",
+        "lazypipe": "0.2.x",
+        "map-stream": "0.0.5",
+        "merge": "1.2.x",
+        "merge-stream": "0.1.x",
+        "run-sequence": "1.0.x",
+        "through2": "0.6.x",
+        "vinyl-fs": "^0.3.13"
+    },
+    "devDependencies": {
+        "browser-sync": "1.9.x",
+        "connect-modrewrite": "0.7.x"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://Fleshgrinder@bitbucket.org/Fleshgrinder/melaniegruber.de.git"
     }
-  ],
-  "private": true,
-  "engines": {
-    "node": "0.10.x"
-  },
-  "dependencies": {
-    "concurrent-transform": "1.0.x",
-    "del": "1.1.x",
-    "ejs": "2.2.x",
-    "glob": "4.3.x",
-    "gulp": "3.8.x",
-    "gulp-autoprefixer": "2.1.x",
-    "gulp-cached": "1.0.x",
-    "gulp-changed": "git+https://github.com/Fleshgrinder/gulp-changed.git",
-    "gulp-csso": "1.0.x",
-    "gulp-front-matter": "1.2.x",
-    "gulp-html-minifier": "0.1.x",
-    "gulp-image-resize": "0.6.x",
-    "gulp-imagemin": "2.1.x",
-    "gulp-markdown": "1.0.x",
-    "gulp-multi-renderer": "git+https://github.com/Fleshgrinder/gulp-multi-renderer.git",
-    "gulp-plumber": "0.6.x",
-    "gulp-remember": "0.3.x",
-    "gulp-replace": "0.5.x",
-    "gulp-sass": "1.3.x",
-    "gulp-sourcemaps": "1.3.x",
-    "gulp-tap": "^0.1.3",
-    "gulp-uglify": "1.1.x",
-    "gulp-util": "3.0.x",
-    "gulp-webp": "2.2.x",
-    "gulp-zopfli": "0.1.x",
-    "image-size": "0.3.x",
-    "imagemin-mozjpeg": "4.0.x",
-    "imagemin-pngquant": "4.0.x",
-    "lazypipe": "0.2.x",
-    "map-stream": "0.0.5",
-    "merge": "1.2.x",
-    "merge-stream": "0.1.x",
-    "run-sequence": "1.0.x",
-    "through2": "0.6.x",
-    "vinyl-fs": "^0.3.13"
-  },
-  "devDependencies": {
-    "browser-sync": "1.9.x",
-    "connect-modrewrite": "0.7.x"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Fleshgrinder/melaniegruber.de"
-  }
 }
