@@ -1,6 +1,5 @@
-.idea
-dev
-dist
-desktop.ini
-node_modules
-src/google*.html
+/dev/
+/dist/
+/node_modules/
+/src/google*.html
+/desktop.ini
