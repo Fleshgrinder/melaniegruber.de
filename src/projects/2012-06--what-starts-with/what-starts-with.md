@@ -1,7 +1,7 @@
 ---
 
 title: What Starts With …?
-type: Android-App for Tablets (Bachelor’s Project)
+type: Android-App for Tablets (Bachelorʼs Project)
 description: Character designs and 2D animations for an app for children of preschool age.
 programs:
     - Adobe Photoshop

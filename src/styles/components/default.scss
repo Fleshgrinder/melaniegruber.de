@@ -91,6 +91,10 @@
     display: none !important;
 }
 
+.media-3d-model {
+    background: url("/images/icons/sketchfab.svg") center no-repeat #000;
+}
+
 .media-video {
     background: url("/images/icons/vimeo-wordmark.svg") center no-repeat #000;
 }
@@ -118,6 +122,7 @@
         width: 100%;
     }
 
+    .media-3d-model,
     .media-video {
         padding-bottom: 56.25%;
         position: relative;

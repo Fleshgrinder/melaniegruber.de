@@ -10,6 +10,6 @@ layout: index
 
 Hello there!
 
-I’m **Melanie**,  
+Iʼm **Melanie**,  
 a Düsseldorf based  
 **3D artist**.

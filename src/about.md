@@ -7,7 +7,7 @@ gallery:
 
 ---
 
-<q>“Around here, however, we don’t look backwards for very long. We keep moving forward, opening up new doors and doing
+<q>“Around here, however, we donʼt look backwards for very long. We keep moving forward, opening up new doors and doing
  new things, because we're curious… and curiosity keeps leading us down new paths.” — 
  <cite><a href="https://en.wikiquote.org/wiki/Walt_Disney" target="_blank">Walt Disney</a></cite></q>
 
@@ -24,7 +24,8 @@ It is my curiosity that always leaves me wanting to learn and experience more. A
 
 [contact@melaniegruber.de](mailto:contact@melaniegruber.de)
 
-Currently I am teaching 3D and Game Design at the [b.i.b. International College](http://www.bib.de/b.i.b.-International-College-Bergisch-Gladbach.aspx)
- in Bergisch Gladbach.
+Currently I am working as a lecturer for “3D-Software and Animation”, “Game Art Production”, and “"Gameplay and Game
+ Design” at the [bib International College](http://www.bib.de/b.i.b.-International-College-Bergisch-Gladbach.aspx) in
+ Bergisch Gladbach.
 
 <% include views/partials/about-weblinks.ejs %>

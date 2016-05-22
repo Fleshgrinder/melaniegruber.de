@@ -20,6 +20,8 @@ gallery:
     - Low Poly Modeling
     - High Poly Modeling
     - Shading
+sketchfab:
+    - 101850329c1c4ddcae2ebe08d10bb6e0
 
 ---
 

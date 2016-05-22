@@ -20,7 +20,7 @@ var childProcess = require('child_process');
  *
  * @type {{dependencies:{}}}
  */
-var packageJSON = require('./../package.json');
+var package_json = require('./../package.json');
 
 /**
  * Array used to collect node module names.
@@ -38,52 +38,54 @@ var dependency;
 
 if (process.argv.pop().match('--dev')) {
     console.log('Installing development dependencies as well ...');
-    for (var dependency in packageJSON.devDependencies) {
-        packageJSON.dependencies[dependency] = packageJSON.devDependencies[dependency];
+    for (var dependency in package_json.devDependencies) {
+        package_json.dependencies[dependency] = package_json.devDependencies[dependency];
     }
 }
 
 // Install all non-gulp modules first.
-for (dependency in packageJSON.dependencies) {
+for (dependency in package_json.dependencies) {
     if (!dependency.match(/^gulp/)) {
         dependencies.push(dependency);
-        delete packageJSON.dependencies[dependency];
+        delete package_json.dependencies[dependency];
     }
 }
 
 // Install the util module and gulp itself next.
 ['gulp-util', 'gulp'].forEach(function (dependency) {
-    if (packageJSON.dependencies.hasOwnProperty(dependency)) {
+    if (package_json.dependencies.hasOwnProperty(dependency)) {
         dependencies.push(dependency);
-        delete packageJSON.dependencies[dependency];
+        delete package_json.dependencies[dependency];
     }
 });
 
 // Install all *normal* gulp modules next.
-for (dependency in packageJSON.dependencies) {
+for (dependency in package_json.dependencies) {
     if (!dependency.match(/image(?:min|-resize)$/)) {
         dependencies.push(dependency);
-        delete packageJSON.dependencies[dependency];
+        delete package_json.dependencies[dependency];
     }
 }
 
 // Install all *problematic* gulp modules last.
-for (dependency in packageJSON.dependencies) {
+for (dependency in package_json.dependencies) {
       dependencies.push(dependency);
-      delete packageJSON.dependencies[dependency];
+      delete package_json.dependencies[dependency];
 }
 
 // Now install all dependencies in their correct order for maximum success rate.
 (function npmUpdate(i) {
     console.log('Installing ' + dependencies[i] + ' ...');
-    childProcess.exec('npm update ' + dependencies[i], function (error, stdOut, stdError) {
+    childProcess.exec('npm update ' + dependencies[i], function (error, std_out, std_err) {
         if (error) {
             console.error(error);
             process.exit(64);
-        } else if (stdOut) {
-            console.log(stdOut);
-        } else if (stdError) {
-            console.error(stdError);
+        }
+        else if (std_out) {
+            console.log(std_out);
+        }
+        else if (std_err) {
+            console.error(std_err);
         }
 
         ++i;

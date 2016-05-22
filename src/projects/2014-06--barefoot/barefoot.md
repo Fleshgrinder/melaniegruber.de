@@ -1,7 +1,7 @@
 ---
 
 title: BareFoot
-type: Game (Master’s Project)
+type: Game (Masterʼs Project)
 description: Modeling and texturing of various game assets for a racing game with a stylized look.
 programs:
     - Adobe Photoshop
@@ -40,6 +40,13 @@ screenshots:
     - Screenshot Mushrooms
     - Screenshot Forest
     - Screenshot Ice Isles
+sketchfab:
+    - 6a3a5c57e6e942aebf2c7917044b58db
+    - b10ab3dacd854bea925a1e9e72c7ce49
+    - ec5c72c52c9a4b0e97a0d46acdf91354
+    - 37e388f125d84e2bb618d79367fd4ece
+    - b0e5b35658f74744aea5b4f74f09daa8
+    - 059a546a261c40e9965731b9c314e423
 
 ---
 

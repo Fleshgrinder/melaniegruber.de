@@ -34,7 +34,7 @@
             </div>
         <% } %>
     </div>
-    <% if (page.gallery || page.screenshots || page.vimeo) { %>
+    <% if (page.gallery || page.screenshots || page.vimeo || page.sketchfab) { %>
         <div id="gallery">
             <% if (page.gallery) { %>
                 <% include partials/gallery.ejs %>
@@ -44,6 +44,9 @@
             <% } %>
             <% if (page.vimeo) { %>
                 <% include partials/videos.ejs %>
+            <% } %>
+            <% if (page.sketchfab) { %>
+                <% include partials/3d-models.ejs %>
             <% } %>
         </div>
         <% if (page.next || page.previous) { %>

@@ -1,7 +1,7 @@
 ---
 
-title: Let’s Roll
-type: Short Film (Bachelor’s Project)
+title: Letʼs Roll
+type: Short Film (Bachelorʼs Project)
 description: Character design, lighting, and shading for a short film.
 programs:
     - Autodesk Maya 
@@ -15,6 +15,17 @@ work:
 gallery:
     - Ostrich Character Design
     - Sphere Character Design
+sketchfab:
+    - fdfd6cebd72c4def973c42a9bf34687b
+    - 1f27c59e7747491eaa8efb73fc27b721
+    - d2ff1f4a25a441c2a762c4c543f80221
+    - 9be5ee76660646e89db11adebc0ff319
+    - a21651ac410d493aa796c9602f9d7acc
+    - 89e60c1c0d41496e9fe3b898c3df3d9b
+    - e31dfc5d721b4017aa4f0b2c73e821b2
+    - a7a03b606db2459d99036ffa9546398f
+    - 7ce21a88c24b4fedabfc5c4f4ad6bd3d
+    - 4f7447bd48784194b771cd42dd77b260
 vimeo:
     - 25879412
     - 114336001

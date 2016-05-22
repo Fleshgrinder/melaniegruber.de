@@ -70,6 +70,10 @@ function ProjectPage(file, data) {
             enumerable: true,
             value: !!data.screenshots
         },
+        sketchfab: {
+            enumerable: true,
+            value: data.sketchfab
+        },
         type: {
             enumerable: true,
             value: data.type

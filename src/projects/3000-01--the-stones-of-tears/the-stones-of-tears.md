@@ -33,6 +33,9 @@ gallery:
     - Silversmith Naked Shaded
     - Silversmith Clothed Wireframe
     - Silversmith Clothed Shaded
+sketchfab:
+    - 6dba3f12fb4d4dbf8baa7f0ed25d7cc9
+    - fef32aa983e14f019f8908f8f15a34e7
 
 ---
 
@@ -45,6 +48,6 @@ be a great experience, and a good way to improve my skills.
 ## Project Summary
 An Incan silversmith is given the honor to work for the king, who gives him a huge amount of silver. But before he can 
 start his work, the silver is stolen from him. The silversmith is desperate, as he is now facing certain death for 
-losing the king’s silver. Suddenly a blind old woman comes to his hut, kneels down, and starts to cry. With wonder the 
-silversmith realizes that the woman’s tears turn into drops of silver. However, it is the greed of the silversmith that 
+losing the kingʼs silver. Suddenly a blind old woman comes to his hut, kneels down, and starts to cry. With wonder the 
+silversmith realizes that the womanʼs tears turn into drops of silver. However, it is the greed of the silversmith that 
 turns this miracle into a nightmare …

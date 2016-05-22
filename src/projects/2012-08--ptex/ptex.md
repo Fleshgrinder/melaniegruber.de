@@ -1,8 +1,8 @@
 ---
 
 title: Ptex
-type: Bachelor’s Thesis
-description: Bachelor’s thesis about the technology behind Ptex, and its integration into current 3D software.
+type: Bachelorʼs Thesis
+description: Bachelorʼs thesis about the technology behind Ptex, and its integration into current 3D software.
 programs:
     - Adobe Photoshop
     - Autodesk 3ds Max
@@ -32,18 +32,20 @@ gallery:
     - Mermaid Modeling Shaded
     - Mermaid Sculpt
     - Mermaid Textured
+sketchfab:
+    - b75d2abdf0bd460e85b5743b9c8d3eb9
 
 ---
 
 ## Personal Experience
-I chose this topic for my bachelor’s thesis because I am always interested in new technologies, and wanted to see how 
+I chose this topic for my bachelorʼs thesis because I am always interested in new technologies, and wanted to see how 
 well Ptex (Per-Face Texture Mapping) is integrated into the Autodesk programs. During the practical part of the thesis I 
 modeled a mermaid in Autodesk 3ds Max, sculpted additional detail, and created the Ptex texturing in Autodesk Mudbox. 
 During this work I learned a lot about human modeling. Finally, I exported the Ptex textures and rendered the model in 
 Autodesk Maya with Mental Ray.
 
 ## Project Summary
-My bachelor’s thesis “Ptex: Per-Face Texture Mapping in Theory and Practice” evaluated the technology behind Ptex and 
+My bachelorʼs thesis “Ptex: Per-Face Texture Mapping in Theory and Practice” evaluated the technology behind Ptex and 
 its integration into current Autodesk programs. For that purpose I compared the already existing texture mapping 
 methods, and covered the theoretical background of Ptex. The thesis also includes a practical part, where the workflows 
 with Ptex and with UV-Layouts are compared.
