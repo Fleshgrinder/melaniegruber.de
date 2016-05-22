@@ -72,6 +72,7 @@
     background-color: #000;
     margin: 20px 0 0;
     max-width: 600px;
+    overflow: hidden;
 
     img {
         @include transition(transform);
@@ -92,6 +93,7 @@
 
 .media-3d-model {
     background: url("/images/icons/sketchfab.svg") center no-repeat #000;
+    background-size: 64px;
 }
 
 .media-video {
@@ -111,8 +113,19 @@
 
 }
 
-@media (max-width: 40em) {
-    // 640px
+@media (max-width: 80em) {
+    // 1280px
+
+    .media {
+        max-width: 600px;
+    }
+
+    .media-element img {
+        display: block;
+        height: auto;
+        max-width: 100%;
+        width: 100%;
+    }
 
     .media-3d-model,
     .media-video {
@@ -128,22 +141,6 @@
             top: 0;
             width: 100%;
         }
-
-        img {
-            display: block;
-            height: auto;
-            max-width: 100%;
-            width: 100%;
-        }
-    }
-
-}
-
-@media (max-width: 80em) {
-    // 1280px
-
-    .media {
-        max-width: 600px;
     }
 
 }
