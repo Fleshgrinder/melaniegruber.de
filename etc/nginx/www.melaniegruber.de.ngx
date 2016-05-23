@@ -1,0 +1,50 @@
+
+server {
+	listen      [::]:80;
+	server_name melaniegruber.de *.melaniegruber.de;
+
+	return      301 https://www.melaniegruber.de$request_uri;
+}
+
+server {
+	listen              [::]:443 http2;
+	server_name         melaniegruber.de *.melaniegruber.de;
+
+	include             includes/headers-hsts.ngx;
+	include             includes/https-ocsp-stapling-responder.ngx;
+
+	ssl_certificate     certificates/melaniegruber.de/www/pem;
+	ssl_certificate_key certificates/melaniegruber.de/www/key;
+
+	return              302 https://www.melaniegruber.de$request_uri;
+}
+
+server {
+	listen                 [::]:443 http2;
+	server_name            www.melaniegruber.de;
+
+	include                includes/headers-hsts.ngx;
+	include                includes/https-ocsp-stapling-responder.ngx;
+
+	index                  index.html;
+	root                   /srv/www/melaniegruber.de/dist;
+
+	sendfile               on;
+	sendfile_max_chunk     1m;
+	tcp_nopush             on;
+
+	ssl_certificate        certificates/melaniegruber.de/www/pem;
+	ssl_certificate_key    certificates/melaniegruber.de/www/key;
+
+	location / {
+		include            includes/static-files-hsts.ngx;
+
+		location ~ '^/.+(?<!\.html)$' {
+			etag           off;
+			expires        -1;
+			include        includes/headers-hsts.ngx;
+			try_files      $uri $uri.html =404;
+		}
+	}
+
+}
