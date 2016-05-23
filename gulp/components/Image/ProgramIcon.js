@@ -12,7 +12,12 @@ var util = require('util');
  * @param {boolean} index
  */
 function ProgramIcon(title) {
-    ProgramIcon.super_.call(this, title, '/icons', title.split(' ')[0] === 'Autodesk' ? 'png' : 'svg', 24);
+    var format = 'svg';
+    if (title.match(/(?:autodesk|nuke)/i) !== null) {
+        format = 'png';
+    }
+
+    ProgramIcon.super_.call(this, title, '/icons', format, 24);
 }
 
 util.inherits(ProgramIcon, Image);
