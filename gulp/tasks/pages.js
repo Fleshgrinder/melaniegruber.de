@@ -117,13 +117,13 @@ module.exports = function (allDone) {
                 return (b.date + b.route).localeCompare(a.date + a.route);
             });
 
-            for (var i = 0, n = 1, p = -1, l = projects.length; i < l; ++i, ++n, ++p) {
-                indexProjects[i] = projects[i][pageOptions.property];
-                if (n in projects) {
-                    projects[i][pageOptions.property].next = projects[n][pageOptions.property];
+            for (var current = 0, previous = 1, next = -1, l = projects.length; current < l; ++current, ++previous, ++next) {
+                indexProjects[current] = projects[current][pageOptions.property];
+                if (previous in projects) {
+                    projects[current][pageOptions.property].previous = projects[previous][pageOptions.property];
                 }
-                if (p in projects) {
-                    projects[i][pageOptions.property].previous = projects[p][pageOptions.property];
+                if (next in projects) {
+                    projects[current][pageOptions.property].next = projects[next][pageOptions.property];
                 }
             }
 
