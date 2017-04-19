@@ -12,7 +12,7 @@ gallery:
     - Final Painting
     - Blood Coloring
     - Basic Coloring
-    - Refined Sketch	
+    - Refined Sketch
     - First Sketch
 
 ---

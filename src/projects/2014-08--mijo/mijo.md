@@ -16,7 +16,7 @@ work:
 gallery:
     - Shading
     - High Poly Modeling
-    - Low Poly Modeling	
+    - Low Poly Modeling
     - Character Sheet Digital
     - Character Sheet Analog
     - Sketches
