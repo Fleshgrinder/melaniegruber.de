@@ -24,8 +24,8 @@ It is my curiosity that always leaves me wanting to learn and experience more. A
 
 [contact@melaniegruber.de](mailto:contact@melaniegruber.de)
 
-Currently I am working as a lecturer for “3D-Software and Animation”, “Game Art Production”, and “Gameplay and Game
- Design” at the [bib International College](http://www.bib.de/b.i.b.-International-College-Bergisch-Gladbach.aspx) in
- Bergisch Gladbach.
+Currently I am working as a lecturer for 3D, Game Design, Drawing, and Design Theory at the
+ [bib International College](http://www.bib.de/b.i.b.-International-College-Bergisch-Gladbach.aspx) in Bergisch
+ Gladbach.
 
 <% include views/partials/about-weblinks.ejs %>
