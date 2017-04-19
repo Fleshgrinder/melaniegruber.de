@@ -9,11 +9,11 @@ work:
     - Character Design
     - Digital Painting
 gallery:
-    - First Sketch
-    - Refined Sketch
-    - Basic Coloring
-    - Blood Coloring
     - Final Painting
+    - Blood Coloring
+    - Basic Coloring
+    - Refined Sketch	
+    - First Sketch
 
 ---
 

@@ -14,25 +14,25 @@ work:
     - Digital Painting
     - Modeling
 gallery:
-    - Faces Sketch
-    - Old Woman Sketch 1
-    - Old Woman Sketch 2
-    - Silversmith Sketch 1
-    - Silversmith Sketch 2
-    - Old Woman Naked Character Sheet
-    - Old Woman Clothed Character Sheet
-    - Silversmith Naked Character Sheet
-    - Silversmith Clothed Character Sheet
-    - Dog Character Sheet
-    - Character Lineup
-    - Old Woman Naked Wireframe
-    - Old Woman Naked Shaded
-    - Old Woman Clothed Wireframe
     - Old Woman Clothed Shaded
-    - Silversmith Naked Wireframe
-    - Silversmith Naked Shaded
-    - Silversmith Clothed Wireframe
+    - Old Woman Clothed Wireframe
+    - Old Woman Naked Shaded
+    - Old Woman Naked Wireframe
     - Silversmith Clothed Shaded
+    - Silversmith Clothed Wireframe
+    - Silversmith Naked Shaded
+    - Silversmith Naked Wireframe
+    - Character Lineup
+    - Old Woman Clothed Character Sheet
+    - Old Woman Naked Character Sheet
+    - Silversmith Clothed Character Sheet
+    - Silversmith Naked Character Sheet
+    - Dog Character Sheet
+    - Old Woman Sketch 2
+    - Old Woman Sketch 1
+    - Silversmith Sketch 2
+    - Silversmith Sketch 1
+    - Faces Sketch
 sketchfab:
     - 6dba3f12fb4d4dbf8baa7f0ed25d7cc9
     - fef32aa983e14f019f8908f8f15a34e7

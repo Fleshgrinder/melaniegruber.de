@@ -17,21 +17,21 @@ work:
     - Sculpting
     - Texturing
 gallery:
+    - Mermaid Textured
+    - Mermaid Sculpt
+    - Mermaid Modeling Shaded
+    - Mermaid Modeling High Poly
+    - Mermaid Modeling Low Poly
+    - Head Modeling Shaded
+    - Head Modeling High Poly
+    - Head Modeling Low Poly
+    - Hand Modeling Shaded
+    - Hand Modeling High Poly
+    - Hand Modeling Low Poly
     - Thesis Cover
     - Thesis Table of Contents
     - Thesis Content 1
     - Thesis Content 2
-    - Head Modeling Low Poly
-    - Head Modeling High Poly
-    - Head Modeling Shaded
-    - Hand Modeling Low Poly
-    - Hand Modeling High Poly
-    - Hand Modeling Shaded
-    - Mermaid Modeling Low Poly
-    - Mermaid Modeling High Poly
-    - Mermaid Modeling Shaded
-    - Mermaid Sculpt
-    - Mermaid Textured
 sketchfab:
     - b75d2abdf0bd460e85b5743b9c8d3eb9
 

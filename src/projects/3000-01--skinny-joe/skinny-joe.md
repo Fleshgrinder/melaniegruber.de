@@ -11,9 +11,9 @@ work:
     - Modeling
     - Sculpting
 gallery:
-    - Character Sheet
-    - Low Poly Modeling
     - High Poly Sculpting
+    - Low Poly Modeling
+    - Character Sheet
 sketchfab:
     - c131efae66c04a9c889badb77e7053c8
 

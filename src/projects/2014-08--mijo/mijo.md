@@ -14,12 +14,12 @@ work:
     - Modeling
     - Shading
 gallery:
-    - Sketches
-    - Character Sheet Analog
-    - Character Sheet Digital
-    - Low Poly Modeling
-    - High Poly Modeling
     - Shading
+    - High Poly Modeling
+    - Low Poly Modeling	
+    - Character Sheet Digital
+    - Character Sheet Analog
+    - Sketches
 sketchfab:
     - 101850329c1c4ddcae2ebe08d10bb6e0
 
