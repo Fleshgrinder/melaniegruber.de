@@ -17,11 +17,11 @@ work:
     - Rigging
     - Animation
 gallery:
-    - Character Design Drawings 1
-    - Character Design Drawings 2
-    - Character Design Drawings 3
-    - Character Design 3D-Tests
     - Final Character Design
+    - Character Design 3D-Tests
+    - Character Design Drawings 3
+    - Character Design Drawings 2
+    - Character Design Drawings 1
     - Animation Flow-Chart
 screenshots:
     - Screenshot Title-Screen

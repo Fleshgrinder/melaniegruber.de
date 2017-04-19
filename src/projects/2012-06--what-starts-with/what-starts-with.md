@@ -11,7 +11,6 @@ work:
     - Digital Painting
     - 2D Animation
 gallery:
-    - Character Design Sketches
     - Pino Animation
     - Pino Flap Trousers Animation
     - Pino Painting Animation
@@ -26,6 +25,7 @@ gallery:
     - Lion Animation
     - Mouse Animation
     - Wizard Animation
+    - Character Design Sketches
 screenshots:
     - Screenshot Post Office
     - Screenshot Safari
